@@ -1,0 +1,26 @@
+{
+  "name": "artibot",
+  "version": "0.0.1",
+  "description": "Bot open-source fait par Artivain et les contributeurs. ",
+  "main": "index.js",
+  "scripts": {
+    "test": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Artivain/artibot.git"
+  },
+  "keywords": [
+    "Discord"
+  ],
+  "author": "Artivain",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/Artivain/artibot/issues"
+  },
+  "homepage": "https://github.com/Artivain/artibot#readme",
+  "dependencies": {
+    "@sapphire/framework": "^2.2.0",
+    "discord.js": "^13.3.1"
+  }
+}
