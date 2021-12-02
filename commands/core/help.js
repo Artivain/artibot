@@ -5,14 +5,14 @@
  */
 
 // Deconstructing prefix from config file to use in help command
-const { prefix } = require("./../../config.json");
+const { prefix, params } = require("./../../config.json");
 
 // Deconstructing MessageEmbed to create embeds within this command
 const { MessageEmbed } = require("discord.js");
 
 module.exports = {
 	name: "help",
-	description: "Donne une liste des comamndes disponibles avec le bot.",
+	description: "Donne une liste des commandes disponibles avec le bot.",
 	aliases: ["commands", "aide"],
 	usage: "[command name]",
 	cooldown: 5,
@@ -36,13 +36,14 @@ module.exports = {
 			 */
 
 			let helpEmbed = new MessageEmbed()
-				.setColor(0x4286f4)
+				.setColor(params.embedColor)
 				.setURL(process.env.URL)
 				.setTitle("Liste de toutes les commandes disponibles")
 				.setDescription(
 					"`" + commands.map((command) => command.name).join("`, `") + "`"
 				)
-
+				.setFooter(params.botName, params.botIcon)
+				.setTimestamp()
 				.addField(
 					"Utilisation",
 					`\nTu peux envoyer \`${prefix}help [nom de la commande]\` pour avoir plus d'information sur une commande spécifique!`
@@ -104,7 +105,9 @@ module.exports = {
 		 */
 
 		let commandEmbed = new MessageEmbed()
-			.setColor(0x4286f4)
+			.setColor(params.embedColor)
+			.setFooter(params.botName, params.botIcon)
+			.setTimestamp()
 			.setTitle("Aide sur la commande");
 
 		if (command.description)

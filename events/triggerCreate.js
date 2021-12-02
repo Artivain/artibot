@@ -45,7 +45,7 @@ module.exports = {
 
 						console.error(error);
 						message.reply({
-							content: "Il y a eu une erreur avec l'exécution de ce trigger!",
+							content: "Il y a eu une erreur avec l'exécution d'un trigger!",
 						});
 					}
 

@@ -1,7 +1,13 @@
 {
-	"prefix": "!",
+	"prefix": "ab ",
 	"ownerId": "382869186042658818",
 	"clientId": "826609045569929247",
 	"testGuildId": "775798875356397608",
-	"devMode": true
+	"devMode": true,
+	"params": {
+		"embedColor": "#06476d",
+		"botName": "Artibot dev",
+		"botIcon": "https://artivain.com/wp-content/uploads/2021/01/logo-artivain-nouveau-fav-512.png",
+		"advancedCorePing": true
+	}
 }

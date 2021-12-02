@@ -1,7 +1,7 @@
 /**
  * @file Ready Event File.
- * @author Naman Vrati
- * @since 1.0.0
+ * @author Artivain
+ * @since 1.0.1
  */
 
 module.exports = {
