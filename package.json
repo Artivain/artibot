@@ -1,26 +1,34 @@
 {
-  "name": "artibot",
-  "version": "0.0.1",
-  "description": "Bot open-source fait par Artivain et les contributeurs. ",
-  "main": "index.js",
-  "scripts": {
-    "test": "nodemon index.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Artivain/artibot.git"
-  },
-  "keywords": [
-    "Discord"
-  ],
-  "author": "Artivain",
-  "license": "GPL-3.0-or-later",
-  "bugs": {
-    "url": "https://github.com/Artivain/artibot/issues"
-  },
-  "homepage": "https://github.com/Artivain/artibot#readme",
-  "dependencies": {
-    "@sapphire/framework": "^2.2.0",
-    "discord.js": "^13.3.1"
-  }
+	"name": "artibot",
+	"version": "0.0.2",
+	"description": "Bot open-source fait par Artivain et les contributeurs. ",
+	"main": "index.js",
+	"scripts": {
+		"start": "node index.js",
+		"test": "nodemon index.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Artivain/artibot.git"
+	},
+	"keywords": [
+		"Discord",
+		"javascript",
+		"Artivain"
+	],
+	"author": "Artivain",
+	"license": "GPL-3.0-or-later",
+	"bugs": {
+		"url": "https://github.com/Artivain/artibot/issues"
+	},
+	"homepage": "https://github.com/Artivain/artibot#readme",
+	"dependencies": {
+		"@discordjs/builders": "^0.8.2",
+		"@discordjs/rest": "^0.1.0-canary.0",
+		"discord-api-types": "^0.25.2",
+		"discord.js": "^13.3.1"
+	},
+	"devDependencies": {
+		"nodemon": "^2.0.12"
+	}
 }
