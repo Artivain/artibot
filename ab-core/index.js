@@ -204,7 +204,7 @@ const commandJsonData = [
 
 (async () => {
 	try {
-		console.log("Initialisation des commandes slash...");
+		console.log("[SlashManager] Initialisation des commandes slash...");
 
 		/**
 			Ici on envoit à Discord les comamndes slash.
@@ -226,9 +226,9 @@ const commandJsonData = [
 			)
 		};
 
-		console.log("Commandes slash activées avec succès.");
+		console.log("[SlashManager] Commandes slash activées avec succès.");
 	} catch (error) {
-		console.error(error);
+		console.error("[SlashManager] Une erreur est survenue avec l'initialisation des commandes slash, voici les détaisl:", error);
 	}
 })();
 
