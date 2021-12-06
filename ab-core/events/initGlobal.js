@@ -6,7 +6,7 @@ module.exports = {
 	once: true,
 
 	execute(client) {
-		console.log(logPrefix, "Initialisation des modules \"global\"");
+		console.log(logPrefix, "Initialisation des modules");
 		const length = client.global.size;
 		if (length == 0) {
 			console.log(logPrefix, "Aucun module à charger.");
