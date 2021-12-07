@@ -5,5 +5,6 @@ module.exports = {
 		config.twitch = require("./config.json");
 		const twitchAPI = require("./twitchApi");
 		console.log("[TwitchMonitor] Prêt.");
+		twitchAPI.channel();
 	}
 }

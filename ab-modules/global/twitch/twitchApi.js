@@ -1,4 +1,5 @@
 const https = require("https");
+const private = require("./private.json");
 
 function getChannelId(username) {
 	const options = {
@@ -7,8 +8,8 @@ function getChannelId(username) {
 		path: "/helix/users?login=" + username,
 		method: "GET",
 		headers: {
-			"Authorization": "Bearer (oAuth)",
-			"Client-Id": "hz1nw3k4canjewvprmjwjz7a4o5bgb"
+			"Authorization": "Bearer " + private.twitchToken,
+			"Client-Id": private.twitchClientId
 		}
 	}
 
@@ -19,7 +20,7 @@ function getChannelId(username) {
 		}
 		res.on("data", response => {
 			response = JSON.parse(response).data[0];
-			return response.id
+			console.log(response.id);
 		})
 	})
 
@@ -32,6 +33,6 @@ function getChannelId(username) {
 
 module.exports = {
 	channel(username) {
-		console.log(getChannelId(username));
+		getChannelId(username);
 	}
 }
