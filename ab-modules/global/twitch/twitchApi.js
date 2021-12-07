@@ -7,7 +7,7 @@ function getChannelId(username) {
 		path: "/helix/users?login=" + username,
 		method: "GET",
 		headers: {
-			"Authorization": "Bearer wvbjazsepjo8p84x6lj38d2a1uythf",
+			"Authorization": "Bearer (oAuth)",
 			"Client-Id": "hz1nw3k4canjewvprmjwjz7a4o5bgb"
 		}
 	}
