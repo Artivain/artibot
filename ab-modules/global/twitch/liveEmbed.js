@@ -7,14 +7,13 @@ config.private = require("./private.json");
 class LiveEmbed {
 	static createForStream(streamData) {
 		const isLive = streamData.type === "live";
-		const allowBoxArt = config.twitch_use_boxart;
+		const allowBoxArt = config.showGameIcon;
 
 		let msgEmbed = new MessageEmbed();
 		msgEmbed.setColor(isLive ? config.colors.live : config.colors.offline);
 		msgEmbed.setURL(`https://twitch.tv/${streamData.user_name.toLowerCase()}`);
 
 		// Thumbnail
-		/*
 		let thumbUrl = streamData.profile_image_url;
 
 		if (allowBoxArt && streamData.game && streamData.game.box_art_url) {
@@ -24,7 +23,6 @@ class LiveEmbed {
 		}
 
 		msgEmbed.setThumbnail(thumbUrl);
-		*/
 
 		// Title
 		if (isLive) {
@@ -34,7 +32,7 @@ class LiveEmbed {
 			msgEmbed.setTitle(`:white_circle: ${streamData.user_name} était en live sur Twitch.`);
 			msgEmbed.setDescription('Le live est maintenant terminé.');
 
-			msgEmbed.addField("Titre", streamData.title, false);
+			msgEmbed.addField("Titre", streamData.title, true);
 		}
 
 		// Add game
@@ -44,15 +42,17 @@ class LiveEmbed {
 
 		if (isLive) {
 			// Add status
-			if (config.showViews) msgEmbed.addField("Visionnements", isLive ? `Actuellement ${streamData.viewer_count} personnes` : 'Le live est terminé', false);
+			if (config.showViews) msgEmbed.addField("Visionnements", isLive ? `Actuellement ${streamData.viewer_count}` : 'Le live est terminé', true);
 
 			// Set main image (stream preview)
-			let imageUrl = streamData.thumbnail_url;
-			imageUrl = imageUrl.replace("{width}", "1280");
-			imageUrl = imageUrl.replace("{height}", "720");
-			let thumbnailBuster = (Date.now() / 1000).toFixed(0);
-			imageUrl += `?t=${thumbnailBuster}`;
-			msgEmbed.setImage(imageUrl);
+			if (config.showThumbnail) {
+				let imageUrl = streamData.thumbnail_url;
+				imageUrl = imageUrl.replace("{width}", "1280");
+				imageUrl = imageUrl.replace("{height}", "720");
+				let thumbnailBuster = (Date.now() / 1000).toFixed(0);
+				imageUrl += `?t=${thumbnailBuster}`;
+				msgEmbed.setImage(imageUrl);
+			}
 
 			// Add uptime
 			if (config.showUptime) {

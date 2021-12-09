@@ -134,7 +134,7 @@ module.exports = {
 								.then((existingMsg) => {
 									existingMsg.edit({
 										content: msgFormatted,
-										embed: msgEmbed
+										embeds: [msgEmbed]
 									}).then((message) => {
 										// Clean up entry if no longer live
 										if (!isLive) {

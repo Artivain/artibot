@@ -9,10 +9,11 @@
 	"mentions": {
 		"goudronviande24": "everyone"
 	},
-	"allowBoxArt": true,
+	"showGameIcon": true,
 	"showGame": true,
 	"showViews": true,
 	"showUptime": true,
+	"showThumbnail": true,
 	"colors": {
 		"live": "#9146ff",
 		"offline": "GREY"
