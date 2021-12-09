@@ -107,7 +107,7 @@ module.exports = {
 			// Refresh channel list
 			try {
 				syncServerList(false);
-			} catch (e) {};
+			} catch (e) { };
 
 			// Update activity
 			StreamActivity.setChannelOnline(streamData);
@@ -178,8 +178,10 @@ module.exports = {
 									if (roleData) {
 										mentionMode = `<@&${roleData.id}>`;
 									} else {
-										console.log('[TwitchMonitor]', `Impossible de mentionner le rôle: ${mentionMode}`,
-											`(le rôle n'existe pas sur le serveur ${discordChannel.guild.name})`);
+										console.log(
+											'[TwitchMonitor]', `Impossible de mentionner le rôle: ${mentionMode}`,
+											`(le rôle n'existe pas sur le serveur ${discordChannel.guild.name})`
+										);
 										mentionMode = null;
 									}
 								}
@@ -191,11 +193,10 @@ module.exports = {
 								msgToSend = msgFormatted + ` ${mentionMode}`
 							}
 
-							let msgOptions = {
-								embed: msgEmbed
-							};
-
-							discordChannel.send(msgToSend, msgOptions)
+							discordChannel.send({
+								content: msgToSend,
+								embeds: [msgEmbed]
+							})
 								.then((message) => {
 									console.log('[TwitchMonitor]', `Annonce envoyée sur #${discordChannel.name} sur ${discordChannel.guild.name}`)
 

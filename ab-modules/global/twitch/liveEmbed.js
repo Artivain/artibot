@@ -59,7 +59,7 @@ class LiveEmbed {
 				let now = moment();
 				let startedAt = moment(streamData.started_at);
 
-				msgEmbed.addField("Live depuis", humanizeDuration(now - startedAt, {
+				msgEmbed.addField("En ligne depuis", humanizeDuration(now - startedAt, {
 					language: "fr",
 					delimiter: ", ",
 					largest: 2,
