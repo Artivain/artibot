@@ -148,16 +148,16 @@ for (const folder of userMenus) {
 }
 
 /**********************************************************************/
-// Initialisation des commandes bouton
+// Initialisation des bouton
 
-// Toutes les commandes bouton
+// Tous les bouton
 
 const buttonCommands = fs.readdirSync("./ab-modules/buttons", { withFileTypes: true })
 	.filter(dirent => dirent.isDirectory())
 	.map(dirent => dirent.name)
 	.filter(name => !disabledModules.includes(name));
 
-// Enregistrer toutes les commandes bouton dans la collection
+// Enregistrer tous les boutons dans la collection
 
 for (const module of buttonCommands) {
 	const commandFiles = fs
@@ -180,7 +180,7 @@ const selectMenus = fs.readdirSync("./ab-modules/select-menus", { withFileTypes:
 	.map(dirent => dirent.name)
 	.filter(name => !disabledModules.includes(name));
 
-// Enregistrer les comamndes menu select dans la collection
+// Enregistrer les commandes menu select dans la collection
 
 for (const module of selectMenus) {
 	const commandFiles = fs
