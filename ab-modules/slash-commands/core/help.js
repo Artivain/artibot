@@ -1,14 +1,6 @@
-/**
- * @file Sample help command with slash command.
- * @author Artivain
- * @since 3.1.0
- */
-
-// Deconstructed the constants we need in this file.
-
 const { MessageEmbed } = require("discord.js");
 const { SlashCommandBuilder } = require("@discordjs/builders");
-const { prefix, params } = require("../../../config.json");
+const { prefix } = require("../../../config.json");
 
 module.exports = {
 	// The data needed to register slash commands to Discord.
@@ -24,30 +16,15 @@ module.exports = {
 				.setRequired(false)
 		),
 
-	/**
-	 * @description Executes when the interaction is called by interaction handler.
-	 * @author Artivain
-	 * @param {*} interaction The interaction object of the command.
-	 */
-
-	async execute(interaction) {
-		/**
-		 * @type {Object[]}
-		 * @description Array of all slash commands objects earlier registered.
-		 */
+	async execute(interaction, config) {
 
 		const commands = interaction.client.slashCommands;
 
-		/**
-		 * @type {Object[]}
-		 * @description Help command's embed
-		 */
-
 		const helpEmbed = new MessageEmbed()
-			.setColor(params.embedColor)
+			.setColor(config.embedColor)
 			.setTitle("Liste de toutes les commandes slash")
 			.setTimestamp()
-			.setFooter(params.botName, params.botIcon)
+			.setFooter(config.botName, config.botIcon)
 			.setDescription(
 				"`" + commands.map((command) => command.data.name).join("`, `") + "`\n\nTu peux aussi avoir la liste des commandes normales avec `" + prefix + "help`."
 			);

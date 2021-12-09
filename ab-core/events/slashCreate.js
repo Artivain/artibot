@@ -1,3 +1,5 @@
+const config = require("../../config.json").params;
+
 module.exports = {
 	name: "interactionCreate",
 
@@ -8,10 +10,6 @@ module.exports = {
 		// Checks if the interaction is a command (to prevent weird bugs)
 
 		if (!interaction.isCommand()) return;
-		/**
-		 * @description The Interaction command object
-		 * @type {Object}
-		 */
 
 		const command = client.slashCommands.get(interaction.commandName);
 
@@ -22,7 +20,7 @@ module.exports = {
 		// A try to executes the interaction.
 
 		try {
-			await command.execute(interaction);
+			await command.execute(interaction, config);
 		} catch (err) {
 			console.error(err);
 			await interaction.reply({
