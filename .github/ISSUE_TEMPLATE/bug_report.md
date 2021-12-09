@@ -23,7 +23,7 @@ A clear and concise description of what you expected to happen.
 **Screenshots**
 If applicable, add screenshots to help explain your problem.
 
-**System info:**
+**System info**
  - Server OS: [e.g. Ubuntu 20.04, Windows 10]
  - Discord client: [e.g. Browser (Chrome), Desktop (Windows)]
  - Node.js version: [e.g. 16.13.1, 17.2.0]
