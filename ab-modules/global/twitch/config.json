@@ -1,1 +1,21 @@
-{}
+{
+	"checkInterval": 60000,
+	"notificationChannel": "notifs",
+	"twitchChannels": [
+		"goudronviande24",
+		"zariaa2020",
+		"valorant"
+	],
+	"mentions": {
+		"goudronviande24": "everyone"
+	},
+	"allowBoxArt": true,
+	"showGame": true,
+	"showViews": true,
+	"showUptime": true,
+	"colors": {
+		"live": "#9146ff",
+		"offline": "GREY"
+	},
+	"debug": false
+}
