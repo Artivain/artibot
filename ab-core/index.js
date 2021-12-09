@@ -121,7 +121,7 @@ for (const folder of messageMenus) {
 		.filter((file) => file.endsWith(".js"));
 	for (const file of files) {
 		const menu = require(`../ab-modules/message-menus/${folder}/${file}`);
-		const keyName = `${folder.toUpperCase()} ${menu.data.name}`;
+		const keyName = `MESSAGE ${menu.data.name}`;
 		client.contextCommands.set(keyName, menu);
 	}
 }
@@ -142,7 +142,7 @@ for (const folder of userMenus) {
 		.filter((file) => file.endsWith(".js"));
 	for (const file of files) {
 		const menu = require(`../ab-modules/user-menus/${folder}/${file}`);
-		const keyName = `${folder.toUpperCase()} ${menu.data.name}`;
+		const keyName = `USER ${menu.data.name}`;
 		client.contextCommands.set(keyName, menu);
 	}
 }

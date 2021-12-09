@@ -4,7 +4,7 @@ module.exports = {
 		type: 3, // 3 is for message context menus
 	},
 
-	async execute(interaction) {
+	async execute(interaction, config) {
 		await interaction.reply({
 			content: "I am a sample message context menu.",
 		});
