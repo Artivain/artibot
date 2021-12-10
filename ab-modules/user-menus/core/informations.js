@@ -1,11 +1,6 @@
-/**
- * @file Bouton pour obtenir des informations sur un utilisateur.
- * @author Krish Garg
- * @since 3.0.0
- */
-
 const { MessageEmbed } = require("discord.js");
 const { params } = require("../../../config.json");
+const util = require("util");
 
 module.exports = {
 	data: {
@@ -13,20 +8,14 @@ module.exports = {
 		type: 2 // 2 is for user context menus
 	},
 
-	/**
-	 * @description Executes when the context option with name "sample" is clicked.
-	 * @author Krish Garg
-	 * @param {Object} interaction The Interaction Object of the command.
-	 */
-
-	async execute(interaction) {
+	async execute(interaction, config) {
 
 		const embed = new MessageEmbed()
 			.setColor(params.embedColor)
+			.setTimestamp()
+			.setFooter(config.botName, config.botIcon)
 			.setTitle("Informations sur l'utilisateur")
-			.setDescription(
-				"asd"
-			);
+			.setDescription(interaction.options._hoistedOptions[0].member.user.username);
 
 		await interaction.reply({
 			embeds: [embed]
