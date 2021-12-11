@@ -1,4 +1,5 @@
 const fs = require("fs");
+const { disabledModules } = require("../../../config.json");
 
 module.exports = {
 	name: "reload",
@@ -23,10 +24,13 @@ module.exports = {
 			});
 		}
 
-		const commandFolders = fs.readdirSync("./commands");
+		const commandFolders = fs.readdirSync("./ab-modules/commands", { withFileTypes: true })
+			.filter(dirent => dirent.isDirectory())
+			.map(dirent => dirent.name)
+			.filter(name => !disabledModules.includes(name));
 
 		const folderName = commandFolders.find((folder) =>
-			fs.readdirSync(`./commands/${folder}`).includes(`${command.name}.js`)
+			fs.readdirSync(`./ab-modules/commands/${folder}`).includes(`${command.name}.js`)
 		);
 
 		// Deletes current cache of that specified command.
