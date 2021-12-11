@@ -8,7 +8,7 @@ const token = require("../private.json").botToken;
 // Depuis Discord.js v13, il est obligatoire de déclarer les intents
 
 const client = new Client({
-	intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
+	intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS],
 });
 
 /**********************************************************************/
