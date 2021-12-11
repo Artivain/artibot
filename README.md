@@ -61,6 +61,4 @@ Si vous avez tous les prérequis, vous pouvez suivre ces commandes pour faire l'
  - Et voilà, le bot devrait être connecté!
 
 ## Licence
-Artibot © 2021 by Artivain is licensed under CC BY-NC 4.0 [![image](https://user-images.githubusercontent.com/42936037/145693926-9e720097-458e-4dab-952b-5c1b28c39068.png)](LICENSE)
-
-Artibot © 2021 par Artivain est sous licence CC BY-NC 4.0 [![image](https://user-images.githubusercontent.com/42936037/145693926-9e720097-458e-4dab-952b-5c1b28c39068.png)](LICENSE)
+Artibot est sous licence [GPL 3.0](LICENSE).
