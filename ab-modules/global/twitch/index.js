@@ -78,12 +78,6 @@ module.exports = {
 					});
 
 					if (config.twitch.debug) console.log('[TwitchMonitor]', `Activité en cours: Streame ${streamInfo.user_name}.`);
-				} else {
-					if (config.twitch.debug) console.log('[TwitchMonitor]', 'Activité par défaut.');
-
-					this.discordClient.user.setPresence({
-						status: "online"
-					});
 				}
 			}
 
