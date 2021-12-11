@@ -8,12 +8,6 @@ module.exports = {
 		.setName("help")
 		.setDescription(
 			"Donne une liste des commandes ou de l'information sur une commande spécifique."
-		)
-		.addStringOption((option) =>
-			option
-				.setName("commande")
-				.setDescription("Le nom de la commande à obtenir de l'information.")
-				.setRequired(false)
 		),
 
 	async execute(interaction, config) {
