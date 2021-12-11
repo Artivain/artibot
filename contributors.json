@@ -1,6 +1,10 @@
 {
 	"devs": [
 		{
+			"name": "Artivain",
+			"github": "https://github.com/Artivain"
+		},
+		{
 			"name": "Thomas Fournier",
 			"discordTag": "GoudronViande24#7211",
 			"discordId": "382869186042658818",
@@ -13,5 +17,10 @@
 			"github": "https://github.com/Zariaa27"
 		}
 	],
-	"donators": []
+	"donators": [
+		{
+			"name": "Artivain",
+			"github": "https://github.com/Artivain"
+		}
+	]
 }
