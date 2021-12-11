@@ -1,3 +1,5 @@
+const {params} = require("../../config.json");
+
 module.exports = {
 	name: "interactionCreate",
 
@@ -21,7 +23,7 @@ module.exports = {
 		// A try to execute the interaction.
 
 		try {
-			await command.execute(interaction);
+			await command.execute(interaction, params);
 			return;
 		} catch (err) {
 			console.error(err);

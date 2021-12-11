@@ -1,3 +1,5 @@
+const {params} = require("../../config.json");
+
 module.exports = {
 	name: "messageCreate",
 
@@ -20,7 +22,7 @@ module.exports = {
 
 				if (message.content.includes(name)) {
 					try {
-						trigger.execute(message);
+						trigger.execute(message, params);
 					} catch (error) {
 						// If checks fail, reply back!
 

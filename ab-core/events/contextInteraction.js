@@ -60,7 +60,7 @@ module.exports = {
 		// Practically not possible, but we are still caching the bug.
 		// Possible Fix is a restart!
 		else {
-			return console.log("[InteractionManager] Quelque chose de suspect est survenue avec le menu. Réception d'un type de menu inconnu.");
+			return console.log("[InteractionManager] Quelque chose de suspect est survenue avec le menu. Réception d'un type de menu inconnu.");
 		}
 	},
 };
