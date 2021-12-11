@@ -55,6 +55,7 @@ Si vous avez tous les prérequis, vous pouvez suivre ces commandes pour faire l'
  - Personnaliser la configuration du bot dans `config.json`
  - Certains modules ont aussi besoin de clées privées dans un `private.json` et de configurations dans un `config.json`.
  - Exécuter les commandes suivantes:
+	 - `fnm use` pour utiliser la bonne version de Node.js (si FNM est installé)
 	 - `npm i` pour installer les dépendances
 	 - `npm start` pour démarrer le bot
  - Et voilà, le bot devrait être connecté!
