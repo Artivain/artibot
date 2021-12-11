@@ -1,7 +1,4 @@
-// Deconstructing prefix from config file to use in help command
 const { prefix } = require("../../../config.json");
-
-// Deconstructing MessageEmbed to create embeds within this command
 const { MessageEmbed } = require("discord.js");
 
 module.exports = {
@@ -20,7 +17,6 @@ module.exports = {
 
 			let helpEmbed = new MessageEmbed()
 				.setColor(config.embedColor)
-				.setURL(process.env.URL)
 				.setTitle("Liste de toutes les commandes disponibles")
 				.setDescription(
 					"`" + commands.map((command) => command.name).join("`, `") + "`"
