@@ -38,7 +38,7 @@ if (!token) {
 	process.exit(1);
 }
 
-if (!clientId || !testGuildId || !devMode || !disabledModules) {
+if (!clientId || !testGuildId || !disabledModules) {
 	console.error("[Artibot] Erreur de configuration: Le fichier config.json est invalide.");
 	process.exit(1);
 }
