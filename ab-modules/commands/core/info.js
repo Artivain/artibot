@@ -14,7 +14,7 @@ module.exports = {
 	cooldown: 5,
 
 	execute(message, args, config) {
-
+		var botVersion = require("../../../package.json").version;
 		var devs = "", donators = "";
 		contributors.devs.forEach(dev => {
 			if (dev.discordTag) {
@@ -45,7 +45,7 @@ module.exports = {
 			.setTimestamp()
 			.setTitle("À propos de " + config.botName)
 			.setDescription(description)
-			.addField("Version", process.env.npm_package_version)
+			.addField("Version", botVersion)
 			.addField("Développeurs", devs, true)
 			.addField("Donateurs", donators, true);
 
