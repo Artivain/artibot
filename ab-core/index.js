@@ -1,9 +1,52 @@
-const fs = require("fs");
-const { Client, Collection, Intents } = require("discord.js");
-const { REST } = require("@discordjs/rest");
-const { Routes } = require("discord-api-types/v9");
-const { clientId, testGuildId, devMode, disabledModules } = require("../config.json");
-const token = require("../private.json").botToken;
+try {
+	var fs = require("fs");
+	var { Client, Collection, Intents } = require("discord.js");
+	var { REST } = require("@discordjs/rest");
+	var { Routes } = require("discord-api-types/v9");
+} catch (error) {
+	if (error.code !== 'MODULE_NOT_FOUND') {
+		// Re-throw not "Module not found" errors 
+		throw error;
+	} else {
+		console.error("[Artibot] Erreur de configuration: Les modules Node.js ne sont pas installés correctement.");
+		process.exit(1);
+	}
+}
+
+try { var { clientId, testGuildId, devMode, disabledModules } = require("../config.json"); } catch (error) {
+	if (error.code !== 'MODULE_NOT_FOUND') {
+		// Re-throw not "Module not found" errors 
+		throw error;
+	} else {
+		console.error("[Artibot] Erreur de configuration: Le fichier config.json est introuvable.");
+		process.exit(1);
+	}
+}
+
+try { var token = require("../private.json").botToken; } catch (error) {
+	if (error.code !== 'MODULE_NOT_FOUND') {
+		// Re-throw not "Module not found" errors 
+		throw error;
+	} else {
+		console.error("[Artibot] Erreur de configuration: Le fichier private.json est introuvable.");
+		process.exit(1);
+	}
+}
+
+if (!token) {
+	console.error("[Artibot] Erreur de configuration: Le fichier private.json est invalide.");
+	process.exit(1);
+}
+
+if (!clientId || !testGuildId || !devMode || !disabledModules) {
+	console.error("[Artibot] Erreur de configuration: Le fichier config.json est invalide.");
+	process.exit(1);
+}
+
+if (disabledModules.includes("core")) {
+	console.error("[Artibot] Erreur de configuration: Le module \"core\" est désactivé dans le fichier de config.");
+	process.exit(1);
+}
 
 // Depuis Discord.js v13, il est obligatoire de déclarer les intents
 
@@ -56,8 +99,8 @@ const globalFolders = fs.readdirSync("./ab-modules/global", { withFileTypes: tru
 // Enregistrer touts les global dans la collection
 
 for (const folder of globalFolders) {
-		const global = require(`../ab-modules/global/${folder}/index.js`);
-		client.global.set(global.name, global);
+	const global = require(`../ab-modules/global/${folder}/index.js`);
+	client.global.set(global.name, global);
 }
 
 /**********************************************************************/

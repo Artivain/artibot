@@ -5,15 +5,17 @@
 */
 
 const { MessageEmbed } = require("discord.js");
+const { SlashCommandBuilder } = require("@discordjs/builders");
 const contributors = require("../../../contributors.json");
 
 module.exports = {
-	name: "info",
-	description: "Donne plein d'informations sur le bot.",
-	aliases: ["infos", "about"],
-	cooldown: 5,
+	data: new SlashCommandBuilder()
+		.setName("info")
+		.setDescription(
+			"Obtenir de l'information sur ce bot."
+		),
 
-	execute(message, args, config) {
+	execute(interaction, config) {
 
 		var devs = "", donators = "";
 		contributors.devs.forEach(dev => {
@@ -49,7 +51,7 @@ module.exports = {
 			.addField("Développeurs", devs, true)
 			.addField("Donateurs", donators, true);
 
-		message.channel.send({
+		interaction.reply({
 			embeds: [embed]
 		});
 	},

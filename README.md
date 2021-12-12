@@ -62,3 +62,6 @@ Si vous avez tous les prérequis, vous pouvez suivre ces commandes pour faire l'
 
 ## Licence
 Artibot est sous licence [GPL 3.0](LICENSE).
+
+> Même si la licence ne vous oblige pas à laisser le crédit dans la commande info, ça serait extrêmement apprécié!
+Ça nous aide à gagner en popularité et surtout de continuer le développement du bot. Si vous voulez toujours le retirer, merci de considérer de faire une donation pour nous encourager!
