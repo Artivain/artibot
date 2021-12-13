@@ -1,0 +1,14 @@
+{
+	"format": "HH:mm (z)",
+	"updateinterval": 10000,
+	"clocks": [
+		{
+			"botName": "Montréal",
+			"timezone": "America/Montreal"
+		},
+		{
+			"botName": "Paris",
+			"timezone": "Europe/Paris"
+		}
+	]
+}

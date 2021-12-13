@@ -30,7 +30,8 @@
 		"discord.js": "^13.3.1",
 		"discordjs-reaction-role": "^2.1.0",
 		"humanize-duration": "^3.27.1",
-		"moment": "^2.29.1"
+		"moment": "^2.29.1",
+		"moment-timezone": "^0.5.31"
 	},
 	"devDependencies": {
 		"nodemon": "^2.0.12"
