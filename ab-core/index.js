@@ -1,3 +1,5 @@
+const { checkUpdates } = require("./updates");
+
 try {
 	var fs = require("fs");
 	var { Client, Collection, Intents } = require("discord.js");
@@ -300,3 +302,6 @@ for (const folder of triggerFolders) {
 // Connection à l'API Discord avec le bot
 
 client.login(token);
+
+// Vérifier si une mise à jour existe sur le repo GitHub
+checkUpdates();

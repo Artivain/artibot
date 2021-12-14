@@ -9,6 +9,7 @@
 		"embedColor": "#06476d",
 		"botName": "Artibot [dev]",
 		"botIcon": "https://artivain.com/wp-content/uploads/2021/01/logo-artivain-nouveau-fav-512.png",
-		"advancedCorePing": true
+		"advancedCorePing": true,
+		"checkForUpdates": "unstable"
 	}
 }
