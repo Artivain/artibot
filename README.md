@@ -33,28 +33,7 @@ Voici la liste des gens qui aident à développer le projet avec des dons. Sans 
  - [Artivain](https://github.com/Artivain)
 
 ## Installation
-Ce bot est auto-hébergé. Vous devez donc avoir un serveur supportant Node.js.
-
-### Infogéré
-Besoin d'une solution toute-en-un? Contactez-nous sur notre serveur Discord, nous avons un service d'hébergement optimisé pour Artibot et sans gestion de votre part.
-
-### Auto-hébergé
-Vous devez avoir les prérequis installés:
- - Ubuntu 20.04 / 21.04, Debian 11, Windows 10 / 11, Raspberry Pi OS...
- - Node.js ([version exacte ici](.node-version))
- - NPM (à jour)
- - FNM [Optionnel]
-
-Si vous avez tous les prérequis, vous pouvez suivre ces commandes pour faire l'installation:
- - [Télécharger la dernière version (Stable ou Beta)](https://github.com/Artivain/artibot/releases)
- - Renommer le fichier `private-example.json` en `private.json` et remplir les informations requises
- - Personnaliser la configuration du bot dans `config.json`
- - Certains modules ont aussi besoin de clées privées dans un `private.json` et de configurations dans un `config.json`.
- - Exécuter les commandes suivantes:
-	 - `fnm use` pour utiliser la bonne version de Node.js (si FNM est installé)
-	 - `npm i` pour installer les dépendances
-	 - `npm start` pour démarrer le bot
- - Et voilà, le bot devrait être connecté!
+[Informations sur le wiki](https://github.com/Artivain/artibot/wiki/Installation)
 
 ## Licence
 Artibot est sous licence [GPL 3.0](LICENSE).
