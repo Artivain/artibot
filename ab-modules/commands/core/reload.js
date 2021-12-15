@@ -4,7 +4,7 @@ const { disabledModules } = require("../../../config.json");
 module.exports = {
 	name: "reload",
 	description: "Recharge une commande",
-	args: true,
+	args: "<nom de la commande>",
 	ownerOnly: true,
 
 	execute(message, args, config) {
