@@ -5,7 +5,7 @@ module.exports = {
 	name: "help",
 	description: "Donne une liste des commandes disponibles avec le bot.",
 	aliases: ["commands", "aide"],
-	usage: "[command name]",
+	usage: "[nom de la commande]",
 	cooldown: 5,
 
 	execute(message, args, config) {
