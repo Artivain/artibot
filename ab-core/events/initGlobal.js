@@ -15,7 +15,9 @@ module.exports = {
 		console.log(logPrefix, `Lancement de ${length} module${(length == 1) ? "" : "s"}:`);
 		client.global.forEach(module => {
 			console.log(logPrefix, "-", module.name);
-			module.execute(client, params);
+			setTimeout(() => {
+				module.execute(client, params);
+			}, 1000);
 		});
 	}
 };
