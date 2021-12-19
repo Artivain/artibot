@@ -20,8 +20,8 @@ module.exports = {
 			option.setName("cryptomonaie")
 				.setDescription("Le code court de la cryptomonaie")
 				.setRequired(true)
-				.addChoice("BTC", "BTC")
-				.addChoice("ETH", "ETH")
+				.addChoice("Bitcoin", "BTC")
+				.addChoice("Ethereum", "ETH")
 		),
 
 	async execute(interaction, params) {
