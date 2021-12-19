@@ -11,6 +11,13 @@ module.exports = {
 
 		if (!interaction.isContextMenu()) return;
 
+		// Don't execute interactions in DM channels
+
+		if (!interaction.channel) return interaction.reply({
+			content: "Ceci est désactivé dans les messages privés.",
+			ephemeral: true
+		});
+
 		/**********************************************************************/
 
 		// Checks if the interaction target was a user
@@ -35,7 +42,7 @@ module.exports = {
 				return;
 			}
 		}
-		// Checks if the interaction target was a user
+		// Checks if the interaction target was a message
 		else if (interaction.targetType === "MESSAGE") {
 
 			const command = client.contextCommands.get(
