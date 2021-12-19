@@ -34,8 +34,6 @@ module.exports = {
 			 */
 			static setChannelOnline(stream) {
 				this.onlineChannels[stream.user_name] = stream;
-
-				this.updateActivity();
 			}
 
 			/**
@@ -43,49 +41,11 @@ module.exports = {
 			 */
 			static setChannelOffline(stream) {
 				delete this.onlineChannels[stream.user_name];
-
-				this.updateActivity();
-			}
-
-			/**
-			 * Fetches the channel that went online most recently, and is still currently online.
-			 */
-			static getMostRecentStreamInfo() {
-				let lastChannel = null;
-				for (let channelName in this.onlineChannels) {
-					if (typeof channelName !== "undefined" && channelName) {
-						lastChannel = this.onlineChannels[channelName];
-					}
-				}
-				return lastChannel;
-			}
-
-			/**
-			 * Updates the user activity on Discord.
-			 * Either clears the activity if no channels are online, or sets it to "watching" if a stream is up.
-			 */
-			static updateActivity() {
-				let streamInfo = this.getMostRecentStreamInfo();
-
-				if (streamInfo) {
-					this.discordClient.user.setPresence({
-						activities: [{
-							name: streamInfo.user_name,
-							url: `https://twitch.tv/${streamInfo.user_name.toLowerCase()}`,
-							type: "STREAMING"
-						}],
-						status: "online"
-					});
-
-					if (config.twitch.debug) console.log('[TwitchMonitor]', `Activité en cours: Streame ${streamInfo.user_name}.`);
-				}
 			}
 
 			static init(discordClient) {
 				this.discordClient = discordClient;
 				this.onlineChannels = {};
-
-				this.updateActivity();
 			}
 		}
 
