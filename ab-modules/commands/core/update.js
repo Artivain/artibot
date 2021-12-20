@@ -16,7 +16,7 @@ module.exports = {
 		if (args[0] == "force") {
 			updater.checkUpdates().then(response => {
 				if (response.upToDate) {
-					message.reply(`Artibot est déjà à jours (v${response.currentVersion})`)
+					message.reply(`Artibot est déjà à jours (v${response.currentVersion}).`);
 					return
 				};
 
@@ -37,6 +37,18 @@ module.exports = {
 						message.reply("Une erreur est survenue pendant la mise à jour. Consulter la console pour plus de détails.");
 						console.error("[Updater] Problème avec la mise à jour: " + e);
 					});
+			});
+		} else {
+			updater.checkUpdates().then(response => {
+				if (response.upToDate) {
+					message.reply(`Artibot est à jours (v${response.currentVersion}).`);
+				} else {
+					message.reply(
+						`Une mise à jour est disponible: v${response.currentVersion} --> v${response.remoteVersion}.\n` +
+						"**Bien lire la documentation avant de faire la mise à jour!**\n" +
+						"Pour faire la mise à jour, faire la commande `update force`."
+					);
+				}
 			});
 		};
 	},
