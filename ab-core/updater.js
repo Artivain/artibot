@@ -11,7 +11,7 @@ if (require.main === module) {
 
 	const config = {
 		repository: 'https://github.com/Artivain/artibot',
-		tempLocation: './updaterFiles',
+		tempLocation: '../updaterFiles',
 		exitOnComplete: true,
 		branch: (params.checkForUpdates == "stable" ? "main" : "unstable")
 	};
@@ -37,7 +37,7 @@ if (require.main === module) {
 
 			const config = {
 				repository: 'https://github.com/Artivain/artibot',
-				tempLocation: './updaterFiles',
+				tempLocation: '../../updaterFiles',
 				exitOnComplete: true,
 				branch: (params.checkForUpdates == "stable" ? "main" : "unstable")
 			};
@@ -62,7 +62,7 @@ if (require.main === module) {
 		
 			const config = {
 				repository: 'https://github.com/Artivain/artibot',
-				tempLocation: './updaterFiles',
+				tempLocation: '../../updaterFiles',
 				exitOnComplete: false,
 				branch: (params.checkForUpdates == "stable" ? "main" : "unstable")
 			};
