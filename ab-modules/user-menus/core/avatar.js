@@ -14,7 +14,7 @@ module.exports = {
 			.setTimestamp()
 			.setFooter(config.botName, config.botIcon)
 			.setTitle("Avatar")
-			.setDescription("Voici la photo de profil de l'utilisateur:")
+			.setDescription(`Voici la photo de profil de <@${infos.user.id}>:`)
 			.setImage(`https://cdn.discordapp.com/avatars/${infos.user.id}/${infos.user.avatar}.webp?size=512`);
 
 		await interaction.reply({
