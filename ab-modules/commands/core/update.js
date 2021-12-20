@@ -20,18 +20,28 @@ module.exports = {
 					return
 				};
 
-				updater.doUpdates()
+				message.reply("Début des mises à jours... Consulter la console pour plus de détails.")
+
+				const options = {
+					repository: 'https://github.com/Artivain/artibot',
+					tempLocation: '../../updaterFiles',
+					exitOnComplete: false,
+					branch: (config.checkForUpdates == "stable" ? "main" : "unstable")
+				};
+
+				updater.doUpdates(options)
 					.then(response => {
 						if (!response) {
 							message.reply("Une erreur est survenue pendant la mise à jour. Consulter la console pour plus de détails.");
 							return
 						}
 						message.reply(
-							"La mise à jour a bien été installée.\n" +
+							"Les mises à jour ont bien été installées.\n" +
 							"Le bot va maintenant s'éteindre tout seul.\n" + 
 							"Si votre hébergement le supporte, le bot devrait revenir de lui même bientôt."
-						);
-						process.exit(1);
+						).then(() => {
+							process.exit(1);
+						});
 					})
 					.catch(e => {
 						message.reply("Une erreur est survenue pendant la mise à jour. Consulter la console pour plus de détails.");

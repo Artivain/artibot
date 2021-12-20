@@ -38,7 +38,7 @@ if (require.main === module) {
 			const config = {
 				repository: 'https://github.com/Artivain/artibot',
 				tempLocation: '../../updaterFiles',
-				exitOnComplete: true,
+				exitOnComplete: false,
 				branch: (params.checkForUpdates == "stable" ? "main" : "unstable")
 			};
 
@@ -55,28 +55,21 @@ if (require.main === module) {
 			return updater.compareVersions();
 		},
 
-		async doUpdates() {
+		async doUpdates(options) {
 			if (params.checkForUpdates != "stable" && params.checkForUpdates != "unstable") {
 				throw "Erreur de configuration"
 			};
 		
-			const config = {
-				repository: 'https://github.com/Artivain/artibot',
-				tempLocation: '../../updaterFiles',
-				exitOnComplete: false,
-				branch: (params.checkForUpdates == "stable" ? "main" : "unstable")
-			};
+			const autoUpdater = new AutoGitUpdate(options);
 		
-			const updater = new AutoGitUpdate(config);
-		
-			updater.setLogConfig({
+			autoUpdater.setLogConfig({
 				logDebug: true,
 				logDetail: true,
 				logGeneral: true,
 				logWarning: true,
 				logError: true
 			});
-			return updater.autoUpdate();
+			return autoUpdater.autoUpdate();
 		}
 	};
 
