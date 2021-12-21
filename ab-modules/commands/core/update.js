@@ -24,7 +24,7 @@ module.exports = {
 
 				const options = {
 					repository: 'https://github.com/Artivain/artibot',
-					tempLocation: '../../updaterFiles',
+					tempLocation: '../updaterFiles',
 					exitOnComplete: false,
 					branch: (config.checkForUpdates == "stable" ? "main" : "unstable")
 				};
