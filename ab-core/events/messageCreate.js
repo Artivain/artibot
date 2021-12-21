@@ -1,4 +1,4 @@
-const { Collection } = require("discord.js");
+const { Collection, MessageEmbed } = require("discord.js");
 const { prefix, ownerId } = require("../../config.json");
 const config = require("../../config.json").params;
 
@@ -65,7 +65,13 @@ module.exports = {
 		// Owner Only Property, add in your command properties if true.
 
 		if (command.ownerOnly && message.author.id !== ownerId) {
-			return message.reply({ content: `Cette commande ne peut être exécutée que par <@${ownerId}>.` });
+			let embedOwner = new MessageEmbed()
+				.setColor("RED")
+				.setFooter(config.botName, config.botIcon)
+				.setTimestamp()
+				.setTitle("Aide sur la commande")
+				.setDescription(`Cette commande ne peut être exécutée que par <@${ownerId}>.`);
+			return message.reply({ embeds: [embedOwner] });
 		}
 
 		// Guild Only Property, add in your command properties if true.

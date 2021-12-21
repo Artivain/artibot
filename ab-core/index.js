@@ -1,4 +1,4 @@
-const { checkUpdates } = require("./updates");
+const { checkUpdates } = require("./updater");
 
 try {
 	var fs = require("fs");
@@ -304,4 +304,14 @@ for (const folder of triggerFolders) {
 client.login(token);
 
 // Vérifier si une mise à jour existe sur le repo GitHub
-checkUpdates();
+checkUpdates().then(response => {
+	if (response.upToDate) {
+		console.log(`[Updater] Artibot est à jours (v${response.currentVersion})`);
+	} else {
+		console.log(
+			"[Updater] Une mise à jour est disponible pour Artibot!\n" +
+			`[Updater]  - Version actuelle: ${response.currentVersion}\n` +
+			`[Updater]  - Dernière version: ${response.remoteVersion}`
+		);
+	};
+});
