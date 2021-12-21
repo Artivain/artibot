@@ -50,8 +50,9 @@ module.exports = {
 
 			// 🎉 Confirmation sent if reloading was successful!
 			message.channel.send({
-				content: `La commande \`${newCommand.name}\` a bien été rafraichie!`,
+				content: `La commande \`${newCommand.name}\` a bien été rafraichie!`
 			});
+			console.log(`[Artibot] Commande ${newCommand.name} rafraichie.`);
 		} catch (error) {
 			// Catch block executes if there is any error in your code. It logs the error in console and also sends back in discord GUI.
 
