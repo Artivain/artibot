@@ -30,7 +30,7 @@
 		"axios": "^0.24.0",
 		"discord-api-types": "^0.25.2",
 		"discord-giveaways": "^5.0.1",
-		"discord.js": "^13.3.1",
+		"discord.js": "^13.4.0",
 		"discordjs-reaction-role": "^2.1.0",
 		"humanize-duration": "^3.27.1",
 		"moment": "^2.29.1",
