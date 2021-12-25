@@ -8,10 +8,7 @@
 		"test": "nodemon ab-core/index.js",
 		"updater": "node ab-core/updater.js"
 	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/Artivain/artibot.git"
-	},
+	"repository": "github:Artivain/artibot",
 	"keywords": [
 		"Discord",
 		"javascript",
