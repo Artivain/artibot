@@ -41,12 +41,19 @@ module.exports = {
 				"[GitHub](https://github.com/Artivain/artibot)"
 		}
 
+		var memberCount = 0;
+		interaction.client.guilds.cache.forEach((guild) => {
+			memberCount += guild.memberCount;
+		});
+
 		let embed = new MessageEmbed()
 			.setColor(config.embedColor)
 			.setFooter(config.botName, config.botIcon)
 			.setTimestamp()
 			.setTitle("À propos de " + config.botName)
 			.setDescription(description)
+			.addField("Nombre de serveurs", interaction.client.guilds.cache.size + " serveurs", true)
+			.addField("Nombre d'utilisateurs", memberCount+ " utilisateurs", true)
 			.addField("Version", botVersion)
 			.addField("Développeurs", devs, true)
 			.addField("Donateurs", donators, true);
