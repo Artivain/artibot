@@ -71,7 +71,7 @@ module.exports = {
 						if (typeof obj[key] == "string") {
 							obj[key] = [obj[key], value];
 						} else { // Else add value to the array
-							obj[key] = obj[key].push(value);
+							obj[key].push(value);
 						};
 					} else {
 						obj[key] = value;
@@ -96,6 +96,36 @@ module.exports = {
 				});
 			};
 
+			if (typeof results.domainStatus == "string") {
+				let code = results.domainStatus.split("#")[1].split(/[^A-Za-z]/)[0];
+				var status = `[${code}](http://www.icann.org/epp#${code})`;
+			} else {
+				var status = "";
+				results.domainStatus.forEach(value => {
+					let code = value.split("#")[1].split(/[^A-Za-z]/)[0];
+					status += `[${code}](http://www.icann.org/epp#${code})\n`;
+				});
+				status = status.trim();
+			};
+
+			if (typeof results.nameServer == "string") {
+				var ns = results.nameServer;
+			} else {
+				var ns = "";
+				results.nameServer.forEach(value => {
+					ns += `${value}\n`;
+				});
+				ns = ns.trim();
+			};
+
+			if (results.registrantOrganization) {
+				var name = results.registrantOrganization;
+			} else if (results.registrantName) {
+				var name = results.registrantName;
+			} else {
+				var name = "Nom introuvable";
+			};
+
 			const embed = new MessageEmbed()
 				.setColor(config.embedColor)
 				.setTitle(`WHOIS - ${domain}`)
@@ -106,12 +136,10 @@ module.exports = {
 				.addField("Serveur WHOIS du registraire", results.registrarWHOISServer, true)
 				.addField("Date d'enregistrement du domaine", results.creationDate, true)
 				.addField("Courriel pour le signalement d'abus", results.registrarAbuseContactEmail, true)
-				.addField(
-					"Statut du domain (ICANN)",
-					`[${results.domainStatus.split("#")[1]}](http://www.icann.org/epp#${results.domainStatus.split("#")[1]})`,
-					true
-				)
-				.addField("Nom du propriétaire", results.registrantName, true);
+				.addField("Statut du domain (ICANN)", status, true)
+				.addField("Nom du propriétaire", name, true)
+				.addField("Statut DNSSEC", results.dnssec, true)
+				.addField("Serveur(s) DNS", ns, true);
 
 			if (results.reseller) {
 				embed.addField("Revendeur", results.reseller, true);
