@@ -2,7 +2,7 @@ const { MessageEmbed } = require("discord.js");
 const https = require('https');
 
 module.exports = {
-	name: "chuckNorris",
+	name: "chucknorris",
 	description: "Dit une blague de Chuck Norris.",
 	aliases: ["cn"],
 
