@@ -1,4 +1,4 @@
-const {params} = require("../../config.json");
+const { params } = require("../../config.json");
 
 module.exports = {
 	name: "interactionCreate",
