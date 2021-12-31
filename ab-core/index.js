@@ -1,10 +1,9 @@
 const { checkUpdates } = require("./updater");
+const slashManager = require("./slashManager");
 
 try {
 	var fs = require("fs");
 	var { Client, Collection, Intents } = require("discord.js");
-	var { REST } = require("@discordjs/rest");
-	var { Routes } = require("discord-api-types/v9");
 } catch (error) {
 	if (error.code !== 'MODULE_NOT_FOUND') {
 		// Re-throw not "Module not found" errors 
@@ -15,7 +14,7 @@ try {
 	}
 }
 
-try { var { clientId, testGuildId, devMode, disabledModules } = require("../config.json"); } catch (error) {
+try { var { clientId, testGuildId, disabledModules } = require("../config.json"); } catch (error) {
 	if (error.code !== 'MODULE_NOT_FOUND') {
 		// Re-throw not "Module not found" errors 
 		throw error;
@@ -53,7 +52,7 @@ if (disabledModules.includes("core")) {
 // Depuis Discord.js v13, il est obligatoire de déclarer les intents
 
 const client = new Client({
-	intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS],
+	intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS, Intents.FLAGS.GUILD_VOICE_STATES],
 });
 
 /**********************************************************************/
@@ -240,42 +239,9 @@ for (const module of selectMenus) {
 /**********************************************************************/
 // Initialisation des commandes slash dans l'API Discord
 
-const rest = new REST({ version: "9" }).setToken(token);
-
-const commandJsonData = [
-	...Array.from(client.slashCommands.values()).map((c) => c.data.toJSON()),
-	...Array.from(client.contextCommands.values()).map((c) => c.data),
-];
-
-(async () => {
-	try {
-		console.log("[SlashManager] Initialisation des commandes slash...");
-
-		/**
-			Ici on envoit à Discord les comamndes slash.
-			Il y a 2 types de comamndes, les "guild" et les "global".
-			"Guild" pour les commandes par serveur et "global" pour les commandes globales.
-			En développement, utiliser seulement des commandes "guild" puisqu'elles peuvent se rafraichir
-			instantanéments, alors que les commandes globales peuvent prendre jusqu'à 1 heure.
-		*/
-
-		if (devMode) {
-			await rest.put(
-				Routes.applicationGuildCommands(clientId, testGuildId),
-				{ body: commandJsonData }
-			);
-		} else {
-			await rest.put(
-				Routes.applicationCommands(clientId),
-				{ body: commandJsonData }
-			)
-		};
-
-		console.log("[SlashManager] Commandes slash activées avec succès.");
-	} catch (error) {
-		console.error("[SlashManager] Une erreur est survenue avec l'initialisation des commandes slash, voici les détaisl:", error);
-	}
-})();
+slashManager.init(token);
+slashManager.generateData(client);
+slashManager.register();
 
 /**********************************************************************/
 // Initialisation des triggers
