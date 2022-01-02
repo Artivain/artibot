@@ -1,3 +1,4 @@
+const { log } = require("../logger");
 const config = require("../../config.json").params;
 
 module.exports = {
@@ -22,11 +23,11 @@ module.exports = {
 		try {
 			await command.execute(interaction, config);
 		} catch (err) {
-			console.error(err);
+			log("SlashManager", err, "warn", true);
 			await interaction.reply({
 				content: "Il y a eu une erreur avec l'exécution de cette commande.",
-				ephemeral: true,
+				ephemeral: true
 			});
-		}
-	},
+		};
+	}
 };

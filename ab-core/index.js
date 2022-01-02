@@ -1,53 +1,61 @@
-const { checkUpdates } = require("./updater");
 const slashManager = require("./slashManager");
+const { checkUpdates } = require("./updater");
+const { log } = require("./logger");
 
 try {
 	var fs = require("fs");
 	var { Client, Collection, Intents } = require("discord.js");
+	var chalk = require("chalk");
+	var figlet = require("figlet");
 } catch (error) {
 	if (error.code !== 'MODULE_NOT_FOUND') {
-		// Re-throw not "Module not found" errors 
+		// Re-throw not "Module not found" errors
 		throw error;
 	} else {
-		console.error("[Artibot] Erreur de configuration: Les modules Node.js ne sont pas installés correctement.");
+		log("Artibot", "Erreur de configuration: Les modules Node.js ne sont pas installés correctement.", "err", true);
 		process.exit(1);
-	}
-}
+	};
+};
+
+console.log(chalk.blue(figlet.textSync('Artibot', {
+	font: 'ANSI Shadow',
+	horizontalLayout: 'fitted'
+})));
 
 try { var { clientId, testGuildId, disabledModules } = require("../config.json"); } catch (error) {
 	if (error.code !== 'MODULE_NOT_FOUND') {
 		// Re-throw not "Module not found" errors 
 		throw error;
 	} else {
-		console.error("[Artibot] Erreur de configuration: Le fichier config.json est introuvable.");
+		log("Artibot", "Erreur de configuration: Le fichier config.json est introuvable.", "err", true);
 		process.exit(1);
-	}
-}
+	};
+};
 
 try { var token = require("../private.json").botToken; } catch (error) {
 	if (error.code !== 'MODULE_NOT_FOUND') {
 		// Re-throw not "Module not found" errors 
 		throw error;
 	} else {
-		console.error("[Artibot] Erreur de configuration: Le fichier private.json est introuvable.");
+		log("Artibot", "Erreur de configuration: Le fichier private.json est introuvable.", "err", true);
 		process.exit(1);
-	}
-}
+	};
+};
 
 if (!token) {
-	console.error("[Artibot] Erreur de configuration: Le fichier private.json est invalide.");
+	log("Artibot", "Erreur de configuration: Le fichier private.json est invalide.", "err", true);
 	process.exit(1);
-}
+};
 
 if (!clientId || !testGuildId || !disabledModules) {
-	console.error("[Artibot] Erreur de configuration: Le fichier config.json est invalide.");
+	log("Artibot", "Erreur de configuration: Le fichier config.json est invalide.", "err", true);
 	process.exit(1);
-}
+};
 
 if (disabledModules.includes("core")) {
-	console.error("[Artibot] Erreur de configuration: Le module \"core\" est désactivé dans le fichier de config.");
+	log("Artibot", "Erreur de configuration: Le module \"core\" est désactivé dans le fichier de config.", "err", true);
 	process.exit(1);
-}
+};
 
 // Depuis Discord.js v13, il est obligatoire de déclarer les intents
 
@@ -72,8 +80,8 @@ for (const file of eventFiles) {
 			event.name,
 			async (...args) => await event.execute(...args, client)
 		);
-	}
-}
+	};
+};
 
 /**********************************************************************/
 // Définir les collections des commandes, commandes slash et cooldowns
@@ -102,7 +110,7 @@ const globalFolders = fs.readdirSync("./ab-modules/global", { withFileTypes: tru
 for (const folder of globalFolders) {
 	const global = require(`../ab-modules/global/${folder}/index.js`);
 	client.global.set(global.name, global);
-}
+};
 
 /**********************************************************************/
 // Initialisation des commandes par message
@@ -123,8 +131,8 @@ for (const folder of commandFolders) {
 	for (const file of commandFiles) {
 		const command = require(`../ab-modules/commands/${folder}/${file}`);
 		client.commands.set(command.name, command);
-	}
-}
+	};
+};
 
 /**********************************************************************/
 // Initialisation des commandes slash
@@ -146,8 +154,8 @@ for (const module of slashCommands) {
 	for (const commandFile of commandFiles) {
 		const command = require(`../ab-modules/slash-commands/${module}/${commandFile}`);
 		client.slashCommands.set(command.data.name, command);
-	}
-}
+	};
+};
 
 /**********************************************************************/
 // Initialisation du menu sur les messages
@@ -167,8 +175,8 @@ for (const folder of messageMenus) {
 		const menu = require(`../ab-modules/message-menus/${folder}/${file}`);
 		const keyName = `MESSAGE ${menu.data.name}`;
 		client.contextCommands.set(keyName, menu);
-	}
-}
+	};
+};
 
 /**********************************************************************/
 // Initialisation du menu sur les utilisateurs
@@ -188,8 +196,8 @@ for (const folder of userMenus) {
 		const menu = require(`../ab-modules/user-menus/${folder}/${file}`);
 		const keyName = `USER ${menu.data.name}`;
 		client.contextCommands.set(keyName, menu);
-	}
-}
+	};
+};
 
 /**********************************************************************/
 // Initialisation des bouton
@@ -211,8 +219,8 @@ for (const module of buttonCommands) {
 	for (const commandFile of commandFiles) {
 		const command = require(`../ab-modules/buttons/${module}/${commandFile}`);
 		client.buttonCommands.set(command.id, command);
-	}
-}
+	};
+};
 
 /**********************************************************************/
 // Initialisation des commandes menu select
@@ -233,8 +241,8 @@ for (const module of selectMenus) {
 	for (const commandFile of commandFiles) {
 		const command = require(`../ab-modules/select-menus/${module}/${commandFile}`);
 		client.selectCommands.set(command.id, command);
-	}
-}
+	};
+};
 
 /**********************************************************************/
 // Initialisation des commandes slash dans l'API Discord
@@ -262,8 +270,8 @@ for (const folder of triggerFolders) {
 	for (const file of triggerFiles) {
 		const trigger = require(`../ab-modules/triggers/${folder}/${file}`);
 		client.triggers.set(trigger.name, trigger);
-	}
-}
+	};
+};
 
 // Connection à l'API Discord avec le bot
 
@@ -272,12 +280,10 @@ client.login(token);
 // Vérifier si une mise à jour existe sur le repo GitHub
 checkUpdates().then(response => {
 	if (response.upToDate) {
-		console.log(`[Updater] Artibot est à jours (v${response.currentVersion})`);
+		log("Updater", `Artibot est à jours (v${response.currentVersion})`, "log", true);
 	} else {
-		console.log(
-			"[Updater] Une mise à jour est disponible pour Artibot!\n" +
-			`[Updater]  - Version actuelle: ${response.currentVersion}\n` +
-			`[Updater]  - Dernière version: ${response.remoteVersion}`
-		);
+		log("Updater", `Une mise à jour est disponible pour Artibot!`, "warn", true);
+		log("Updater", ` - Version actuelle: ${response.currentVersion}`, "warn", true);
+		log("Updater", ` - Dernière version: ${response.remoteVersion}`, "warn", true);
 	};
 });

@@ -4,6 +4,6 @@ module.exports = {
 			content: "Il y a eu une erreur avec cette option du menu!",
 			ephemeral: true,
 		});
-		return;
+		return
 	}
 };

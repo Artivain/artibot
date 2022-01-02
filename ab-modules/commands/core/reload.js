@@ -1,3 +1,4 @@
+const { log } = require("../../../ab-core/logger");
 const fs = require("fs");
 const { disabledModules } = require("../../../config.json");
 
@@ -52,14 +53,14 @@ module.exports = {
 			message.channel.send({
 				content: `La commande \`${newCommand.name}\` a bien été rafraichie!`
 			});
-			console.log(`[Artibot] Commande ${newCommand.name} rafraichie.`);
+			log("CommandManager", `Commande ${newCommand.name} rafraichie.`, "log", true);
 		} catch (error) {
 			// Catch block executes if there is any error in your code. It logs the error in console and also sends back in discord GUI.
 
-			console.error(error);
+			log("CommandManager", error, "warn", true);
 			message.channel.send({
 				content: `Il y a eu une erreur lors du rechargement de la commadne \`${command.name}\`:\n\`${error.message}\``,
 			});
-		}
-	},
+		};
+	}
 };

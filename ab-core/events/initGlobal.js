@@ -1,20 +1,24 @@
 const { params } = require("../../config.json");
-const logPrefix = "[GlobalManager]";
+const { log } = require("../logger");
+const logPrefix = "GlobalManager";
 
 module.exports = {
 	name: "ready",
 	once: true,
 
 	execute(client) {
-		console.log(logPrefix, "Initialisation des modules");
+		log(logPrefix, "Initialisation des modules", "log", true);
 		const length = client.global.size;
+
 		if (length == 0) {
-			console.log(logPrefix, "Aucun module à charger.");
+			log(logPrefix, "Aucun module à charger.", "log", true);
 			return
-		}
-		console.log(logPrefix, `Lancement de ${length} module${(length == 1) ? "" : "s"}:`);
+		};
+
+		log(logPrefix, `Lancement de ${length} module${(length == 1) ? "" : "s"}:`, "log", true);
+
 		client.global.forEach(module => {
-			console.log(logPrefix, "-", module.name);
+			log(logPrefix, " - " + module.name, "log", true);
 			setTimeout(() => {
 				module.execute(client, params);
 			}, 1000);

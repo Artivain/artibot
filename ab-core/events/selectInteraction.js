@@ -1,3 +1,4 @@
+const { log } = require("../logger");
 const {params} = require("../../config.json");
 
 module.exports = {
@@ -17,8 +18,8 @@ module.exports = {
 
 		if (!command) {
 			await require("../messages/defaultSelectError").execute(interaction);
-			return;
-		}
+			return
+		};
 
 		// A try to execute the interaction.
 
@@ -26,12 +27,12 @@ module.exports = {
 			await command.execute(interaction, params);
 			return;
 		} catch (err) {
-			console.error(err);
+			log("InteractionManager", err, "warn", true);
 			await interaction.reply({
 				content: "Il y a eu une erreur avec l'exécution de cette option du menu.",
 				ephemeral: true,
 			});
-			return;
-		}
-	},
+			return
+		};
+	}
 };

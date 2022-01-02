@@ -1,3 +1,4 @@
+const { log } = require("../../../ab-core/logger");
 const { prefix } = require("../../../config.json");
 const { MessageEmbed } = require("discord.js");
 
@@ -45,9 +46,11 @@ module.exports = {
 				.catch((error) => {
 					// On failing, throw error.
 
-					console.error(
-						`Impossible d'envoyer la liste des commandes en MP à ${message.author.tag}.\n`,
-						error
+					log(
+						"Core",
+						`Impossible d'envoyer la liste des commandes en MP à ${message.author.tag}. Détails de l'erreur: ${error}`,
+						"warn",
+						true
 					);
 
 					message.reply({ content: "On dirait que c'est impossible pour moi de t'envoyer un message privé!" });
