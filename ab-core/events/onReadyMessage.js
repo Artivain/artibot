@@ -5,6 +5,6 @@ module.exports = {
 	once: true,
 
 	execute(client) {
-		log("Artibot", `Prêt! Connecté en tant que ${client.user.tag}`, "log", true);
+		log("Artibot", `Prêt! Connecté en tant que ${client.user.tag}`, "info", true);
 	}
 };

@@ -7,7 +7,7 @@ module.exports = {
 	once: true,
 
 	execute(client) {
-		log(logPrefix, "Initialisation des modules", "log", true);
+		log(logPrefix, "Initialisation des modules...", "info", true);
 		const length = client.global.size;
 
 		if (length == 0) {

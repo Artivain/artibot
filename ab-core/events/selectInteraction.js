@@ -27,7 +27,7 @@ module.exports = {
 			await command.execute(interaction, params);
 			return;
 		} catch (err) {
-			log("InteractionManager", err, "warn", true);
+			log("ButtonManager", err, "warn", true);
 			await interaction.reply({
 				content: "Il y a eu une erreur avec l'exécution de cette option du menu.",
 				ephemeral: true,

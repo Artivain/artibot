@@ -20,7 +20,7 @@ module.exports = {
 
 	async register() {
 		try {
-			log("SlashManager", "Initialisation des commandes slash...", "log", true);
+			log("SlashManager", "Initialisation des commandes slash auprès de Discord...", "info", true);
 
 			/**
 				Ici on envoit à Discord les commandes slash.
@@ -42,7 +42,7 @@ module.exports = {
 				);
 			};
 
-			log("SlashManager", "Commandes slash activées avec succès.", "log", true);
+			log("SlashManager", "Commandes slash initialisées avec succès.", "log", true);
 			return true
 		} catch (error) {
 			log("SlashManager", "Une erreur est survenue avec l'initialisation des commandes slash, voici les détais: " + error, "warn", true);

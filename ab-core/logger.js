@@ -8,11 +8,12 @@ module.exports = {
 	 * @since v1.5.3
 	 * @param {string} name Name of the module sending the log.
 	 * @param {string} msg Message to send.
-	 * @param {("log"|"warn"|"err"|"debug")} type Type of message.
+	 * @param {("log"|"warn"|"err"|"debug"|"info")} type Type of message.
 	 * @param {boolean} isCore Is this message sent from the core? Probably not.
 	 */
 
 	log(name, msg, type = "log", isCore = false) {
+		type = type.toLowerCase();
 		if (isCore) {
 			var prefix = chalk.green(`[${name}]`);
 		} else {
@@ -28,7 +29,9 @@ module.exports = {
 			prefix += chalk.magenta(" (debug)");
 		} else if (type == "log") {
 			var content = chalk.gray(msg);
-		} else throw `[Logger] log: "${type}" is not a valid type. Valid values are: "log", "warn", "err", "debug".`;
+		} else if (type == "info" || type == "infos") {
+			var content = chalk.cyan(msg);
+		} else throw `[Logger] log: "${type}" is not a valid type. Valid values are: "log", "warn", "err", "debug", "info".`;
 
 		console.log(prefix, content);
 	}
