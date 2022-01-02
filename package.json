@@ -1,6 +1,6 @@
 {
 	"name": "artibot",
-	"version": "1.5.1",
+	"version": "1.5.2",
 	"description": "Bot open-source fait par Artivain et les contributeurs. ",
 	"main": "index.js",
 	"scripts": {
