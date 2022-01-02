@@ -4,7 +4,7 @@
 	"clientId": "826609045569929247",
 	"testGuildId": "775798875356397608",
 	"devMode": true,
-	"disabledModules": ["twitch", "clocks", "reactionRole", "vcRole", "crypto", "documentation"],
+	"disabledModules": ["twitch", "clocks", "reactionRole", "vcRole", "crypto", "documentation", "welcome"],
 	"params": {
 		"embedColor": "#06476d",
 		"botName": "Artibot [dev]",
