@@ -313,7 +313,7 @@ client.login(token);
 // Vérifier si une mise à jour existe sur le repo GitHub
 checkUpdates().then(response => {
 	if (response.upToDate) {
-		log("Updater", `Artibot est à jour (v${response.currentVersion}).`, "log", true);
+		log("Updater", `Artibot est à jour (v${response.currentVersion}).`, "info", true);
 	} else {
 		log("Updater", `Une mise à jour est disponible pour Artibot!`, "warn", true);
 		log("Updater", ` - Version actuelle: ${response.currentVersion}`, "info", true);
