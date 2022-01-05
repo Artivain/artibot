@@ -50,104 +50,102 @@ module.exports = {
 		),
 
 	async execute(interaction, config) {
-		try {
-			// Send "Loading" embed
+		// Send "Loading" embed
 		let waitEmbed = new MessageEmbed()
-		.setColor("#e3350d")
-		.setTitle("Pokédex")
-		.setImage(icon)
-		.setTimestamp()
-		.setFooter(config.botName, config.botIcon)
-		.setDescription("Recherche en cours...");
+			.setColor("#e3350d")
+			.setTitle("Pokédex")
+			.setImage(icon)
+			.setTimestamp()
+			.setFooter(config.botName, config.botIcon)
+			.setDescription("Recherche en cours...");
 
-	const message = await interaction.reply({
-		embeds: [waitEmbed],
-		fetchReply: true
-	});
+		const message = await interaction.reply({
+			embeds: [waitEmbed],
+			fetchReply: true
+		});
 
-	const input = interaction.options.getString("id").toLowerCase();
+		const input = interaction.options.getString("id").toLowerCase();
 
-	try {
-		var response = await axios.get(apiBase + "/pokemon-species/" + input);
-		var response2 = await axios.get(apiBase + "/pokemon/" + input);
-	} catch (error) {
-		if (error.response.status == 404) {
-			var content = `**Erreur:**\nImpossible de trouver le Pokémon avec le ID ou le nom \`${input}\`.`;
-		} else {
-			var content = `Une erreur est survenue.`;
+		try {
+			var response = await axios.get(apiBase + "/pokemon-species/" + input);
+			var response2 = await axios.get(apiBase + "/pokemon/" + input);
+		} catch (error) {
+			if (error.response.status == 404) {
+				var content = `**Erreur:**\nImpossible de trouver le Pokémon avec le ID ou le nom \`${input}\`.`;
+			} else {
+				var content = `Une erreur est survenue.`;
+			};
+
+			let errorEmbed = new MessageEmbed()
+				.setColor("#e3350d")
+				.setTitle("Pokédex")
+				.setTimestamp()
+				.setFooter(config.botName, config.botIcon)
+				.setDescription(content);
+
+			await message.edit({
+				embeds: [errorEmbed]
+			});
+
+			return
 		};
 
-		let errorEmbed = new MessageEmbed()
+		const data = response.data;
+		const data2 = response2.data;
+
+		let types = "";
+		data2.types.forEach(i => types += i.type.name + "\n");
+		types = types.trim();
+
+		let forms = "";
+		data2.forms.forEach(form => forms += form.name + "\n");
+		forms = forms.trim();
+
+		let abilities = "";
+		data2.abilities.forEach(i => abilities += i.ability.name + "\n");
+		abilities = abilities.trim();
+
+		let special = "";
+		if (data.is_legendary) special += "Pokémon légendaire\n";
+		if (data.is_mythical) special += "Pokémon mythique\n";
+		special = special.trim();
+
+		const flavorText = removeLineBreaks(data.flavor_text_entries.find(i => i.language.name == "fr").flavor_text);
+		const name = data.names.find(i => i.language.name == "fr").name;
+		const id = data.id;
+		const generation = data.generation.name.split("-")[1].toUpperCase();
+		const category = data.genera.find(i => i.language.name == "fr").genus;
+		const image = data2.sprites.other["official-artwork"].front_default;
+		const height = `${data2.height * 10} cm\n${toFeet(data2.height * 10)}`;
+		const weight = `${data2.weight / 10} kg\n${Math.round(data2.weight / 10 * 2.205 * 10) / 10} lb`;
+
+		let embed = new MessageEmbed()
 			.setColor("#e3350d")
 			.setTitle("Pokédex")
 			.setTimestamp()
 			.setFooter(config.botName, config.botIcon)
-			.setDescription(content);
+			.setDescription(`**${name}** - #${id}\n${category}\n${flavorText}`)
+			.setImage(image)
+			.addField("Type(s)", types, true)
+			.addField("Grandeur", height, true)
+			.addField("Poid", weight, true)
+			.addField("Génération", generation, true)
+			.addField("Formes", forms, true)
+			.addField("Capacité(s)", abilities, true);
+
+		if (special) {
+			embed.addField("Attribut spécial", special, true);
+		};
+
+		if (data.evolves_from_species) {
+			const response3 = await axios.get(data.evolves_from_species.url);
+			const data3 = response3.data;
+			const evolvesFromName = data3.names.find(i => i.language.name == "fr").name;
+			embed.addField("Est l'évolution de", evolvesFromName, true);
+		};
 
 		await message.edit({
-			embeds: [errorEmbed]
+			embeds: [embed]
 		});
-
-		return
-	};
-
-	const data = response.data;
-	const data2 = response2.data;
-
-	let types = "";
-	data2.types.forEach(i => types += i.type.name + "\n");
-	types = types.trim();
-
-	let forms = "";
-	data2.forms.forEach(form => forms += form.name + "\n");
-	forms = forms.trim();
-
-	let abilities = "";
-	data2.abilities.forEach(i => abilities += i.ability.name + "\n");
-	abilities = abilities.trim();
-
-	let special = "";
-	if (data.is_legendary) special += "Pokémon légendaire\n";
-	if (data.is_mythical) special += "Pokémon mythique\n";
-	special = special.trim();
-
-	const flavorText = removeLineBreaks(data.flavor_text_entries.find(i => i.language.name == "fr").flavor_text);
-	const name = data.names.find(i => i.language.name == "fr").name;
-	const id = data.id;
-	const generation = data.generation.name.split("-")[1].toUpperCase();
-	const category = data.genera.find(i => i.language.name == "fr").genus;
-	const image = data2.sprites.other["official-artwork"].front_default;
-	const height = `${data2.height * 10} cm\n${toFeet(data2.height * 10)}`;
-	const weight = `${data2.weight / 10} kg\n${Math.round(data2.weight / 10 * 2.205 * 10) / 10} lb`;
-
-	let embed = new MessageEmbed()
-		.setColor("#e3350d")
-		.setTitle("Pokédex")
-		.setTimestamp()
-		.setFooter(config.botName, config.botIcon)
-		.setDescription(`**${name}** - #${id}\n${category}\n${flavorText}`)
-		.setImage(image)
-		.addField("Type(s)", types, true)
-		.addField("Grandeur", height, true)
-		.addField("Poid", weight, true)
-		.addField("Génération", generation, true)
-		.addField("Formes", forms, true)
-		.addField("Capacité(s)", abilities, true);
-
-	if (special) {
-		embed.addField("Attribut spécial", special, true);
-	};
-
-	if (data.evolves_from_species) {
-		const response3 = await axios.get(data.evolves_from_species.url);
-		const data3 = response3.data;
-		const evolvesFromName = data3.names.find(i => i.language.name == "fr").name;
-		embed.addField("Est l'évolution de", evolvesFromName, true);
-	};
-
-	await message.edit({
-		embeds: [embed]
-	});
-		} catch (e) {console.log(e)};
 	}
 };
