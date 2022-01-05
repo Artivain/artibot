@@ -4,7 +4,7 @@
 	"clientId": "826609045569929247",
 	"testGuildId": "775798875356397608",
 	"devMode": true,
-	"enabledModules": ["giveaways", "moderation", "whois", "meme"],
+	"enabledModules": ["giveaways", "moderation", "whois", "meme", "pokemon"],
 	"params": {
 		"embedColor": "#06476d",
 		"botName": "Artibot [dev]",
