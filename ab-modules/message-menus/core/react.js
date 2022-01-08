@@ -11,6 +11,6 @@ module.exports = {
 			content: "Réaction ajoutée",
 			ephemeral: true
 		});
-		return;
-	},
+		return
+	}
 };

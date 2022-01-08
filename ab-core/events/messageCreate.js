@@ -1,5 +1,6 @@
 const { Collection, MessageEmbed } = require("discord.js");
 const { prefix, ownerId } = require("../../config.json");
+const { log } = require("../logger");
 const config = require("../../config.json").params;
 
 // Prefix regex, we will use to match in mention prefix.
@@ -136,7 +137,7 @@ module.exports = {
 		try {
 			command.execute(message, args, config);
 		} catch (error) {
-			console.error(error);
+			log("CommandManager", error, "warn", true);
 			message.reply({
 				content: "Il y a eu une erreur lors de l'exécution de cette commande.",
 			});

@@ -1,0 +1,23 @@
+{
+	"debug": false,
+	"servers": {
+
+		"775798875356397608": {
+			"name": "Super Cool Server",
+			"welcome": {
+				"activate": true,
+				"channel": "926959115404738640",
+				"showProfilePicture": true,
+				"showMemberCount": true,
+				"customInfo": "asdasd"
+			},
+			"farewell": {
+				"activate": true,
+				"channel": "926959115404738640",
+				"showProfilePicture": false,
+				"showMemberCount": true
+			}
+		}
+
+	}
+}

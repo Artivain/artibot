@@ -1,11 +1,12 @@
 const AutoGitUpdate = require('auto-git-update');
 const { params } = require("../config.json");
+const { log } = require("./logger");
 
 // if ran with npm run updater
 if (require.main === module) {
 
 	if (params.checkForUpdates != "stable" && params.checkForUpdates != "unstable") {
-		console.error("[Updater] Erreur de configuration");
+		log("Updater", "Erreur de configuration!", "err", true);
 		process.exit(1);
 	};
 
@@ -32,8 +33,8 @@ if (require.main === module) {
 	module.exports = {
 		async checkUpdates() {
 			if (params.checkForUpdates != "stable" && params.checkForUpdates != "unstable") {
-				return console.log("[Updater] Vérification des mises à jours désactivée dans la configuration")
-			}
+				return log("Updater", "Vérification des mises à jours désactivée dans la configuration", "err", true)
+			};
 
 			const config = {
 				repository: 'https://github.com/Artivain/artibot',

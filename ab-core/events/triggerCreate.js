@@ -1,3 +1,4 @@
+const { log } = require("../logger");
 const {params} = require("../../config.json");
 
 module.exports = {
@@ -26,16 +27,16 @@ module.exports = {
 					} catch (error) {
 						// If checks fail, reply back!
 
-						console.error(error);
+						log("TriggerManager", error, "warn", true);
 						message.reply({
 							content: "Il y a eu une erreur avec l'exécution d'un trigger!",
 						});
-					}
+					};
 
 					check = 1;
-					return false;
-				}
+					return false
+				};
 			});
 		});
-	},
+	}
 };

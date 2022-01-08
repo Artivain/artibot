@@ -1,4 +1,5 @@
 const config = require("../../config.json").params;
+const { log } = require("../logger");
 
 module.exports = {
 	name: "interactionCreate",
@@ -34,7 +35,7 @@ module.exports = {
 				await command.execute(interaction, config);
 				return;
 			} catch (err) {
-				console.error(err);
+				log("InteractionManager", err, "warn", true);
 				await interaction.reply({
 					content: "Il y a eu un problème avec l'exécution de l'interaction...",
 					ephemeral: true,
@@ -55,7 +56,7 @@ module.exports = {
 				await command.execute(interaction, config);
 				return;
 			} catch (err) {
-				console.error(err);
+				log("InteractionManager", err, "warn", true);
 				await interaction.reply({
 					content: "Il y a eu un problème avec l'exécution de l'interaction...",
 					ephemeral: true,
@@ -64,10 +65,10 @@ module.exports = {
 			}
 		}
 
-		// Practically not possible, but we are still caching the bug.
+		// Practically not possible, but we are still catching the bug.
 		// Possible Fix is a restart!
 		else {
-			return console.log("[InteractionManager] Quelque chose de suspect est survenue avec le menu. Réception d'un type de menu inconnu.");
-		}
-	},
+			return log("InteractionManager", "Quelque chose de suspect est survenue avec le menu. Réception d'un type de menu inconnu.", "warn", true);
+		};
+	}
 };

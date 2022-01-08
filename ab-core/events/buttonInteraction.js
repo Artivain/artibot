@@ -1,4 +1,5 @@
 const { params } = require("../../config.json");
+const { log } = require("../logger");
 
 module.exports = {
 	name: "interactionCreate",
@@ -27,7 +28,7 @@ module.exports = {
 			await command.execute(interaction, params);
 			return;
 		} catch (err) {
-			console.error(err);
+			log("ButtonManager", err, "warn", true);
 			await interaction.reply({
 				content: "[ButtonManager] Il y a eu un problème lors de l'exécution de ce bouton...",
 				ephemeral: true,

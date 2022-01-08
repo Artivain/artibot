@@ -1,3 +1,4 @@
+const { log } = require("../../../ab-core/logger");
 const { MessageActionRow, MessageButton, MessageEmbed } = require('discord.js');
 const { testGuildId } = require("../../../config.json");
 
@@ -17,7 +18,7 @@ module.exports = {
 			embeds: [waitingEmbed]
 		});
 
-		console.log("[SlashManager] Suppression des commandes slash du bot et du serveur de test en cours...");
+		log("SlashManager", "Suppression des commandes slash du bot et du serveur de test en cours...", "log", true);
 
 		// Fetch test guild
 		message.client.guilds.fetch(testGuildId)
@@ -25,12 +26,12 @@ module.exports = {
 				// Remove all commands from test guild
 				guild.commands.set([])
 					.then(() => {
-						console.log("[SlashManager] Les commandes ont bien étés supprimées du serveur de test.");
+						log("SlashManager", "Les commandes ont bien étés supprimées du serveur de test.", "log", true);
 
 						// Remove all commands from the client (so in all servers)
 						message.client.application.commands.set([])
 							.then(() => {
-								console.log("[SlashManager] Les commandes ont bien étés supprimées du bot.");
+								log("SlashManager", "Les commandes ont bien étés supprimées du bot.", "log", true);
 
 								const embed = new MessageEmbed()
 									.setColor(config.embedColor)
@@ -68,7 +69,7 @@ module.exports = {
 								response.edit({
 									embeds: [errorEmbed]
 								});
-								console.log("[SlashManager] Erreur avec la suppression des commandes slash du bot: " + e);
+								log("SlashManager", "Erreur avec la suppression des commandes slash du bot: " + e, "warn", true);
 							});
 					})
 					.catch(e => {
@@ -81,7 +82,7 @@ module.exports = {
 						response.edit({
 							embeds: [errorEmbed]
 						});
-						console.log("[SlashManager] Erreur avec la suppression des commandes dans le serveur de test: " + e);
+						log("SlashManager", "Erreur avec la suppression des commandes dans le serveur de test: " + e, "warn", true);
 					});
 			});
 	}

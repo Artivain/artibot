@@ -1,3 +1,4 @@
+const { log } = require("../../../ab-core/logger");
 const updater = require("../../../ab-core/updater");
 
 module.exports = {
@@ -34,7 +35,7 @@ module.exports = {
 						if (!response) {
 							message.reply("Une erreur est survenue pendant la mise à jour. Consulter la console pour plus de détails.");
 							return
-						}
+						};
 						message.reply(
 							"Les mises à jour ont bien été installées.\n" +
 							"Le bot va maintenant s'éteindre tout seul.\n" + 
@@ -45,7 +46,7 @@ module.exports = {
 					})
 					.catch(e => {
 						message.reply("Une erreur est survenue pendant la mise à jour. Consulter la console pour plus de détails.");
-						console.error("[Updater] Problème avec la mise à jour: " + e);
+						log("Updater", "Problème avec la mise à jour: " + e, "warn", true);
 					});
 			});
 		} else {
@@ -58,8 +59,8 @@ module.exports = {
 						"**Bien lire la documentation avant de faire la mise à jour!**\n" +
 						"Pour faire la mise à jour, faire la commande `update force`."
 					);
-				}
+				};
 			});
 		};
-	},
+	}
 };

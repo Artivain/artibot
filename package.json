@@ -1,6 +1,6 @@
 {
 	"name": "artibot",
-	"version": "1.5.0",
+	"version": "1.6.0",
 	"description": "Bot open-source fait par Artivain et les contributeurs. ",
 	"main": "index.js",
 	"scripts": {
@@ -25,10 +25,12 @@
 		"@discordjs/rest": "^0.1.0-canary.0",
 		"auto-git-update": "^2.0.2",
 		"axios": "^0.24.0",
+		"chalk": "^4.1.2",
 		"discord-api-types": "^0.25.2",
 		"discord-giveaways": "^5.0.1",
 		"discord.js": "^13.4.0",
 		"discordjs-reaction-role": "^2.1.0",
+		"figlet": "^1.5.2",
 		"humanize-duration": "^3.27.1",
 		"moment": "^2.29.1",
 		"moment-timezone": "^0.5.31",

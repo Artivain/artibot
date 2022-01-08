@@ -1,6 +1,7 @@
 const { REST } = require("@discordjs/rest");
 const { Routes } = require("discord-api-types/v9");
 const { clientId, testGuildId, devMode } = require("../config.json");
+const { log } = require("./logger");
 
 var rest = new REST({ version: "9" });
 var commandJsonData = [];
@@ -19,11 +20,11 @@ module.exports = {
 
 	async register() {
 		try {
-			console.log("[SlashManager] Initialisation des commandes slash...");
+			log("SlashManager", "Initialisation des commandes slash auprès de Discord...", "info", true);
 
 			/**
-				Ici on envoit à Discord les comamndes slash.
-				Il y a 2 types de comamndes, les "guild" et les "global".
+				Ici on envoit à Discord les commandes slash.
+				Il y a 2 types de commandes, les "guild" et les "global".
 				"Guild" pour les commandes par serveur et "global" pour les commandes globales.
 				En développement, utiliser seulement des commandes "guild" puisqu'elles peuvent se rafraichir
 				instantanéments, alors que les commandes globales peuvent prendre jusqu'à 1 heure.
@@ -38,13 +39,13 @@ module.exports = {
 				await rest.put(
 					Routes.applicationCommands(clientId),
 					{ body: commandJsonData }
-				)
+				);
 			};
 
-			console.log("[SlashManager] Commandes slash activées avec succès.");
+			log("SlashManager", "Commandes slash initialisées avec succès.", "log", true);
 			return true
 		} catch (error) {
-			console.error("[SlashManager] Une erreur est survenue avec l'initialisation des commandes slash, voici les détais:", error);
+			log("SlashManager", "Une erreur est survenue avec l'initialisation des commandes slash, voici les détais: " + error, "warn", true);
 			return false
 		};
 	}

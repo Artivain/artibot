@@ -1,7 +1,9 @@
+const { log } = require("../logger");
+
 module.exports = {
 	name: "guildCreate",
 	
 	async execute(guild) {
-		console.log("[Artibot] Ajouté à un nouveau serveur:", guild.name)
+		log("Artibot", "Ajouté à un nouveau serveur: " + guild.name, "log", true);
 	}
-}
+};
