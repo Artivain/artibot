@@ -21,7 +21,7 @@ Une description claire et précise du bug.
 Une description claire et précise de ce qui serait supposé se passer si le bug n'était pas là.
 
 **Captures d'écran**
-Si possible et pertinant, fournir des captures d'écran du bug.
+Si possible et pertinent, fournir des captures d'écran du bug.
 
 **Informations systèmes**
  - OS du serveur: [ex.: Ubuntu 20.04, Windows 10]

@@ -13,7 +13,7 @@ Une description claire et précise du problème. Ex.: Ça me dérange quand [...
 **Décrire la solution que vous aimeriez**
 Une description claire et précise de ce que vous aimeriez comme modifications au projet.
 
-**Expliquer les alternatives consiférées**
+**Expliquer les alternatives considérées**
 Une description claire et précise des solutions alternatives que vous avez considéré.
 
 **Contexte additionnel**
