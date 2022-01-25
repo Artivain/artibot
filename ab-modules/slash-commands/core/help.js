@@ -27,23 +27,23 @@ module.exports = {
 
 		if (name) {
 			// If a single command has been asked for, send only this command's help.
-			helpEmbed.setTitle(`Help for \`${name}\` command`);
+			helpEmbed.setTitle(`Aide pour la commande \`${name}\``);
 			if (commands.has(name)) {
 				const command = commands.get(name).data;
-				if (command.description) helpEmbed.setDescription(command.description + "\n\n**Parameters:**");
+				if (command.description) helpEmbed.setDescription(command.description + "\n\n**Paramètres:**");
 				command.options.forEach(option => {
 					let content = option.description;
 					if (option.choices) {
-						let choices = "\nChoices: ";
+						let choices = "\nChoix: ";
 						option.choices.forEach(choice => choices += choice + ", ");
 						choices = choices.slice(0, -2);
 						content += choices;
 					};
-					if (!option.required) content += "\n*Optional*";
+					if (!option.required) content += "\n*Facultatif*";
 					helpEmbed.addField(option.name, content.trim(), true);
 				});
 			} else {
-				helpEmbed.setDescription(`No slash command with the name \`${name}\` found.`).setColor("YELLOW");
+				helpEmbed.setDescription(`Il n'y a pas de commande slash avec le nom \`${name}\`.`).setColor("YELLOW");
 			};
 		} else {
 			// Give a list of all the commands
