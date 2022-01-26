@@ -14,7 +14,7 @@ if (require.main === module) {
 		repository: 'https://github.com/Artivain/artibot',
 		tempLocation: '../updaterFiles',
 		exitOnComplete: true,
-		branch: (params.checkForUpdates == "stable" ? "main" : "unstable")
+		fromReleases: true
 	};
 
 	const updater = new AutoGitUpdate(config);
@@ -40,7 +40,7 @@ if (require.main === module) {
 				repository: 'https://github.com/Artivain/artibot',
 				tempLocation: '../../updaterFiles',
 				exitOnComplete: false,
-				branch: (params.checkForUpdates == "stable" ? "main" : "unstable")
+				fromReleases: true
 			};
 
 			const updater = new AutoGitUpdate(config);
