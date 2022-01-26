@@ -18,7 +18,7 @@ module.exports = {
 		const waitingEmbed = new MessageEmbed()
 			.setColor("YELLOW")
 			.setTitle("SlashManager")
-			.setFooter(config.botName, config.botIcon)
+			.setFooter({text: config.botName, iconURL: config.botIcon})
 			.setTimestamp()
 			.setDescription("Initialisation des commandes slash...\nCeci peut prendre du temps.");
 
@@ -35,7 +35,7 @@ module.exports = {
 			const embed = new MessageEmbed()
 				.setColor(config.embedColor)
 				.setTitle("SlashManager")
-				.setFooter(config.botName, config.botIcon)
+				.setFooter({text: config.botName, iconURL: config.botIcon})
 				.setTimestamp()
 				.setDescription("Les commandes slash ont bien été initialisées auprès de Discord.");
 
@@ -46,7 +46,7 @@ module.exports = {
 			const embed = new MessageEmbed()
 				.setColor("RED")
 				.setTitle("SlashManager")
-				.setFooter(config.botName, config.botIcon)
+				.setFooter({text: config.botName, iconURL: config.botIcon})
 				.setTimestamp()
 				.setDescription("Une erreur est survenue avec l'initialisation des commandes slash auprès de Discord.\nConsulter la console pour plus de détails.");
 

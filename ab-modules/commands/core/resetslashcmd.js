@@ -11,7 +11,7 @@ module.exports = {
 		const waitingEmbed = new MessageEmbed()
 			.setColor("YELLOW")
 			.setTitle("SlashManager")
-			.setFooter(config.botName, config.botIcon)
+			.setFooter({text: config.botName, iconURL: config.botIcon})
 			.setTimestamp()
 			.setDescription("Suppression des commandes slash du bot et du serveur de test en cours...\nCeci peut prendre du temps.");
 		const response = await message.reply({
@@ -36,7 +36,7 @@ module.exports = {
 								const embed = new MessageEmbed()
 									.setColor(config.embedColor)
 									.setTitle("Réinitialisation terminée")
-									.setFooter(config.botName, config.botIcon)
+									.setFooter({text: config.botName, iconURL: config.botIcon})
 									.setTimestamp()
 									.setDescription("Les commandes ont bien été supprimées du serveur de test et du bot.\nVous pouvez décider de réenregistrer les commandes maintenant, ou le faire plus tard en redémarrant le bot.");
 
@@ -63,7 +63,7 @@ module.exports = {
 								const errorEmbed = new MessageEmbed()
 									.setColor("RED")
 									.setTitle("SlashManager")
-									.setFooter(config.botName, config.botIcon)
+									.setFooter({text: config.botName, iconURL: config.botIcon})
 									.setTimestamp()
 									.setDescription("Une erreur est survenue avec la suppression des commandes du bot.\nConsulter la console pour en savoir plus.");
 								response.edit({
@@ -76,7 +76,7 @@ module.exports = {
 						const errorEmbed = new MessageEmbed()
 							.setColor("RED")
 							.setTitle("SlashManager")
-							.setFooter(config.botName, config.botIcon)
+							.setFooter({text: config.botName, iconURL: config.botIcon})
 							.setTimestamp()
 							.setDescription("Une erreur est survenue avec la suppression des commandes du serveur de test.\nConsulter la console pour en savoir plus.");
 						response.edit({

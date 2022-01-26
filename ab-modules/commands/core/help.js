@@ -22,7 +22,7 @@ module.exports = {
 				.setDescription(
 					"`" + commands.map((command) => command.name).join("`, `") + "`"
 				)
-				.setFooter(config.botName, config.botIcon)
+				.setFooter({text: config.botName, iconURL: config.botIcon})
 				.setTimestamp()
 				.addField(
 					"Utilisation",
@@ -73,7 +73,7 @@ module.exports = {
 
 		let commandEmbed = new MessageEmbed()
 			.setColor(config.embedColor)
-			.setFooter(config.botName, config.botIcon)
+			.setFooter({text: config.botName, iconURL: config.botIcon})
 			.setTimestamp()
 			.setTitle("Aide sur la commande");
 

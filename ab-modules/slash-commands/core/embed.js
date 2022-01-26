@@ -58,14 +58,14 @@ module.exports = {
 			var embed = new MessageEmbed()
 				.setColor(config.embedColor)
 				.setTitle("Créer un embed")
-				.setFooter(config.botName, config.botIcon)
+				.setFooter({text: config.botName, iconURL: config.botIcon})
 				.setTimestamp()
 				.setDescription("Le embed *" + title+ "* devrait normalement avoir été créé.");
 		} else {
 			var embed = new MessageEmbed()
 				.setColor("RED")
 				.setTitle("Créer un embed")
-				.setFooter(config.botName, config.botIcon)
+				.setFooter({text: config.botName, iconURL: config.botIcon})
 				.setTimestamp()
 				.setDescription("Erreur: vous n'avez pas les permissions administrateur!");
 		}

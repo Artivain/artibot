@@ -12,7 +12,7 @@ module.exports = {
 		const embed = new MessageEmbed()
 			.setColor(config.embedColor)
 			.setTimestamp()
-			.setFooter(config.botName, config.botIcon)
+			.setFooter({text: config.botName, iconURL: config.botIcon})
 			.setTitle("Avatar")
 			.setDescription(`Voici la photo de profil de <@${infos.user.id}>:`)
 			.setImage(`https://cdn.discordapp.com/avatars/${infos.user.id}/${infos.user.avatar}.webp?size=512`);

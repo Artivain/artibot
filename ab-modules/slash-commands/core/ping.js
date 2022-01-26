@@ -15,7 +15,7 @@ module.exports = {
 			var embed = new MessageEmbed()
 				.setColor(config.embedColor)
 				.setTitle("Ping")
-				.setFooter(config.botName, config.botIcon)
+				.setFooter({text: config.botName, iconURL: config.botIcon})
 				.setTimestamp()
 				.setDescription(
 					`Pong!\n\nLa latence du bot est de ${Date.now() - interaction.createdTimestamp}ms.\nLa latence de l'API est de ${Math.round(interaction.client.ws.ping)}ms.`
@@ -24,7 +24,7 @@ module.exports = {
 			var embed = new MessageEmbed()
 				.setColor(config.embedColor)
 				.setTitle("Ping")
-				.setFooter(config.botName, config.botIcon)
+				.setFooter({text: config.botName, iconURL: config.botIcon})
 				.setTimestamp()
 				.setDescription(
 					`Pong!`
