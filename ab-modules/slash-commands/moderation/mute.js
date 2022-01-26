@@ -53,7 +53,7 @@ module.exports = {
 			const errorEmbed = new MessageEmbed()
 				.setColor("RED")
 				.setTitle("Mute")
-				.setFooter(config.botName, config.botIcon)
+				.setFooter({text: config.botName, iconURL: config.botIcon})
 				.setTimestamp()
 				.setDescription("Vous n'avez pas la permission de faire cette commande!");
 
@@ -68,7 +68,7 @@ module.exports = {
 			const errorEmbed = new MessageEmbed()
 				.setColor("RED")
 				.setTitle("Mute")
-				.setFooter(config.botName, config.botIcon)
+				.setFooter({text: config.botName, iconURL: config.botIcon})
 				.setTimestamp()
 				.setDescription("`" + time + "` n'est pas une durée valide.");
 
@@ -87,7 +87,7 @@ module.exports = {
 				const dmEmbed = new MessageEmbed()
 					.setColor(config.embedColor)
 					.setTitle("Mute")
-					.setFooter(config.botName, config.botIcon)
+					.setFooter({text: config.botName, iconURL: config.botIcon})
 					.setTimestamp()
 					.setDescription(`Vous avez été réduit au silence par ${moderator} pendant ${humanTime} sur **${guild.name}.**.`);
 
@@ -96,7 +96,7 @@ module.exports = {
 				const embed = new MessageEmbed()
 					.setColor(config.embedColor)
 					.setTitle("Mute")
-					.setFooter(config.botName, config.botIcon)
+					.setFooter({text: config.botName, iconURL: config.botIcon})
 					.setTimestamp()
 					.setDescription(`${member} a bien été réduit au silence pour ${humanTime}.`);
 
@@ -118,7 +118,7 @@ module.exports = {
 					var errorEmbed = new MessageEmbed()
 						.setColor("RED")
 						.setTitle("Mute")
-						.setFooter(config.botName, config.botIcon)
+						.setFooter({text: config.botName, iconURL: config.botIcon})
 						.setTimestamp()
 						.setDescription(`Je n'ai pas les permissions requises pour rendre muet cet utilisateur!`);
 				} else {
@@ -126,7 +126,7 @@ module.exports = {
 					var errorEmbed = new MessageEmbed()
 						.setColor("RED")
 						.setTitle("Mute")
-						.setFooter(config.botName, config.botIcon)
+						.setFooter({text: config.botName, iconURL: config.botIcon})
 						.setTimestamp()
 						.setDescription(`Une erreur est survenue.`);
 				};

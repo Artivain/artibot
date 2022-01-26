@@ -22,7 +22,7 @@ module.exports = {
 			.setColor(config.embedColor)
 			.setTitle("Dad joke")
 			.setDescription(joke)
-			.setFooter(config.botName, config.botIcon)
+			.setFooter({text: config.botName, iconURL: config.botIcon})
 			.setTimestamp();
 
 		await message.reply({

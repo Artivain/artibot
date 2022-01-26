@@ -30,7 +30,7 @@ module.exports = {
 			.setColor(config.embedColor)
 			.setTitle(`${name} | ${page.name}`)
 			.setTimestamp()
-			.setFooter(config.botName, config.botIcon)
+			.setFooter({text: config.botName, iconURL: config.botIcon})
 			.setDescription(page.content);
 
 		if (page.icon) embed.setThumbnail(page.icon);

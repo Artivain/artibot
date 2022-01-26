@@ -173,7 +173,7 @@ module.exports = {
 					.setColor("RED")
 					.setTitle("Giveaways")
 					.setTimestamp()
-					.setFooter(config.botName, config.botIcon)
+					.setFooter({text: config.botName, iconURL: config.botIcon})
 					.setDescription("Giveaway introuvable.");
 
 				await interaction.reply({
@@ -192,7 +192,7 @@ module.exports = {
 					.setColor("RED")
 					.setTitle("Giveaways")
 					.setTimestamp()
-					.setFooter(config.botName, config.botIcon)
+					.setFooter({text: config.botName, iconURL: config.botIcon})
 					.setDescription("**Vous ne pouvez pas exécuter cette commande.**\nVous devez avoir les permissions administrateur ou être celui qui héberge le giveaway.");
 
 				await interaction.reply({
@@ -208,7 +208,7 @@ module.exports = {
 					.setColor("RED")
 					.setTitle("Giveaways")
 					.setTimestamp()
-					.setFooter(config.botName, config.botIcon)
+					.setFooter({text: config.botName, iconURL: config.botIcon})
 					.setDescription("Le giveaway est déjà terminé.");
 
 				await interaction.reply({
@@ -224,7 +224,7 @@ module.exports = {
 					.setColor(config.embedColor)
 					.setTitle("Giveaways")
 					.setTimestamp()
-					.setFooter(config.botName, config.botIcon)
+					.setFooter({text: config.botName, iconURL: config.botIcon})
 					.setDescription("Le giveaway a bien été terminé.");
 			})
 				.catch(() => {
@@ -232,7 +232,7 @@ module.exports = {
 						.setColor("RED")
 						.setTitle("Giveaways")
 						.setTimestamp()
-						.setFooter(config.botName, config.botIcon)
+						.setFooter({text: config.botName, iconURL: config.botIcon})
 						.setDescription("Une erreur est survenue.");
 				});
 		};
@@ -250,7 +250,7 @@ module.exports = {
 					.setColor("RED")
 					.setTitle("Giveaways")
 					.setTimestamp()
-					.setFooter(config.botName, config.botIcon)
+					.setFooter({text: config.botName, iconURL: config.botIcon})
 					.setDescription("Giveaway introuvable.");
 
 				await interaction.reply({
@@ -269,7 +269,7 @@ module.exports = {
 					.setColor("RED")
 					.setTitle("Giveaways")
 					.setTimestamp()
-					.setFooter(config.botName, config.botIcon)
+					.setFooter({text: config.botName, iconURL: config.botIcon})
 					.setDescription("**Vous ne pouvez pas exécuter cette commande.**\nVous devez avoir les permissions administrateur ou être celui qui héberge le giveaway.");
 
 				await interaction.reply({
@@ -285,7 +285,7 @@ module.exports = {
 					.setColor("RED")
 					.setTitle("Giveaways")
 					.setTimestamp()
-					.setFooter(config.botName, config.botIcon)
+					.setFooter({text: config.botName, iconURL: config.botIcon})
 					.setDescription("Impossible de modifier un giveaway terminé.");
 
 				await interaction.reply({
@@ -307,7 +307,7 @@ module.exports = {
 						.setColor("RED")
 						.setTitle("Giveaways")
 						.setTimestamp()
-						.setFooter(config.botName, config.botIcon)
+						.setFooter({text: config.botName, iconURL: config.botIcon})
 						.setDescription("La valeur entrée est invalide.");
 
 					await interaction.reply({
@@ -332,7 +332,7 @@ module.exports = {
 					.setColor(config.embedColor)
 					.setTitle("Giveaways")
 					.setTimestamp()
-					.setFooter(config.botName, config.botIcon)
+					.setFooter({text: config.botName, iconURL: config.botIcon})
 					.setDescription("Le giveaway a bien été modifié.");
 			})
 				.catch(() => {
@@ -340,7 +340,7 @@ module.exports = {
 						.setColor("RED")
 						.setTitle("Giveaways")
 						.setTimestamp()
-						.setFooter(config.botName, config.botIcon)
+						.setFooter({text: config.botName, iconURL: config.botIcon})
 						.setDescription("Une erreur est survenue.");
 				});
 		};
@@ -358,7 +358,7 @@ module.exports = {
 					.setColor("RED")
 					.setTitle("Giveaways")
 					.setTimestamp()
-					.setFooter(config.botName, config.botIcon)
+					.setFooter({text: config.botName, iconURL: config.botIcon})
 					.setDescription("Giveaway introuvable.");
 
 				await interaction.reply({
@@ -377,7 +377,7 @@ module.exports = {
 					.setColor("RED")
 					.setTitle("Giveaways")
 					.setTimestamp()
-					.setFooter(config.botName, config.botIcon)
+					.setFooter({text: config.botName, iconURL: config.botIcon})
 					.setDescription("**Vous ne pouvez pas exécuter cette commande.**\nVous devez avoir les permissions administrateur ou être celui qui héberge le giveaway.");
 
 				await interaction.reply({
@@ -399,7 +399,7 @@ module.exports = {
 					.setColor(config.embedColor)
 					.setTitle("Giveaways")
 					.setTimestamp()
-					.setFooter(config.botName, config.botIcon)
+					.setFooter({text: config.botName, iconURL: config.botIcon})
 					.setDescription("Le reroll a été effectué.");
 			})
 				.catch(() => {
@@ -407,7 +407,7 @@ module.exports = {
 						.setColor("RED")
 						.setTitle("Giveaways")
 						.setTimestamp()
-						.setFooter(config.botName, config.botIcon)
+						.setFooter({text: config.botName, iconURL: config.botIcon})
 						.setDescription("Une erreur est survenue.");
 				});
 		};
@@ -426,7 +426,7 @@ module.exports = {
 					.setColor("RED")
 					.setTitle("Giveaways")
 					.setTimestamp()
-					.setFooter(config.botName, config.botIcon)
+					.setFooter({text: config.botName, iconURL: config.botIcon})
 					.setDescription("**Vous ne pouvez pas exécuter cette commande.**\nVous devez avoir les permissions administrateur.");
 
 				await interaction.reply({
@@ -484,7 +484,7 @@ module.exports = {
 				.setColor(config.embedColor)
 				.setTitle("Giveaways")
 				.setTimestamp()
-				.setFooter(config.botName, config.botIcon)
+				.setFooter({text: config.botName, iconURL: config.botIcon})
 				.setDescription("Le giveaway a bien été créé!");
 		};
 
@@ -502,7 +502,7 @@ module.exports = {
 					.setColor("RED")
 					.setTitle("Giveaways")
 					.setTimestamp()
-					.setFooter(config.botName, config.botIcon)
+					.setFooter({text: config.botName, iconURL: config.botIcon})
 					.setDescription("**Vous ne pouvez pas exécuter cette commande.**\nVous devez avoir les permissions administrateur.");
 
 				await interaction.reply({
@@ -559,7 +559,7 @@ module.exports = {
 				.setColor(config.embedColor)
 				.setTitle("Giveaways")
 				.setTimestamp()
-				.setFooter(config.botName, config.botIcon)
+				.setFooter({text: config.botName, iconURL: config.botIcon})
 				.setDescription("Le drop a bien été lancé!");
 		};
 

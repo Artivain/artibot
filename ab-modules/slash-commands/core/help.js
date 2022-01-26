@@ -23,7 +23,7 @@ module.exports = {
 		const helpEmbed = new MessageEmbed()
 			.setColor(config.embedColor)
 			.setTimestamp()
-			.setFooter(config.botName, config.botIcon);
+			.setFooter({text: config.botName, iconURL: config.botIcon});
 
 		if (name) {
 			// If a single command has been asked for, send only this command's help.

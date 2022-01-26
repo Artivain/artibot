@@ -38,7 +38,7 @@ module.exports = {
 				.setColor(color)
 				.setTitle(`${member.user.username} vient de rejoindre le serveur!`)
 				.setDescription(content)
-				.setFooter(config.botName, config.botIcon)
+				.setFooter({text: config.botName, iconURL: config.botIcon})
 				.setTimestamp();
 
 			if (guild.config.welcome.showProfilePicture) {
@@ -79,7 +79,7 @@ module.exports = {
 				.setColor(color)
 				.setTitle(`${member.user.username} vient de quitter le serveur.`)
 				.setDescription(content)
-				.setFooter(config.botName, config.botIcon)
+				.setFooter({text: config.botName, iconURL: config.botIcon})
 				.setTimestamp();
 
 			if (guild.config.farewell.showProfilePicture) {

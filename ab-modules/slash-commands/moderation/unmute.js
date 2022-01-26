@@ -30,7 +30,7 @@ module.exports = {
 			const errorEmbed = new MessageEmbed()
 				.setColor("RED")
 				.setTitle("Unmute")
-				.setFooter(config.botName, config.botIcon)
+				.setFooter({text: config.botName, iconURL: config.botIcon})
 				.setTimestamp()
 				.setDescription("Vous n'avez pas la permission de faire cette commande!");
 
@@ -47,7 +47,7 @@ module.exports = {
 			const errorEmbed = new MessageEmbed()
 				.setColor("RED")
 				.setTitle("Unmute")
-				.setFooter(config.botName, config.botIcon)
+				.setFooter({text: config.botName, iconURL: config.botIcon})
 				.setTimestamp()
 				.setDescription("Cet utilisateur n'est pas muet...\nUne deuxième bouche serait bizarre, non?");
 
@@ -63,14 +63,14 @@ module.exports = {
 				const dmEmbed = new MessageEmbed()
 					.setColor(config.embedColor)
 					.setTitle("Unmute")
-					.setFooter(config.botName, config.botIcon)
+					.setFooter({text: config.botName, iconURL: config.botIcon})
 					.setTimestamp()
 					.setDescription(`${moderator} vient de vous redonner le droit de parler sur **${guild.name}.**`);
 
 				const embed = new MessageEmbed()
 					.setColor(config.embedColor)
 					.setTitle("Unmute")
-					.setFooter(config.botName, config.botIcon)
+					.setFooter({text: config.botName, iconURL: config.botIcon})
 					.setTimestamp()
 					.setDescription(`${member} a bien retrouvé sa voix.`);
 
@@ -92,7 +92,7 @@ module.exports = {
 					var errorEmbed = new MessageEmbed()
 						.setColor("RED")
 						.setTitle("Unmute")
-						.setFooter(config.botName, config.botIcon)
+						.setFooter({text: config.botName, iconURL: config.botIcon})
 						.setTimestamp()
 						.setDescription(`Je n'ai pas les permissions requises pour rendre la parole à cet utilisateur!`);
 				} else {
@@ -100,7 +100,7 @@ module.exports = {
 					var errorEmbed = new MessageEmbed()
 						.setColor("RED")
 						.setTitle("Unmute")
-						.setFooter(config.botName, config.botIcon)
+						.setFooter({text: config.botName, iconURL: config.botIcon})
 						.setTimestamp()
 						.setDescription(`Une erreur est survenue.`);
 				};

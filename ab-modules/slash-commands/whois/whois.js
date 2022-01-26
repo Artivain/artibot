@@ -26,7 +26,7 @@ module.exports = {
 			const errorEmbed = new MessageEmbed()
 				.setColor("RED")
 				.setTitle(`WHOIS - ${domain}`)
-				.setFooter(config.botName, config.botIcon)
+				.setFooter({text: config.botName, iconURL: config.botIcon})
 				.setTimestamp()
 				.setDescription(`\`${domain}\` n'est pas un domaine valide.\nCe WHOIS ne supporte que les \`.com\`, \`.net\` et \`.edu.\``);
 
@@ -42,7 +42,7 @@ module.exports = {
 				const errorEmbed = new MessageEmbed()
 					.setColor("RED")
 					.setTitle(`WHOIS - ${domain}`)
-					.setFooter(config.botName, config.botIcon)
+					.setFooter({text: config.botName, iconURL: config.botIcon})
 					.setTimestamp()
 					.setDescription("Une erreur est survenue.");
 
@@ -86,7 +86,7 @@ module.exports = {
 				const errorEmbed = new MessageEmbed()
 					.setColor("RED")
 					.setTitle(`WHOIS - ${domain}`)
-					.setFooter(config.botName, config.botIcon)
+					.setFooter({text: config.botName, iconURL: config.botIcon})
 					.setTimestamp()
 					.setDescription(`Impossible de trouver le domaine ${domain}`);
 
@@ -129,7 +129,7 @@ module.exports = {
 			const embed = new MessageEmbed()
 				.setColor(config.embedColor)
 				.setTitle(`WHOIS - ${domain}`)
-				.setFooter(config.botName, config.botIcon)
+				.setFooter({text: config.botName, iconURL: config.botIcon})
 				.setTimestamp()
 				.setDescription(`Voici les résultats pour ${domain}\n[Voir la fiche complète en ligne](https://who.is/whois/${domain})`)
 				.addField("Registraire", `[${results.registrar}](${results.registrarURL})`, true)

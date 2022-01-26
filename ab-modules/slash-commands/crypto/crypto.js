@@ -37,7 +37,7 @@ module.exports = {
 		var embed = new MessageEmbed()
 				.setColor(params.embedColor)
 				.setTitle(`Valeur actuelle - ${crypto}`)
-				.setFooter(params.botName, params.botIcon)
+				.setFooter({text: params.botName, iconUR: params.botIcon})
 				.setTimestamp()
 				.setDescription(costs + "\n`Données fournies par Coinbase`");
 

@@ -56,7 +56,7 @@ module.exports = {
 			.setTitle("Pokédex")
 			.setImage(icon)
 			.setTimestamp()
-			.setFooter(config.botName, config.botIcon)
+			.setFooter({text: config.botName, iconURL: config.botIcon})
 			.setDescription("Recherche en cours...");
 
 		const message = await interaction.reply({
@@ -80,7 +80,7 @@ module.exports = {
 				.setColor("#e3350d")
 				.setTitle("Pokédex")
 				.setTimestamp()
-				.setFooter(config.botName, config.botIcon)
+				.setFooter({text: config.botName, iconURL: config.botIcon})
 				.setDescription(content);
 
 			await message.edit({
@@ -123,7 +123,7 @@ module.exports = {
 			.setColor("#e3350d")
 			.setTitle("Pokédex")
 			.setTimestamp()
-			.setFooter(config.botName, config.botIcon)
+			.setFooter({text: config.botName, iconURL: config.botIcon})
 			.setDescription(`**${name}** - #${id}\n${category}\n${flavorText}`)
 			.setImage(image)
 			.addField("Type(s)", types, true)

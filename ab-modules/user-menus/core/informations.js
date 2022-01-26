@@ -46,7 +46,7 @@ module.exports = {
 		const embed = new MessageEmbed()
 			.setColor(config.embedColor)
 			.setTimestamp()
-			.setFooter(config.botName, config.botIcon)
+			.setFooter({text: config.botName, iconURL: config.botIcon})
 			.setTitle("Informations sur l'utilisateur")
 			.setDescription(
 				"Nom sur le serveur: " + (infos.nickname ? infos.nickname : infos.user.username) + "\n" +

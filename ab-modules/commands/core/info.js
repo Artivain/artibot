@@ -46,7 +46,7 @@ module.exports = {
 
 		let embed = new MessageEmbed()
 			.setColor(config.embedColor)
-			.setFooter(config.botName, config.botIcon)
+			.setFooter({text: config.botName, iconURL: config.botIcon})
 			.setTimestamp()
 			.setTitle("À propos de " + config.botName)
 			.setDescription(description)

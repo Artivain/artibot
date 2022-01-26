@@ -21,7 +21,7 @@ module.exports = {
 				.setTitle("Blague de Chuck Norris")
 				.setDescription(JSON.parse(data).value)
 				.setThumbnail(JSON.parse(data).icon_url)
-				.setFooter(config.botName, config.botIcon)
+				.setFooter({text: config.botName, iconURL: config.botIcon})
 				.setTimestamp();
 
 				message.reply({
