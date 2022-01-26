@@ -1,6 +1,8 @@
 # Artibot
 Bot open-source fait par Artivain et les contributeurs.
 
+[![CodeFactor](https://www.codefactor.io/repository/github/artivain/artibot/badge)](https://www.codefactor.io/repository/github/artivain/artibot)
+
 ## But du projet
 Faire un bot modulaire, moderne, performant et bien documenté disponible pour tous. 
 
