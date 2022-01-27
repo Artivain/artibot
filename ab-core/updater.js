@@ -10,22 +10,20 @@ if (require.main === module) {
 		process.exit(1);
 	};
 
-	const config = {
+	const updater = new AutoGitUpdate({
 		repository: 'https://github.com/Artivain/artibot',
 		tempLocation: '../updaterFiles',
 		exitOnComplete: true,
-		fromReleases: true
-	};
-
-	const updater = new AutoGitUpdate(config);
-
-	updater.setLogConfig({
-		logDebug: true,
-		logDetail: true,
-		logGeneral: true,
-		logWarning: true,
-		logError: true
+		fromReleases: true,
+		logConfig: {
+			logDebug: true,
+			logDetail: true,
+			logGeneral: true,
+			logWarning: true,
+			logError: true
+		}
 	});
+
 	updater.autoUpdate();
 
 } else {
@@ -36,21 +34,18 @@ if (require.main === module) {
 				return log("Updater", "Vérification des mises à jours désactivée dans la configuration", "err", true)
 			};
 
-			const config = {
+			const updater = new AutoGitUpdate({
 				repository: 'https://github.com/Artivain/artibot',
 				tempLocation: '../../updaterFiles',
 				exitOnComplete: false,
-				fromReleases: true
-			};
-
-			const updater = new AutoGitUpdate(config);
-
-			updater.setLogConfig({
-				logDebug: false,
-				logDetail: false,
-				logGeneral: false,
-				logWarning: true,
-				logError: true
+				fromReleases: true,
+				logConfig: {
+					logDebug: false,
+					logDetail: false,
+					logGeneral: false,
+					logWarning: true,
+					logError: true
+				}
 			});
 
 			return updater.compareVersions();
