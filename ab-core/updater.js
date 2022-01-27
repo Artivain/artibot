@@ -5,8 +5,8 @@ const { log } = require("./logger");
 // if ran with npm run updater
 if (require.main === module) {
 
-	if (params.checkForUpdates != "stable" && params.checkForUpdates != "unstable") {
-		log("Updater", "Erreur de configuration!", "err", true);
+	if (!params.checkForUpdates) {
+		log("Updater", "Vérification des mises à jours désactivée dans la configuration", "err", true);
 		process.exit(1);
 	};
 
@@ -30,7 +30,7 @@ if (require.main === module) {
 
 	module.exports = {
 		async checkUpdates() {
-			if (params.checkForUpdates != "stable" && params.checkForUpdates != "unstable") {
+			if (!params.checkForUpdates) {
 				return log("Updater", "Vérification des mises à jours désactivée dans la configuration", "err", true)
 			};
 
@@ -52,9 +52,7 @@ if (require.main === module) {
 		},
 
 		async doUpdates(options) {
-			if (params.checkForUpdates != "stable" && params.checkForUpdates != "unstable") {
-				throw "Erreur de configuration"
-			};
+			if (!params.checkForUpdates) throw "La vérification des mises à jours est désactivée dans la configuration";
 		
 			const autoUpdater = new AutoGitUpdate(options);
 		
