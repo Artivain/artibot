@@ -172,6 +172,18 @@
 
 		"Bot name updated to [[0]].": {
 			"fr": "Nom du bot mis à jour pour [[0]]."
+		},
+
+		"There was an error with this button!": {
+			"fr": "Il y a eu une erreur avec ce bouton!"
+		},
+
+		"There was an error with this menu option!": {
+			"fr": "Il y a eu une erreur avec cette option du menu!"
+		},
+
+		"Hello [[0]]! My prefix is `[[1]]`, you can get help with the `[[1]]help` command.": {
+			"fr": "Bonjour [[0]]! Mon préfixe est `[[1]]`, tu peux obtenir de l'aide en faisait `[[1]]help`."
 		}
 
 	}

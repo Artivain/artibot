@@ -69,7 +69,7 @@ module.exports = class Localizer {
 	 */
 	translateWithPlaceholders(string, { lang, placeholders }) {
 		let translated = this.translate(string, lang);
-		placeholders.forEach((placeholder, i) => translated = translated.replace(`[[${i}]]`, placeholder));
+		placeholders.forEach((placeholder, i) => translated = translated.replaceAll(`[[${i}]]`, placeholder));
 		return translated
 	};
 
