@@ -72,6 +72,18 @@
 
 		"Check for updates is disabled in config": {
 			"fr": "Vérification des mises à jours désactivée dans la configuration"
+		},
+
+		"Initializing slash commands on Discord...": {
+			"fr": "Initialisation des commandes slash auprès de Discord..."
+		},
+
+		"Slash commands initialized successfully.": {
+			"fr": "Commandes slash initialisées avec succès."
+		},
+
+		"An error occured when initializing slash commands, here are the details: ": {
+			"fr": "Une erreur est survenue avec l'initialisation des commandes slash, voici les détais: "
 		}
 
 	}

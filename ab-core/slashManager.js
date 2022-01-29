@@ -1,10 +1,19 @@
 const { REST } = require("@discordjs/rest");
 const { Routes } = require("discord-api-types/v9");
-const { clientId, testGuildId, devMode } = require("../config.json");
+const { clientId, testGuildId, devMode, locale } = require("../config.json");
 const { log } = require("./logger");
+const Localizer = require("./localizer");
+const path = require("path");
 
 var rest = new REST({ version: "9" });
 var commandJsonData = [];
+
+const localizer = new Localizer({
+	lang: locale,
+	filePath: path.resolve(__dirname, "locales.json")
+});
+
+const { _ } = localizer;
 
 module.exports = {
 	init(token) {
@@ -20,7 +29,7 @@ module.exports = {
 
 	async register() {
 		try {
-			log("SlashManager", "Initialisation des commandes slash auprès de Discord...", "info", true);
+			log("SlashManager", _("Initializing slash commands on Discord..."), "info", true);
 
 			/**
 				Ici on envoit à Discord les commandes slash.
@@ -42,10 +51,10 @@ module.exports = {
 				);
 			};
 
-			log("SlashManager", "Commandes slash initialisées avec succès.", "log", true);
+			log("SlashManager", _("Slash commands initialized successfully."), "log", true);
 			return true
 		} catch (error) {
-			log("SlashManager", "Une erreur est survenue avec l'initialisation des commandes slash, voici les détais: " + error, "warn", true);
+			log("SlashManager", _("An error occured when initializing slash commands, here are the details: ") + error, "warn", true);
 			return false
 		};
 	}
