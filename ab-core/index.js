@@ -27,7 +27,7 @@ try {
 		// Re-throw not "Module not found" errors 
 		throw error;
 	} else {
-		log("Artibot", localizer.translate("Configuration error: The config.json file does not exist."), "err", true);
+		log("Artibot", localizer.translateWithPlaceholders("Configuration error: [[0]] file does not exist.", { placeholders: ["config.json"] }), "err", true);
 		process.exit(1);
 	};
 };
@@ -40,18 +40,18 @@ try { var token = require("../private.json").botToken; } catch (error) {
 		// Re-throw not "Module not found" errors 
 		throw error;
 	} else {
-		log("Artibot", "Erreur de configuration: Le fichier private.json est introuvable.", "err", true);
+		log("Artibot", localizer.translateWithPlaceholders("Configuration error: [[0]] file does not exist.", { placeholders: ["private.json"] }), "err", true);
 		process.exit(1);
 	};
 };
 
 if (!token) {
-	log("Artibot", "Erreur de configuration: Le fichier private.json est invalide.", "err", true);
+	log("Artibot", localizer.translateWithPlaceholders("Configuration error: [[0]] file is invalid.", { placeholders: ["private.json"] }), "err", true);
 	process.exit(1);
 };
 
 if (!clientId || !testGuildId || !enabledModules) {
-	log("Artibot", "Erreur de configuration: Le fichier config.json est invalide.", "err", true);
+	log("Artibot", localizer.translateWithPlaceholders("Configuration error: [[0]] file is invalid.", { placeholders: ["config.json"] }), "err", true);
 	process.exit(1);
 };
 
@@ -129,10 +129,10 @@ const commandFolders = fs.readdirSync("./ab-modules/commands", { withFileTypes: 
 
 // Enregistrer toutes les commandes dans la collection
 
-log("CommandManager", "Activation des commandes:", "info", true);
+log("CommandManager", localizer.translate("Activating commands:"), "info", true);
 
 for (const folder of commandFolders) {
-	log("CommandManager", " - Activation du module " + folder, "log", true);
+	log("CommandManager", ` - ${localizer.translate("Activating module")} ${folder}`, "log", true);
 	const commandFiles = fs
 		.readdirSync(`./ab-modules/commands/${folder}`)
 		.filter((file) => file.endsWith(".js"));
@@ -143,7 +143,7 @@ for (const folder of commandFolders) {
 	};
 };
 
-if (client.commands.size == 0) log("CommandManager", "Aucun module à charger.", "log", true);
+if (client.commands.size == 0) log("CommandManager", localizer.translate("No module to activate."), "log", true);
 
 /**********************************************************************/
 // Initialisation des commandes slash
@@ -157,10 +157,10 @@ const slashCommands = fs.readdirSync("./ab-modules/slash-commands", { withFileTy
 
 // Enregistrer les commandes slash dans la collection
 
-log("SlashManager", "Activation des commandes slash:", "info", true);
+log("SlashManager", localizer.translate("Activating slash commands"), "info", true);
 
 for (const module of slashCommands) {
-	log("SlashManager", " - Activation du module " + module, "log", true);
+	log("SlashManager", ` - ${localizer.translate("Activating module")} ${module}`, "log", true);
 	const commandFiles = fs
 		.readdirSync(`./ab-modules/slash-commands/${module}`)
 		.filter((file) => file.endsWith(".js"));
@@ -172,7 +172,7 @@ for (const module of slashCommands) {
 	};
 };
 
-if (client.slashCommands.size == 0) log("SlashManager", "Aucun module à charger.", "log", true);
+if (client.slashCommands.size == 0) log("SlashManager", localizer.translate("No module to activate."), "log", true);
 
 /**********************************************************************/
 // Initialisation du menu sur les messages
@@ -184,10 +184,10 @@ const messageMenus = fs.readdirSync("./ab-modules/message-menus", { withFileType
 
 // Enregistrer le menu des messages dans la collection
 
-log("InteractionManager", "Activation du menu contextuel sur les messages:", "info", true);
+log("InteractionManager", localizer.translate("Activating context menu on messages:"), "info", true);
 
 for (const folder of messageMenus) {
-	log("InteractionManager", " - Activation du module " + folder, "log", true);
+	log("InteractionManager", ` - ${localizer.translate("Activating module")} ${folder}`, "log", true);
 	const files = fs
 		.readdirSync(`./ab-modules/message-menus/${folder}`)
 		.filter((file) => file.endsWith(".js"));
@@ -202,7 +202,7 @@ for (const folder of messageMenus) {
 
 const interactionAmmount = client.contextCommands.size;
 
-if (interactionAmmount == 0) log("InteractionManager", "Aucun module à charger.", "log", true);
+if (interactionAmmount == 0) log("InteractionManager", localizer.translate("No module to activate."), "log", true);
 
 /**********************************************************************/
 // Initialisation du menu sur les utilisateurs
@@ -214,10 +214,10 @@ const userMenus = fs.readdirSync("./ab-modules/user-menus", { withFileTypes: tru
 
 // Enregistrer le menu des utilisateurs dans la collection
 
-log("InteractionManager", "Activation du menu contextuel sur les utilisateurs:", "info", true);
+log("InteractionManager", localizer.translate("Activating context menu on users:"), "info", true);
 
 for (const folder of userMenus) {
-	log("InteractionManager", " - Activation du module " + folder, "log", true);
+	log("InteractionManager", ` - ${localizer.translate("Activating module")} ${folder}`, "log", true);
 	const files = fs
 		.readdirSync(`./ab-modules/user-menus/${folder}`)
 		.filter((file) => file.endsWith(".js"));
@@ -229,7 +229,7 @@ for (const folder of userMenus) {
 	};
 };
 
-if (interactionAmmount == client.contextCommands.size) log("InteractionManager", "Aucun module à charger.", "log", true);
+if (interactionAmmount == client.contextCommands.size) log("InteractionManager", localizer.translate("No module to activate."), "log", true);
 
 /**********************************************************************/
 // Initialisation des bouton
@@ -243,10 +243,10 @@ const buttonCommands = fs.readdirSync("./ab-modules/buttons", { withFileTypes: t
 
 // Enregistrer tous les boutons dans la collection
 
-log("ButtonManager", "Activation des boutons:", "info", true);
+log("ButtonManager", localizer.translate("Activating buttons:"), "info", true);
 
 for (const module of buttonCommands) {
-	log("ButtonManager", " - Activation du module " + module, "log", true);
+	log("ButtonManager", ` - ${localizer.translate("Activating module")} ${module}`, "log", true);
 	const commandFiles = fs
 		.readdirSync(`./ab-modules/buttons/${module}`)
 		.filter((file) => file.endsWith(".js"));
@@ -258,7 +258,7 @@ for (const module of buttonCommands) {
 	};
 };
 
-if (client.buttonCommands.size == 0) log("ButtonManager", "Aucun module à charger.", "log", true);
+if (client.buttonCommands.size == 0) log("ButtonManager", localizer.translate("No module to activate."), "log", true);
 
 /**********************************************************************/
 // Initialisation des menu déroulants
@@ -272,10 +272,10 @@ const selectMenus = fs.readdirSync("./ab-modules/select-menus", { withFileTypes:
 
 // Enregistrer les menus déroulants dans la collection
 
-log("ButtonManager", "Activation des menus déroulants:", "info", true);
+log("ButtonManager", localizer.translate("Activating select menus:"), "info", true);
 
 for (const module of selectMenus) {
-	log("ButtonManager", " - Activation du module " + module, "log", true);
+	log("ButtonManager", ` - ${localizer.translate("Activating module")} ${module}`, "log", true);
 	const commandFiles = fs
 		.readdirSync(`./ab-modules/select-menus/${module}`)
 		.filter((file) => file.endsWith(".js"));
@@ -286,7 +286,7 @@ for (const module of selectMenus) {
 	};
 };
 
-if (client.selectCommands.size == 0) log("ButtonManager", "Aucun module à charger.", "log", true);
+if (client.selectCommands.size == 0) log("ButtonManager", localizer.translate("No module to activate."), "log", true);
 
 /**********************************************************************/
 // Initialisation des triggers
@@ -300,10 +300,10 @@ const triggerFolders = fs.readdirSync("./ab-modules/triggers", { withFileTypes: 
 
 // Enregistrer les triggers dans la collection
 
-log("TriggerManager", "Activation des triggers:", "info", true);
+log("TriggerManager", localizer.translate("Activating triggers:"), "info", true);
 
 for (const folder of triggerFolders) {
-	log("TriggerManager", " - Activation du module " + folder, "log", true);
+	log("TriggerManager", ` - ${localizer.translate("Activating module")} ${folder}`, "log", true);
 	const triggerFiles = fs
 		.readdirSync(`./ab-modules/triggers/${folder}`)
 		.filter((file) => file.endsWith(".js"));
@@ -314,7 +314,7 @@ for (const folder of triggerFolders) {
 	};
 };
 
-if (client.triggers.size == 0) log("TriggerManager", "Aucun module à charger.", "log", true);
+if (client.triggers.size == 0) log("TriggerManager", localizer.translate("No module to activate."), "log", true);
 
 // Connection à l'API Discord avec le bot
 
@@ -323,11 +323,11 @@ client.login(token);
 // Vérifier si une mise à jour existe sur le repo GitHub
 checkUpdates().then(response => {
 	if (response.upToDate) {
-		log("Updater", `Artibot est à jour (v${response.currentVersion}).`, "info", true);
+		log("Updater", localizer.translateWithPlaceholders("Artibot is up to date (v[[0]]).", { placeholders: [response.currentVersion] }), "info", true);
 	} else {
-		log("Updater", `Une mise à jour est disponible pour Artibot!`, "warn", true);
-		log("Updater", ` - Version actuelle: ${response.currentVersion}`, "info", true);
-		log("Updater", ` - Dernière version: ${response.remoteVersion}`, "info", true);
+		log("Updater", localizer.translate("An update for Artibot is available!"), "warn", true);
+		log("Updater", localizer.translateWithPlaceholders(" - Installed version: [[0]]", { placeholders: [response.currentVersion] }), "info", true);
+		log("Updater", localizer.translateWithPlaceholders(" - Latest version: [[0]]", { placeholders: [response.remoteVersion] }), "info", true);
 	};
 });
 

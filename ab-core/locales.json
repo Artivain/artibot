@@ -6,8 +6,64 @@
 	],
 	"strings": {
 
-		"Configuration error: The config.json file does not exist.": {
-			"fr": "Erreur de configuration: Le fichier config.json est introuvable."
+		"Configuration error: The [[0]] file does not exist.": {
+			"fr": "Erreur de configuration: Le fichier [[0]] est introuvable."
+		},
+
+		"Configuration error: The [[0]] file is invalid.": {
+			"fr": "Erreur de configuration: Le fichier [[0]] est invalide."
+		},
+
+		"Activating commands:": {
+			"fr": "Activation des commandes:"
+		},
+
+		"Activating slash commands": {
+			"fr": "Activation des commandes slash:"
+		},
+
+		"Activating context menu on messages:": {
+			"fr": "Activation du menu contextuel sur les messages:"
+		},
+
+		"Activating context menu on users:": {
+			"fr": "Activation du menu contextuel sur les utilisateurs:"
+		},
+
+		"Activating buttons:": {
+			"fr": "Activation des boutons:"
+		},
+
+		"Activating select menus:": {
+			"fr": "Activation des menus déroulants:"
+		},
+
+		"Activating triggers:": {
+			"fr": "Activation des triggers:"
+		},
+
+		"Activating module": {
+			"fr": "Activation du module"
+		},
+
+		"No module to activate.": {
+			"fr": "Aucun module à charger."
+		},
+
+		"Artibot is up to date (v[[0]]).": {
+			"fr": "Artibot est à jour (v[[0]])."
+		},
+
+		"An update for Artibot is available!": {
+			"fr": "Une mise à jour est disponible pour Artibot!"
+		},
+
+		" - Installed version: [[0]]": {
+			"fr": " - Version actuelle: [[0]]"
+		},
+
+		" - Latest version: [[0]]": {
+			"fr": " - Dernière version: [[0]]"
 		},
 
 		"Configuration error!": {
