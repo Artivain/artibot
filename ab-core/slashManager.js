@@ -13,8 +13,6 @@ const localizer = new Localizer({
 	filePath: path.resolve(__dirname, "locales.json")
 });
 
-const { _ } = localizer;
-
 module.exports = {
 	init(token) {
 		rest.setToken(token);
@@ -29,7 +27,7 @@ module.exports = {
 
 	async register() {
 		try {
-			log("SlashManager", _("Initializing slash commands on Discord..."), "info", true);
+			log("SlashManager", localizer._("Initializing slash commands on Discord..."), "info", true);
 
 			/**
 				Ici on envoit à Discord les commandes slash.
@@ -51,10 +49,10 @@ module.exports = {
 				);
 			};
 
-			log("SlashManager", _("Slash commands initialized successfully."), "log", true);
+			log("SlashManager", localizer._("Slash commands initialized successfully."), "log", true);
 			return true
 		} catch (error) {
-			log("SlashManager", _("An error occured when initializing slash commands, here are the details: ") + error, "warn", true);
+			log("SlashManager", localizer._("An error occured when initializing slash commands, here are the details: ") + error, "warn", true);
 			return false
 		};
 	}
