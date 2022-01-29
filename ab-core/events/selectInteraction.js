@@ -1,5 +1,12 @@
 const { log } = require("../logger");
-const {params} = require("../../config.json");
+const { params, locale } = require("../../config.json");
+const Localizer = require("../localizer");
+const path = require("path");
+
+const localizer = new Localizer({
+	lang: locale,
+	filePath: path.resolve(__dirname, "..", "locales.json")
+});
 
 module.exports = {
 	name: "interactionCreate",
@@ -29,7 +36,7 @@ module.exports = {
 		} catch (err) {
 			log("ButtonManager", err, "warn", true);
 			await interaction.reply({
-				content: "Il y a eu une erreur avec l'exécution de cette option du menu.",
+				content: localizer._("An error occured while executing this menu option."),
 				ephemeral: true,
 			});
 			return

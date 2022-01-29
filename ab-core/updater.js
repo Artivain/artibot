@@ -1,12 +1,19 @@
 const AutoGitUpdate = require('auto-git-update');
-const { params } = require("../config.json");
+const { params, locale } = require("../config.json");
 const { log } = require("./logger");
+const Localizer = require("./localizer");
+const path = require('path');
+
+const localizer = new Localizer({
+	lang: locale,
+	filePath: path.resolve(__dirname, "locales.json")
+});
 
 // if ran with npm run updater
 if (require.main === module) {
 
 	if (!params.checkForUpdates) {
-		log("Updater", "Vérification des mises à jours désactivée dans la configuration", "err", true);
+		log("Updater", localizer._("Configuration error!"), "err", true);
 		process.exit(1);
 	};
 
@@ -31,7 +38,7 @@ if (require.main === module) {
 	module.exports = {
 		async checkUpdates() {
 			if (!params.checkForUpdates) {
-				return log("Updater", "Vérification des mises à jours désactivée dans la configuration", "err", true)
+				return log("Updater", localizer.translate("Check for updates is disabled in config"), "err", true)
 			};
 
 			const updater = new AutoGitUpdate({
@@ -52,7 +59,7 @@ if (require.main === module) {
 		},
 
 		async doUpdates(options) {
-			if (!params.checkForUpdates) throw "La vérification des mises à jours est désactivée dans la configuration";
+			if (!params.checkForUpdates) throw new Error(localizer.translate("Configuration error!"));
 		
 			const autoUpdater = new AutoGitUpdate(options);
 		

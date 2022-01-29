@@ -31,7 +31,7 @@ module.exports = {
 			var content = chalk.gray(msg);
 		} else if (type == "info" || type == "infos") {
 			var content = chalk.cyan(msg);
-		} else throw `[Logger] log: "${type}" is not a valid type. Valid values are: "log", "warn", "err", "debug", "info".`;
+		} else throw new Error(`[Logger] log: "${type}" is not a valid type. Valid values are: "log", "warn", "err", "debug", "info".`);
 
 		console.log(prefix, content);
 	}

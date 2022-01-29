@@ -5,10 +5,11 @@
 	"testGuildId": "775798875356397608",
 	"devMode": true,
 	"enabledModules": ["giveaways", "moderation", "whois", "meme", "pokemon"],
+	"locale": "en",
 	"params": {
 		"embedColor": "#06476d",
 		"botName": "Artibot [dev]",
-		"botIcon": "https://artivain.com/wp-content/uploads/2021/01/logo-artivain-nouveau-fav-512.png",
+		"botIcon": "https://assets.artivain.com/fav/main/fav-512.png",
 		"advancedCorePing": true,
 		"checkForUpdates": true
 	}
