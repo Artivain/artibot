@@ -18,7 +18,7 @@ module.exports = {
 	async execute(interaction, config) {
 
 		const commands = interaction.client.slashCommands;
-		const name = interaction.options.getString("commande").toLowerCase();
+		let name = interaction.options.getString("commande");
 
 		const helpEmbed = new MessageEmbed()
 			.setColor(config.embedColor)
@@ -26,6 +26,7 @@ module.exports = {
 			.setFooter({text: config.botName, iconURL: config.botIcon});
 
 		if (name) {
+			name = name.toLowerCase();
 			// If a single command has been asked for, send only this command's help.
 			helpEmbed.setTitle(`Aide pour la commande \`${name}\``);
 			if (commands.has(name)) {
