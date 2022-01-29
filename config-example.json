@@ -11,6 +11,6 @@
 		"botName": "Artibot [dev]",
 		"botIcon": "https://assets.artivain.com/fav/main/fav-512.png",
 		"advancedCorePing": true,
-		"checkForUpdates": "stable"
+		"checkForUpdates": true
 	}
 }

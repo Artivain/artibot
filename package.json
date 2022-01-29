@@ -21,9 +21,9 @@
 	},
 	"homepage": "https://github.com/Artivain/artibot#readme",
 	"dependencies": {
-		"@discordjs/builders": "^0.8.2",
-		"@discordjs/rest": "^0.1.0-canary.0",
-		"auto-git-update": "^2.0.2",
+		"@discordjs/builders": "^0.12.0",
+		"@discordjs/rest": "^0.3.0",
+		"auto-git-update": "chegele/AutoGitUpdate#GitHub-releases-support",
 		"axios": "^0.25.0",
 		"chalk": "^4.1.2",
 		"discord-api-types": "^0.25.2",
