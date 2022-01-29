@@ -1,5 +1,12 @@
 const { log } = require("../logger");
-const config = require("../../config.json").params;
+const { params, locale } = require("../../config.json");
+const Localizer = require("../localizer");
+const path = require("path");
+
+const localizer = new Localizer({
+	lang: locale,
+	filePath: path.resolve(__dirname, "..", "locales.json")
+});
 
 module.exports = {
 	name: "interactionCreate",
@@ -21,11 +28,11 @@ module.exports = {
 		// A try to executes the interaction.
 
 		try {
-			await command.execute(interaction, config);
+			await command.execute(interaction, params);
 		} catch (err) {
 			log("SlashManager", err, "warn", true);
 			await interaction.reply({
-				content: "Il y a eu une erreur avec l'exécution de cette commande.",
+				content: localizer._("An error occured while executing this command."),
 				ephemeral: true
 			});
 		};

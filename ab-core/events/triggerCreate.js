@@ -1,5 +1,12 @@
 const { log } = require("../logger");
-const {params} = require("../../config.json");
+const { params, locale } = require("../../config.json");
+const Localizer = require("../localizer");
+const path = require("path");
+
+const localizer = new Localizer({
+	lang: locale,
+	filePath: path.resolve(__dirname, "..", "locales.json")
+});
 
 module.exports = {
 	name: "messageCreate",
@@ -29,7 +36,7 @@ module.exports = {
 
 						log("TriggerManager", error, "warn", true);
 						message.reply({
-							content: "Il y a eu une erreur avec l'exécution d'un trigger!",
+							content: localizer._("An error occured while trying to execute a trigger."),
 						});
 					};
 
