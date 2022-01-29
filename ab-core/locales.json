@@ -1,5 +1,14 @@
 {
-	"Test": {
-		
+	"version": "1.0.0",
+	"default": "en",
+	"contributors": [
+		"GoudronViande24"
+	],
+	"strings": {
+
+		"Configuration error: The config.json file does not exist.": {
+			"fr": "Erreur de configuration: Le fichier config.json est introuvable."
+		}
+
 	}
 }

@@ -1,36 +1,39 @@
 const slashManager = require("./slashManager");
 const { checkUpdates } = require("./updater");
 const { log } = require("./logger");
+const Localizer = require("./localizer");
 
-try {
-	var fs = require("fs");
-	var { Client, Collection, Intents } = require("discord.js");
-	var chalk = require("chalk");
-	var figlet = require("figlet");
-} catch (error) {
-	if (error.code !== 'MODULE_NOT_FOUND') {
-		// Re-throw not "Module not found" errors
-		throw error;
-	} else {
-		log("Artibot", "Erreur de configuration: Les modules Node.js ne sont pas installés correctement.", "err", true);
-		process.exit(1);
-	};
-};
+var fs = require("fs");
+var { Client, Collection, Intents } = require("discord.js");
+var chalk = require("chalk");
+var figlet = require("figlet");
+var path = require("path");
 
 console.log(chalk.blue(figlet.textSync('Artibot', {
 	font: 'ANSI Shadow',
 	horizontalLayout: 'fitted'
 })));
 
-try { var { clientId, testGuildId, enabledModules } = require("../config.json"); } catch (error) {
+// Initialize localizer
+const localizer = new Localizer({
+	filePath: path.resolve(__dirname, "locales.json")
+});
+
+try {
+	var config = require("../config.json");
+	var { clientId, testGuildId, enabledModules } = config;
+} catch (error) {
 	if (error.code !== 'MODULE_NOT_FOUND') {
 		// Re-throw not "Module not found" errors 
 		throw error;
 	} else {
-		log("Artibot", "Erreur de configuration: Le fichier config.json est introuvable.", "err", true);
+		log("Artibot", localizer.translate("Configuration error: The config.json file does not exist."), "err", true);
 		process.exit(1);
 	};
 };
+
+// Set localizer lang with the config one
+localizer.setLocale(config.locale);
 
 try { var token = require("../private.json").botToken; } catch (error) {
 	if (error.code !== 'MODULE_NOT_FOUND') {
@@ -55,7 +58,14 @@ if (!clientId || !testGuildId || !enabledModules) {
 // Depuis Discord.js v13, il est obligatoire de déclarer les intents
 
 const client = new Client({
-	intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS, Intents.FLAGS.GUILD_VOICE_STATES, Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILD_PRESENCES],
+	intents: [
+		Intents.FLAGS.GUILDS,
+		Intents.FLAGS.GUILD_MESSAGES,
+		Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
+		Intents.FLAGS.GUILD_VOICE_STATES,
+		Intents.FLAGS.GUILD_MEMBERS,
+		Intents.FLAGS.GUILD_PRESENCES
+	],
 });
 
 /**********************************************************************/
