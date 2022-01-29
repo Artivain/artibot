@@ -8,6 +8,14 @@
 
 		"Configuration error: The config.json file does not exist.": {
 			"fr": "Erreur de configuration: Le fichier config.json est introuvable."
+		},
+
+		"Configuration error!": {
+			"fr": "Erreur de configuration!"
+		},
+
+		"Check for updates is disabled in config": {
+			"fr": "Vérification des mises à jours désactivée dans la configuration"
 		}
 
 	}
