@@ -1,6 +1,6 @@
 const { log } = require("../../../ab-core/logger");
 const fs = require("fs");
-const { disabledModules } = require("../../../config.json");
+const { enabledModules } = require("../../../config.json");
 
 module.exports = {
 	name: "reload",
@@ -28,7 +28,7 @@ module.exports = {
 		const commandFolders = fs.readdirSync("./ab-modules/commands", { withFileTypes: true })
 			.filter(dirent => dirent.isDirectory())
 			.map(dirent => dirent.name)
-			.filter(name => !disabledModules.includes(name));
+			.filter(name => enabledModules.includes(name) || name == "core");
 
 		const folderName = commandFolders.find((folder) =>
 			fs.readdirSync(`./ab-modules/commands/${folder}`).includes(`${command.name}.js`)
