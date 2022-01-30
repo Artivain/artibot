@@ -8,7 +8,7 @@ module.exports = {
 	args: "<nom de la commande>",
 	ownerOnly: true,
 
-	execute(message, args, config) {
+	execute(message, args) {
 
 		const commandName = args[0].toLowerCase();
 

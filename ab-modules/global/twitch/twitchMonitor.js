@@ -162,7 +162,6 @@ class TwitchMonitor {
 
 		// Find channels that are now online, but were not before
 		let notifyFailed = false;
-		let anyChanges = false;
 
 		for (let i = 0; i < nextOnlineList.length; i++) {
 			let _chanName = nextOnlineList[i];
@@ -170,7 +169,6 @@ class TwitchMonitor {
 			if (this.activeStreams.indexOf(_chanName) === -1) {
 				// Stream was not in the list before
 				console.log('[TwitchMonitor]', 'Le stream est maintenant en ligne:', _chanName);
-				anyChanges = true;
 			}
 
 			if (!this.handleChannelLiveUpdate(this.streamData[_chanName], true)) {
@@ -187,7 +185,6 @@ class TwitchMonitor {
 				console.log('[TwitchMonitor]', 'Le stream n\'est plus en ligne:', _chanName);
 				this.streamData[_chanName].type = "detected_offline";
 				this.handleChannelOffline(this.streamData[_chanName]);
-				anyChanges = true;
 			}
 		}
 

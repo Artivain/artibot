@@ -1,8 +1,8 @@
 const moment = require('moment');
-const tz = require('moment-timezone');
+require('moment-timezone');
 const { Client, Intents } = require("discord.js");
 
-function updateActivity(client, config, clock, i) {
+function updateActivity(client, config, clock) {
 	const timeNowUpdate = moment().tz(clock.timezone).format(config.format);
 	client.user.setActivity(`🕒 ${timeNowUpdate}`);
 };
@@ -18,8 +18,8 @@ function startClock(clock, config, i) {
 			console.log(`[Clocks] Horloge #${i}: Nom changé pour ${clock.botName}`);
 		};
 		//set the interval
-		setInterval(() => updateActivity(client, config, clock, i), config.updateinterval);
-		updateActivity(client, config, clock, i);
+		setInterval(() => updateActivity(client, config, clock), config.updateinterval);
+		updateActivity(client, config, clock);
 		//tells when it's ready
 		console.log(`[Clocks] Horloge #${i}: Connecté en tant que ${client.user.tag} (${client.user.id}) le ${moment().format("DD MMMM YYYY, HH:mm:ss")}`);
 	});

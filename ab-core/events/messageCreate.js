@@ -145,7 +145,7 @@ module.exports = {
 		} catch (error) {
 			log("CommandManager", error, "warn", true);
 			message.reply({
-				content: localizer.__("An error occured while trying to run this command.")
+				content: localizer._("An error occured while trying to run this command.")
 			});
 		}
 	},
