@@ -184,6 +184,18 @@
 
 		"Hello [[0]]! My prefix is `[[1]]`, you can get help with the `[[1]]help` command.": {
 			"fr": "Bonjour [[0]]! Mon préfixe est `[[1]]`, tu peux obtenir de l'aide en faisait `[[1]]help`."
+		},
+
+		"An error occured while trying to load manifest file of module [[0]].": {
+			"fr": "Une erreur est survenue lors du chargement du fichier manifeste du module [[0]]."
+		},
+
+		"Loading manifests...": {
+			"fr": "Chargement des manifestes..."
+		},
+
+		"Found [[0]] modules.": {
+			"fr": "[[0]] modules trouvés."
 		}
 
 	}

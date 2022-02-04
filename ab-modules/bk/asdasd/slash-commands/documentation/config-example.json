@@ -1,0 +1,24 @@
+{
+	"name": "Documentation",
+	"commandName": "documentation",
+	"commandDescription": "Obtenir de l'aide.",
+	"argName": "page",
+	"argDescription": "Le nom de la page à consulter.",
+	"pages": [
+		{
+			"name": "Général",
+			"content": "Plein d'informations à propos de quelque-chose.\n\n**Supporte le markdown Discord.**\n[Même des liens custom!](https://artivain.com)"
+		},
+		{
+			"name": "Page avec plus de trucs",
+			"content": "Exemple pour une deuxième page dans la commande. Celle-ci a une icône, une image et un auteur, tous des paramètres facultatifs.",
+			"icon": "https://artivain.com/wp-content/uploads/2021/01/logo-artivain-nouveau-fav-512.png",
+			"image": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/960px-Image_created_with_a_mobile_phone.png",
+			"author": {
+				"name": "GoudronViande24",
+				"iconURL": "https://artivain.com/wp-content/uploads/2021/01/logo-artivain-nouveau-fav-512.png",
+				"url": "https://github.com/GoudronViande24"
+			}
+		}
+	]
+}

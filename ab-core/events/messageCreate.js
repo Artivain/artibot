@@ -5,6 +5,7 @@ const { params, locale } = require("../../config.json");
 const config = params;
 const Localizer = require("../localizer");
 const path = require("path");
+const { commons } = require("../loader");
 
 const localizer = new Localizer({
 	lang: locale,
@@ -141,12 +142,12 @@ module.exports = {
 		// execute the final command. Put everything above this.
 
 		try {
-			command.execute(message, args, config);
+			command.execute(message, args, commons);
 		} catch (error) {
 			log("CommandManager", error, "warn", true);
 			message.reply({
 				content: localizer._("An error occured while trying to run this command.")
 			});
 		}
-	},
+	}
 };

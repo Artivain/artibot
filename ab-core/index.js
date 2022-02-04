@@ -2,12 +2,13 @@ const slashManager = require("./slashManager");
 const { checkUpdates } = require("./updater");
 const { log } = require("./logger");
 const Localizer = require("./localizer");
+const loader = require("./loader");
 
-var fs = require("fs");
-var { Client, Collection, Intents } = require("discord.js");
-var chalk = require("chalk");
-var figlet = require("figlet");
-var path = require("path");
+const fs = require("fs");
+const { Client, Collection, Intents } = require("discord.js");
+const chalk = require("chalk");
+const figlet = require("figlet");
+const path = require("path");
 
 console.log(chalk.blue(figlet.textSync('Artibot', {
 	font: 'ANSI Shadow',
@@ -65,7 +66,7 @@ const client = new Client({
 		Intents.FLAGS.GUILD_VOICE_STATES,
 		Intents.FLAGS.GUILD_MEMBERS,
 		Intents.FLAGS.GUILD_PRESENCES
-	],
+	]
 });
 
 /**********************************************************************/
@@ -89,7 +90,7 @@ for (const file of eventFiles) {
 };
 
 /**********************************************************************/
-// Définir les collections des commandes, commandes slash et cooldowns
+// Create collections
 
 client.commands = new Collection();
 client.slashCommands = new Collection();
@@ -101,49 +102,52 @@ client.triggers = new Collection();
 client.global = new Collection();
 
 /**********************************************************************/
-// Initialisation des global
+// Loading manifests
 
-// Catégories des global (par dossier)
+log("Loader", localizer.translate("Loading manifests..."), "log", true);
+const manifests = loader.getManifests();
+log("Loader", localizer.translateWithPlaceholders("Found [[0]] modules.", { placeholders: [manifests.length] }), "log", true);
 
-const globalFolders = fs.readdirSync("./ab-modules/global", { withFileTypes: true })
-	.filter(dirent => dirent.isDirectory())
-	.map(dirent => dirent.name)
-	.filter(name => enabledModules.includes(name) || name == "core");
+// /**********************************************************************/
+// // Initialisation des global
 
-// Enregistrer touts les global dans la collection
+// // Catégories des global (par dossier)
 
-for (const folder of globalFolders) {
-	const global = require(`../ab-modules/global/${folder}/index.js`);
-	client.global.set(global.name, global);
-};
+// const globalFolders = fs.readdirSync("./ab-modules/global", { withFileTypes: true })
+// 	.filter(dirent => dirent.isDirectory())
+// 	.map(dirent => dirent.name)
+// 	.filter(name => enabledModules.includes(name) || name == "core");
+
+// // Enregistrer touts les global dans la collection
+
+// for (const folder of globalFolders) {
+// 	const global = require(`../ab-modules/global/${folder}/index.js`);
+// 	client.global.set(global.name, global);
+// };
 
 /**********************************************************************/
-// Initialisation des commandes par message
-
-// Catégories de commandes (par dossier)
-
-const commandFolders = fs.readdirSync("./ab-modules/commands", { withFileTypes: true })
-	.filter(dirent => dirent.isDirectory())
-	.map(dirent => dirent.name)
-	.filter(name => enabledModules.includes(name) || name == "core");
-
-// Enregistrer toutes les commandes dans la collection
+// Initialize commands
 
 log("CommandManager", localizer.translate("Activating commands:"), "info", true);
 
-for (const folder of commandFolders) {
-	log("CommandManager", ` - ${localizer.translate("Activating module")} ${folder}`, "log", true);
-	const commandFiles = fs
-		.readdirSync(`./ab-modules/commands/${folder}`)
-		.filter((file) => file.endsWith(".js"));
-	for (const file of commandFiles) {
-		const command = require(`../ab-modules/commands/${folder}/${file}`);
+const commandsModules = manifests.filter(manifest => {
+	for (const part of manifest.parts) if (part.type == "command") return true;
+});
+
+for (const module of commandsModules) {
+	log("CommandManager", ` - ${localizer.translate("Activating module")} ${module.name}`, "log", true);
+	const parts = module.parts.filter(part => part.type == "command");
+	for (const part of parts) {
+		const filePath = `../ab-modules/${module.id}/${part.path}`;
+		const command = require(filePath);
 		client.commands.set(command.name, command);
 		log("CommandManager", "   - " + command.name, "log", true);
 	};
 };
 
 if (client.commands.size == 0) log("CommandManager", localizer.translate("No module to activate."), "log", true);
+
+process.exit(0);
 
 /**********************************************************************/
 // Initialisation des commandes slash
