@@ -1,10 +1,10 @@
 const { log } = require("../logger");
-const { params, locale } = require("../../config.json");
 const Localizer = require("artibot-localizer");
 const path = require("path");
+const { commons } = require("../loader");
 
 const localizer = new Localizer({
-	lang: locale,
+	lang: commons.config.locale,
 	filePath: path.resolve(__dirname, "..", "locales.json")
 });
 
@@ -19,16 +19,18 @@ module.exports = {
 
 		if (!interaction.isCommand()) return;
 
-		const command = client.slashCommands.get(interaction.commandName);
+		const data = client.slashCommands.get(interaction.commandName);
 
 		// If the interaction is not a command in cache.
 
-		if (!command) return;
+		if (!data) return;
+
+		const { command } = data;
 
 		// A try to executes the interaction.
 
 		try {
-			await command.execute(interaction, params);
+			await command.execute(interaction, commons);
 		} catch (err) {
 			log("SlashManager", err, "warn", true);
 			await interaction.reply({

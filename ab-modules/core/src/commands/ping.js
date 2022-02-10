@@ -17,7 +17,7 @@ module.exports = {
 				.setDescription(
 					localizer.__("Pong!\n\nThe bot's latency is [[0]]ms.\nThe API's latency is [[1]]ms.", {
 						placeholders: [
-							message.createdTimestamp - Date.now(),
+							Date.now() - message.createdTimestamp,
 							Math.round(message.client.ws.ping)
 						]
 					})

@@ -20,8 +20,8 @@ module.exports = {
 
 	generateData(client) {
 		commandJsonData = [
-			...Array.from(client.slashCommands.values()).map((c) => c.data.toJSON()),
-			...Array.from(client.contextCommands.values()).map((c) => c.data),
+			...Array.from(client.slashCommands.values()).map(({ command }) => command.data.toJSON()),
+			...Array.from(client.contextCommands.values()).map(({ command }) => command.data),
 		];
 	},
 
@@ -29,12 +29,13 @@ module.exports = {
 		try {
 			log("SlashManager", localizer._("Initializing slash commands on Discord..."), "info", true);
 
-			/**
-				Ici on envoit à Discord les commandes slash.
-				Il y a 2 types de commandes, les "guild" et les "global".
-				"Guild" pour les commandes par serveur et "global" pour les commandes globales.
-				En développement, utiliser seulement des commandes "guild" puisqu'elles peuvent se rafraichir
-				instantanéments, alors que les commandes globales peuvent prendre jusqu'à 1 heure.
+			/*
+				Send slash commands and other interactions to Discord API.
+				There is 2 types of interactions, "guild" and "global".
+				"Guild" for interactions in only one server and "gloabl" for interactions
+				in all the servers where the bot has perms.
+				In dev or in bots with only one server, use only "guild" interactions
+				since they can be refreshed more often and there is a shorter cache.
 			*/
 
 			if (devMode) {

@@ -57,15 +57,17 @@ module.exports = {
 
 		const name = args[0].toLowerCase();
 
-		const command =
+		const data =
 			commands.get(name) ||
 			commands.find((c) => c.aliases && c.aliases.includes(name));
 
 		// If it's an invalid command.
 
-		if (!command) {
+		if (!data) {
 			return message.reply({ content: "`" + args[0] + "` " + localizer._("is not a valid command...") });
-		}
+		};
+
+		const { command } = data;
 
 		let commandEmbed = new MessageEmbed()
 			.setColor(config.embedColor)

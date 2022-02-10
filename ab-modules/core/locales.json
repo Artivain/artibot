@@ -216,6 +216,82 @@
 
 		"An update is available: v[[0]] --> v[[1]].\n**Read carefully the documentation before updating!**\nTo install the update, execute the `update force` command.": {
 			"fr": "Une mise à jour est disponible: v[[0]] --> v[[1]].\n**Bien lire la documentation avant de faire la mise à jour!**\nPour faire la mise à jour, faire la commande `update force`."
+		},
+
+		"Make an embed and send it in the channel.": {
+			"fr": "Crée un embed et l'envoie dans le salon."
+		},
+
+		"The title for the embed": {
+			"fr": "Le titre du embed"
+		},
+
+		"The content for the embed (message, rules, infos, etc...)": {
+			"fr": "Le contenu du embed (message, règlements, informations, etc...)"
+		},
+
+		"To show or not the date in the footer": {
+			"fr": "Mettre ou non la date dans le footer"
+		},
+
+		"The text for the footer of the embed": {
+			"fr": "Le texte à mettre dans le footer du embed"
+		},
+
+		"The color at the left of the embed (in hexadecimal notation, ex.: #ffffff)": {
+			"fr": "La couleur qui sera à gauche du embed (en hexadécimal, ex.: #ffffff)"
+		},
+
+		"Create an embed": {
+			"fr": "Créer un embed"
+		},
+
+		"The embed *[[0]]* should have been created.": {
+			"fr": "Le embed *[[0]]* devrait normalement avoir été créé."
+		},
+
+		"Error: you don't have admin perms!": {
+			"fr": "Erreur: vous n'avez pas les permissions administrateur!"
+		},
+
+		"Gives a list of commands or infos about a specific command.": {
+			"fr": "Donne une liste des commandes ou de l'information sur une commande spécifique."
+		},
+
+		"The command to get infos on.": {
+			"fr": "La commande sur laquelle obtenir de l'aide."
+		},
+
+		"Help on command `[[0]]`": {
+			"fr": "Aide pour la commande `[[0]]`"
+		},
+
+		"Parameters:": {
+			"fr": "Paramètres:"
+		},
+
+		"Choices:": {
+			"fr": "Choix:"
+		},
+
+		"Optional": {
+			"fr": "Facultatif"
+		},
+
+		"There is no slash command with the name `[[0]]`.": {
+			"fr": "Il n'y a pas de commande slash avec le nom `[[0]]`."
+		},
+
+		"List of all slash commands": {
+			"fr": "Liste de toutes les commandes slash"
+		},
+
+		"You can also have a list of classic commands with": {
+			"fr": "Tu peux aussi avoir la liste des commandes normales avec"
+		},
+
+		"Learn more about this bot.": {
+			"fr": "En apprendre plus sur ce bot."
 		}
 	}
 }

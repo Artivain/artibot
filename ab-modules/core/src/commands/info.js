@@ -13,7 +13,7 @@ const { localizer } = require("../../index");
 
 module.exports = {
 	name: "info",
-	description: "Donne plein d'informations sur le bot.",
+	description: localizer._("Learn more about this bot."),
 	aliases: ["infos", "about"],
 	cooldown: 5,
 

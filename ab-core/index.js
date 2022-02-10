@@ -125,8 +125,9 @@ log("Loader", localizer.translateWithPlaceholders("Found [[0]] modules.", { plac
 // 	client.global.set(global.name, global);
 // };
 
-/**********************************************************************/
-// Initialize commands
+/*****************************************/
+/* Initialize commands                   */
+/*****************************************/
 
 log("CommandManager", localizer.translate("Activating commands:"), "info", true);
 
@@ -148,7 +149,31 @@ for (const module of commandsModules) {
 	};
 };
 
-if (client.commands.size == 0) log("CommandManager", localizer.translate("No module to activate."), "log", true);
+/*****************************************/
+/* Initialize slash commands             */
+/*****************************************/
+
+log("SlashManager", localizer.translate("Activating slash commands:"), "info", true);
+
+const slashModules = manifests.filter(manifest => {
+	for (const part of manifest.parts) if (part.type == "slashcommand") return true;
+});
+
+for (const module of slashModules) {
+	log("SlashManager", ` - ${localizer.translate("Activating module")} ${module.name}`, "log", true);
+	if (!module.supportedLocales.includes(config.locale)) {
+		log("SlashManager", localizer.__(" -> This module does not support the [[0]] language!", { placeholders: [config.locale] }), "warn", true);
+	};
+	const parts = module.parts.filter(part => part.type == "slashcommand");
+	for (const part of parts) {
+		const filePath = `../ab-modules/${module.id}/${part.path}`;
+		const command = require(filePath);
+		client.slashCommands.set(command.data.name, { command, part, module });
+		log("SlashManager", "   - " + command.data.name, "log", true);
+	};
+};
+
+if (client.commands.size == 0) log("SlashManager", localizer.translate("No module to activate."), "log", true);
 
 // /**********************************************************************/
 // // Initialisation des commandes slash
@@ -339,6 +364,10 @@ checkUpdates().then(response => {
 /**********************************************************************/
 // Initialisation des commandes slash dans l'API Discord
 
-// slashManager.init(token);
-// slashManager.generateData(client);
-// slashManager.register();
+/**********************************************/
+/* Initialize slash commands in Discord's API */
+/**********************************************/
+
+slashManager.init(token);
+slashManager.generateData(client);
+slashManager.register();
