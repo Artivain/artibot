@@ -1,5 +1,5 @@
 const { locale } = require("../../config.json");
-const Localizer = require("../localizer");
+const Localizer = require("artibot-localizer");
 const path = require("path");
 
 const localizer = new Localizer({

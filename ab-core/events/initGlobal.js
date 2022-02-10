@@ -1,7 +1,7 @@
 const { params, locale } = require("../../config.json");
 const { log } = require("../logger");
 const logPrefix = "GlobalManager";
-const Localizer = require("../localizer");
+const Localizer = require("artibot-localizer");
 const path = require("path");
 
 const localizer = new Localizer({

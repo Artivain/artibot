@@ -1,5 +1,6 @@
 {
 	"version": "1.0.0",
+	"localizerVersion": 1,
 	"default": "en",
 	"contributors": [
 		"GoudronViande24"
@@ -196,6 +197,10 @@
 
 		"Found [[0]] modules.": {
 			"fr": "[[0]] modules trouvés."
+		},
+
+		" -> This module does not support the [[0]] language!": {
+			"fr": " -> Ce module ne supporte pas la langue [[0]]!"
 		}
 
 	}

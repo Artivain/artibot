@@ -2,7 +2,7 @@ const { REST } = require("@discordjs/rest");
 const { Routes } = require("discord-api-types/v9");
 const { clientId, testGuildId, devMode, locale } = require("../config.json");
 const { log } = require("./logger");
-const Localizer = require("./localizer");
+const Localizer = require("artibot-localizer");
 const path = require("path");
 
 var rest = new REST({ version: "9" });

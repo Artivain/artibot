@@ -3,7 +3,7 @@ const { prefix, ownerId } = require("../../config.json");
 const { log } = require("../logger");
 const { params, locale } = require("../../config.json");
 const config = params;
-const Localizer = require("../localizer");
+const Localizer = require("artibot-localizer");
 const path = require("path");
 const { commons } = require("../loader");
 
@@ -62,15 +62,15 @@ module.exports = {
 		if (!message.content.startsWith(matchedPrefix) || message.author.bot)
 			return;
 
-		const command =
+		const data =
 			client.commands.get(commandName) ||
-			client.commands.find(
-				(cmd) => cmd.aliases && cmd.aliases.includes(commandName)
-			);
+			client.commands.find(({ command }) => command.aliases && command.aliases.includes(commandName));
 
-		// It it's not a command, return :)
+		// It it's not a command, don't try to execute anything
 
-		if (!command) return;
+		if (!data) return;
+
+		const { command } = data;
 
 		// Owner Only Property, add in your command properties if true.
 

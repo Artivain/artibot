@@ -1,10 +1,26 @@
 // Manifest file for core module
+// Also manage localizer
+
+const Localizer = require("artibot-localizer");
+const path = require("path");
+const { locale } = require("../../config.json");
+
+const localizer = new Localizer({
+	filePath: path.resolve(__dirname, "locales.json"),
+	lang: locale
+});
 
 module.exports = {
+	localizer,
+
 	manifest: {
 
 		version: 1,
 		name: "Artibot Core",
+		supportedLocales: [
+			"en",
+			"fr"
+		],
 		parts: [
 
 			// Commands
@@ -13,26 +29,31 @@ module.exports = {
 				type: "command",
 				path: "src/commands/help.js"
 			},
-			// {
-			// 	id: "info",
-			// 	type: "command",
-			// 	path: "src/commands/info.js"
-			// },
-			// {
-			// 	id: "ping",
-			// 	type: "command",
-			// 	path: "src/commands/ping.js"
-			// },
-			// {
-			// 	id: "update",
-			// 	type: "command",
-			// 	path: "src/commands/update.js"
-			// },
-			// {
-			// 	id: "reload",
-			// 	type: "command",
-			// 	path: "src/commands/reload.js"
-			// },
+			{
+				id: "info",
+				type: "command",
+				path: "src/commands/info.js"
+			},
+			{
+				id: "ping",
+				type: "command",
+				path: "src/commands/ping.js"
+			},
+			{
+				id: "update",
+				type: "command",
+				path: "src/commands/update.js"
+			},
+			{
+				id: "reload",
+				type: "command",
+				path: "src/commands/reload.js"
+			},
+			{
+				id: "resetslashcmd",
+				type: "command",
+				path: "src/commands/resetslashcmd.js"
+			},
 
 			// Slash commands
 			{

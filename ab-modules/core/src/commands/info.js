@@ -1,11 +1,15 @@
 /*
+ * Warning!
+ * Before editing this file, please read this notice:
+ * https://github.com/Artivain/artibot#licence
+ * ---
  * Attention!
  * Avant de modifier ce fichier, merci de lire cette notice:
  * https://github.com/Artivain/artibot#licence
 */
 
 const { MessageEmbed } = require("discord.js");
-const contributors = require("../../../contributors.json");
+const { localizer } = require("../../index");
 
 module.exports = {
 	name: "info",
@@ -13,8 +17,7 @@ module.exports = {
 	aliases: ["infos", "about"],
 	cooldown: 5,
 
-	execute(message, args, config) {
-		var botVersion = require("../../../package.json").version;
+	execute(message, args, { config, contributors, version }) {
 		var devs = "", donators = "";
 		contributors.devs.forEach(dev => {
 			if (dev.discordTag) {
@@ -32,12 +35,11 @@ module.exports = {
 		});
 
 		if (config.botName == "Artibot" || config.botName == "Artibot [dev]") {
-			var description = "Artibot est un bot Discord moderne open-source maintenu par Artivain et la communauté.\n" +
-				"[GitHub](https://github.com/Artivain/artibot)"
+			var description = localizer._("Artibot is a modern and open-source Discord bot maintained by Artivain and it's community.\n") +
+				"[GitHub](https://github.com/Artivain/artibot)";
 		} else {
-			var description = config.botName + " est basé sur Artibot, un bot Discord moderne open-source maintenu par Artivain et la communauté.\n" +
-				"[GitHub](https://github.com/Artivain/artibot)"
-		}
+			var description = localizer.__("[[0]] is based on Artibot, a modern and open-source Discord bot maintained by Artivain and it's community.\n", { placeholders: [config.botName] }) + "[GitHub](https://github.com/Artivain/artibot)";
+		};
 
 		var memberCount = 0;
 		message.client.guilds.cache.forEach((guild) => {
@@ -46,15 +48,15 @@ module.exports = {
 
 		let embed = new MessageEmbed()
 			.setColor(config.embedColor)
-			.setFooter({text: config.botName, iconURL: config.botIcon})
+			.setFooter({ text: config.botName, iconURL: config.botIcon })
 			.setTimestamp()
-			.setTitle("À propos de " + config.botName)
+			.setTitle(localizer.__("About [[0]]", { placeholders: [config.botName] }))
 			.setDescription(description)
-			.addField("Nombre de serveurs", message.client.guilds.cache.size + " serveurs", true)
-			.addField("Nombre d'utilisateurs", memberCount+ " utilisateurs", true)
-			.addField("Version", botVersion)
-			.addField("Développeurs", devs, true)
-			.addField("Donateurs", donators, true);
+			.addField(localizer._("Number of servers"), message.client.guilds.cache.size + " " + localizer._("servers"), true)
+			.addField(localizer._("Number of users"), memberCount + " " + localizer._("users"), true)
+			.addField(localizer._("Version"), version)
+			.addField(localizer._("Developers"), devs, true)
+			.addField(localizer._("Donators"), donators, true);
 
 		message.channel.send({
 			embeds: [embed]

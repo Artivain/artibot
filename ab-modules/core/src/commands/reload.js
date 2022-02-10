@@ -1,66 +1,49 @@
-const { log } = require("../../../ab-core/logger");
-const fs = require("fs");
-const { enabledModules } = require("../../../config.json");
+const { localizer } = require("../../index");
 
 module.exports = {
 	name: "reload",
-	description: "Recharge une commande",
-	args: "<nom de la commande>",
+	description: localizer._("Reloads a command"),
+	args: localizer._("<name of the command>"),
 	ownerOnly: true,
 
-	execute(message, args) {
+	execute(message, args, { log }) {
 
 		const commandName = args[0].toLowerCase();
 
-		const command =
+		const data =
 			message.client.commands.get(commandName) ||
-			message.client.commands.find(
-				(cmd) => cmd.aliases && cmd.aliases.includes(commandName)
-			);
+			message.client.commands.find(({ command }) => command.aliases && command.aliases.includes(commandName));
 
 		// Command returns if there is no such command with the specific command name or alias.
-		if (!command) {
+		if (!data) {
 			return message.channel.send({
-				content: `Il n'y a aucune commande avec le nom ou l'alias \`${commandName}\`, ${message.author}!`,
+				content: localizer.__("There is no command with the name or alias `[[0]]`, [[1]]!", { placeholders: [commandName, message.author] }),
 			});
-		}
-
-		const commandFolders = fs.readdirSync("./ab-modules/commands", { withFileTypes: true })
-			.filter(dirent => dirent.isDirectory())
-			.map(dirent => dirent.name)
-			.filter(name => enabledModules.includes(name) || name == "core");
-
-		const folderName = commandFolders.find((folder) =>
-			fs.readdirSync(`./ab-modules/commands/${folder}`).includes(`${command.name}.js`)
-		);
+		};
 
 		// Deletes current cache of that specified command.
-
+		const filePath = `../../../${data.module.id}/${data.part.path}`;
 		delete require.cache[
-			require.resolve(`../${folderName}/${command.name}.js`)
+			require.resolve(filePath)
 		];
 
 		// Tries Registering command again with new code.
 
 		try {
 
-			const newCommand = require(`../${folderName}/${command.name}.js`);
+			const newCommand = require(filePath);
 
 			// Now registers the command in commands Collection. If it fails, the catch block will be executed.
-			message.client.commands.set(newCommand.name, newCommand);
+			message.client.commands.set(newCommand.name, { command: newCommand, part: data.part, module: data.module });
 
 			// 🎉 Confirmation sent if reloading was successful!
-			message.channel.send({
-				content: `La commande \`${newCommand.name}\` a bien été rafraichie!`
-			});
-			log("CommandManager", `Commande ${newCommand.name} rafraichie.`, "log", true);
+			message.channel.send({ content: localizer.__("The command `[[0]]` has been reloaded!", { placeholders: [newCommand.name] }) });
+			log("CommandManager", localizer.__("Reloaded command [[0]]", { placeholders: [newCommand.name] }), "log", true);
 		} catch (error) {
 			// Catch block executes if there is any error in your code. It logs the error in console and also sends back in discord GUI.
 
 			log("CommandManager", error, "warn", true);
-			message.channel.send({
-				content: `Il y a eu une erreur lors du rechargement de la commadne \`${command.name}\`:\n\`${error.message}\``,
-			});
+			message.channel.send({ content: localizer.__("An error occured while reloading the `[[0]]` command:\n`[[1]]`", { placeholders: [data.command.name, error.message] }) });
 		};
 	}
 };

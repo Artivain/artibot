@@ -1,6 +1,6 @@
 const { log } = require("../logger");
 const { locale } = require("../../config.json");
-const Localizer = require("../localizer");
+const Localizer = require("artibot-localizer");
 const path = require("path");
 
 const localizer = new Localizer({
@@ -13,7 +13,7 @@ module.exports = {
 	once: true,
 
 	execute(client) {
-		const config = require("../../config.json").params;
+		const config = require("../../config.json");
 		if (client.user.username != config.botName) {
 			client.user.setUsername(config.botName)
 				.then(log("Artibot", localizer.__("Bot name updated to [[0]].", { placeholders: [config.botName] }), "log", true));

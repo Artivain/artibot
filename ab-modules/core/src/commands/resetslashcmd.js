@@ -1,55 +1,54 @@
-const { log } = require("../../../ab-core/logger");
 const { MessageActionRow, MessageButton, MessageEmbed } = require('discord.js');
-const { testGuildId } = require("../../../config.json");
+const { localizer } = require("../../index");
 
 module.exports = {
 	name: "resetslashcmd",
-	description: "Supprime le cache des commandes slash auprès de L'API Discord.",
+	description: localizer._("Deletes the cache of the slash commands in Discord's API."),
 	ownerOnly: true,
 
-	async execute(message, args, config) {
+	async execute(message, args, { config, log }) {
 		const waitingEmbed = new MessageEmbed()
 			.setColor("YELLOW")
 			.setTitle("SlashManager")
-			.setFooter({text: config.botName, iconURL: config.botIcon})
+			.setFooter({ text: config.botName, iconURL: config.botIcon })
 			.setTimestamp()
-			.setDescription("Suppression des commandes slash du bot et du serveur de test en cours...\nCeci peut prendre du temps.");
+			.setDescription(localizer._("Deleting saved slash commands from the bot and test server...\nThis can take some time."));
 		const response = await message.reply({
 			embeds: [waitingEmbed]
 		});
 
-		log("SlashManager", "Suppression des commandes slash du bot et du serveur de test en cours...", "log", true);
+		log("SlashManager", localizer._("Deleting saved slash commands from the bot and test server..."), "log", true);
 
 		// Fetch test guild
-		message.client.guilds.fetch(testGuildId)
+		message.client.guilds.fetch(config.testGuildId)
 			.then(guild => {
 				// Remove all commands from test guild
 				guild.commands.set([])
 					.then(() => {
-						log("SlashManager", "Les commandes ont bien étés supprimées du serveur de test.", "log", true);
+						log("SlashManager", localizer._("Slash commands have been deleted from test server."), "log", true);
 
 						// Remove all commands from the client (so in all servers)
 						message.client.application.commands.set([])
 							.then(() => {
-								log("SlashManager", "Les commandes ont bien étés supprimées du bot.", "log", true);
+								log("SlashManager", localizer._("Slash commands have been deleted from the bot."), "log", true);
 
 								const embed = new MessageEmbed()
 									.setColor(config.embedColor)
-									.setTitle("Réinitialisation terminée")
-									.setFooter({text: config.botName, iconURL: config.botIcon})
+									.setTitle(localizer._("Purge finished"))
+									.setFooter({ text: config.botName, iconURL: config.botIcon })
 									.setTimestamp()
-									.setDescription("Les commandes ont bien été supprimées du serveur de test et du bot.\nVous pouvez décider de réenregistrer les commandes maintenant, ou le faire plus tard en redémarrant le bot.");
+									.setDescription(localizer._("The commands have been deleted from the test server and the bot successfully.\nYou can decide to register them back right now, or later by restarting the bot."));
 
 								const row = new MessageActionRow()
 									.addComponents(
 										new MessageButton()
 											.setCustomId("registerslashcommands")
-											.setLabel("Maintenant")
+											.setLabel(localizer._("Now"))
 											.setStyle("PRIMARY")
 											.setEmoji("✅"),
 										new MessageButton()
 											.setCustomId("delete")
-											.setLabel("Plus tard")
+											.setLabel(localizer._("Later"))
 											.setStyle("SECONDARY")
 											.setEmoji("⌛")
 									);
@@ -63,26 +62,22 @@ module.exports = {
 								const errorEmbed = new MessageEmbed()
 									.setColor("RED")
 									.setTitle("SlashManager")
-									.setFooter({text: config.botName, iconURL: config.botIcon})
+									.setFooter({ text: config.botName, iconURL: config.botIcon })
 									.setTimestamp()
-									.setDescription("Une erreur est survenue avec la suppression des commandes du bot.\nConsulter la console pour en savoir plus.");
-								response.edit({
-									embeds: [errorEmbed]
-								});
-								log("SlashManager", "Erreur avec la suppression des commandes slash du bot: " + e, "warn", true);
+									.setDescription(localizer._("An error occured while deleting slash commands from the bot.\nCheck the console for more details."));
+								response.edit({ embeds: [errorEmbed] });
+								log("SlashManager", localizer._("An error occured while deleting slash commands from the bot: ") + e, "warn", true);
 							});
 					})
 					.catch(e => {
 						const errorEmbed = new MessageEmbed()
 							.setColor("RED")
 							.setTitle("SlashManager")
-							.setFooter({text: config.botName, iconURL: config.botIcon})
+							.setFooter({ text: config.botName, iconURL: config.botIcon })
 							.setTimestamp()
-							.setDescription("Une erreur est survenue avec la suppression des commandes du serveur de test.\nConsulter la console pour en savoir plus.");
-						response.edit({
-							embeds: [errorEmbed]
-						});
-						log("SlashManager", "Erreur avec la suppression des commandes dans le serveur de test: " + e, "warn", true);
+							.setDescription(localizer._("An error occured while deleting slash commands from test server.\nCheck the console for more details."));
+						response.edit({ embeds: [errorEmbed] });
+						log("SlashManager", localizer._("An error occured while deleting slash commands from test server: ") + e, "warn", true);
 					});
 			});
 	}

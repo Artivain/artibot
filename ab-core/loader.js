@@ -1,9 +1,11 @@
 const { checkUpdates } = require("./updater");
 const { log } = require("./logger");
-const Localizer = require("./localizer");
+const Localizer = require("artibot-localizer");
 const config = require("../config.json");
 const path = require("path");
 const fs = require("fs");
+const contributors = require("../contributors.json");
+const { version } = require("../package.json");
 
 const localizer = new Localizer({
 	lang: config.locale,
@@ -14,13 +16,14 @@ module.exports = {
 	commons: {
 		checkUpdates,
 		log,
-		Localizer,
-		config
+		config,
+		contributors,
+		version
 	},
 
 	/**
 	 * Get all index files of modules
-	 * @returns {{id: string, name: string, version: Number, parts: {id: string, type: string, path: string}[]}[]} - Array of manifests
+	 * @returns {{id: string, name: string, version: Number, supportedLocales: string[], parts: {id: string, type: string, path: string}[]}[]} - Array of manifests
 	 */
 	getManifests() {
 		let entries = [];

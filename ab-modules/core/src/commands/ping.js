@@ -1,30 +1,34 @@
 const { MessageEmbed } = require("discord.js");
+const { localizer } = require("../../index");
 
 module.exports = {
 	name: "ping",
-	description: 'Vérifie si le bot est en vie.',
+	description: localizer._("Check if the bot is alive."),
 	aliases: ["latence", "latency"],
 	cooldown: 3,
 
-	execute(message, args, config) {
+	execute(message, args, { config }) {
 		if (config.advancedCorePing) {
 			var embed = new MessageEmbed()
 				.setColor(config.embedColor)
 				.setTitle("Ping")
-				.setFooter({text: config.botName, iconURL: config.botIcon})
+				.setFooter({ text: config.botName, iconURL: config.botIcon })
 				.setTimestamp()
 				.setDescription(
-					`Pong!\n\nLa latence du bot est de ${Date.now() - message.createdTimestamp}ms.\nLa latence de l'API est de ${Math.round(message.client.ws.ping)}ms.`
+					localizer.__("Pong!\n\nThe bot's latency is [[0]]ms.\nThe API's latency is [[1]]ms.", {
+						placeholders: [
+							message.createdTimestamp - Date.now(),
+							Math.round(message.client.ws.ping)
+						]
+					})
 				);
 		} else {
 			var embed = new MessageEmbed()
 				.setColor(config.embedColor)
 				.setTitle("Ping")
-				.setFooter({text: config.botName, iconURL: config.botIcon})
+				.setFooter({ text: config.botName, iconURL: config.botIcon })
 				.setTimestamp()
-				.setDescription(
-					`Pong!`
-				);
+				.setDescription(`Pong!`);
 		};
 
 		message.channel.send({ embeds: [embed] });

@@ -1,12 +1,19 @@
 const { MessageEmbed } = require("discord.js");
+const { localizer } = require("../../index");
 
 module.exports = {
 	name: "help",
-	description: "Donne une liste des commandes disponibles avec le bot.",
+	description: localizer._("Gives a list of available commands."),
 	aliases: ["commands", "aide"],
-	usage: "[nom de la commande]",
+	usage: localizer._("[name of the command]"),
 	cooldown: 5,
 
+	/**
+	 * Called when the command is executed
+	 * @param {Message} message - The message from Discord
+	 * @param {string[]} args - List of the arguments from the message
+	 * @param {Object} commons - Commons from Artibot
+	 */
 	execute(message, args, { log, config }) {
 		const { commands } = message.client;
 
@@ -16,15 +23,13 @@ module.exports = {
 
 			let helpEmbed = new MessageEmbed()
 				.setColor(config.embedColor)
-				.setTitle("Liste de toutes les commandes disponibles")
-				.setDescription(
-					"`" + commands.map((command) => command.name).join("`, `") + "`"
-				)
+				.setTitle(localizer._("List of all available commands"))
+				.setDescription("`" + commands.map(({ command }) => command.name).join("`, `") + "`")
 				.setFooter({ text: config.botName, iconURL: config.botIcon })
 				.setTimestamp()
 				.addField(
-					"Utilisation",
-					`\nTu peux envoyer \`${config.prefix}help [nom de la commande]\` pour avoir plus d'information sur une commande spécifique!`
+					localizer._("Usage"),
+					localizer.__("You can send `[[0]]help [name of the command]` to get more info on a specific command!", { placeholders: [config.prefix] })
 				);
 
 			// Attempts to send embed in DMs.
@@ -37,21 +42,14 @@ module.exports = {
 
 					// On validation, reply back.
 
-					message.reply({
-						content: "Je t'ai envoyé un message privé avec la liste de mes commandes",
-					});
+					message.reply({ content: localizer._("I sent you a DM with the list of all my commands") });
 				})
 				.catch((error) => {
 					// On failing, throw error.
 
-					log(
-						"Core",
-						`Impossible d'envoyer la liste des commandes en MP à ${message.author.tag}. Détails de l'erreur: ${error}`,
-						"warn",
-						true
-					);
+					log("Core", `${localizer.__("Impossible to send the list of commands in DM to [[0]]. Details of the error:", { placeholders: [message.author.tag] })} ${error}`, "warn", true);
 
-					message.reply({ content: "On dirait que c'est impossible pour moi de t'envoyer un message privé!" });
+					message.reply({ content: localizer._("Looks like it's impossible for me to send you a DM!") });
 				});
 		}
 
@@ -66,25 +64,25 @@ module.exports = {
 		// If it's an invalid command.
 
 		if (!command) {
-			return message.reply({ content: "`" + args[0] + "` n'est pas une commande valide..." });
+			return message.reply({ content: "`" + args[0] + "` " + localizer._("is not a valid command...") });
 		}
 
 		let commandEmbed = new MessageEmbed()
 			.setColor(config.embedColor)
 			.setFooter({ text: config.botName, iconURL: config.botIcon })
 			.setTimestamp()
-			.setTitle("Aide sur la commande");
+			.setTitle(localizer._("Help on a command"));
 
 		if (command.description)
 			commandEmbed.setDescription(`${command.description}`);
 
 		if (command.aliases)
 			commandEmbed
-				.addField("Alias", `\`${command.aliases.join(", ")}\``, true)
-				.addField("Temps de repos", `${command.cooldown || 3} seconde(s)`, true);
+				.addField(localizer._("Alias"), `\`${command.aliases.join(", ")}\``, true)
+				.addField(localizer._("Cooldown"), `${command.cooldown || 3} ${localizer._("second(s)")}`, true);
 		if (command.usage)
 			commandEmbed.addField(
-				"Utilisation",
+				localizer._("Usage"),
 				`\`${config.prefix}${command.name} ${command.usage}\``,
 				true
 			);
