@@ -1,4 +1,4 @@
-const slashManager = require("./slashManager");
+const interactionManager = require("./interactionManager");
 const { checkUpdates } = require("./updater");
 const { log } = require("./logger");
 const Localizer = require("artibot-localizer");
@@ -176,35 +176,6 @@ for (const module of slashModules) {
 if (client.commands.size == 0) log("SlashManager", localizer.translate("No module to activate."), "log", true);
 
 // /**********************************************************************/
-// // Initialisation des commandes slash
-
-// // Toutes les commandes slash
-
-// const slashCommands = fs.readdirSync("./ab-modules/slash-commands", { withFileTypes: true })
-// 	.filter(dirent => dirent.isDirectory())
-// 	.map(dirent => dirent.name)
-// 	.filter(name => enabledModules.includes(name) || name == "core");
-
-// // Enregistrer les commandes slash dans la collection
-
-// log("SlashManager", localizer.translate("Activating slash commands"), "info", true);
-
-// for (const module of slashCommands) {
-// 	log("SlashManager", ` - ${localizer.translate("Activating module")} ${module}`, "log", true);
-// 	const commandFiles = fs
-// 		.readdirSync(`./ab-modules/slash-commands/${module}`)
-// 		.filter((file) => file.endsWith(".js"));
-
-// 	for (const commandFile of commandFiles) {
-// 		const command = require(`../ab-modules/slash-commands/${module}/${commandFile}`);
-// 		client.slashCommands.set(command.data.name, command);
-// 		log("SlashManager", "   - " + command.data.name, "log", true);
-// 	};
-// };
-
-// if (client.slashCommands.size == 0) log("SlashManager", localizer.translate("No module to activate."), "log", true);
-
-// /**********************************************************************/
 // // Initialisation du menu sur les messages
 
 // const messageMenus = fs.readdirSync("./ab-modules/message-menus", { withFileTypes: true })
@@ -368,6 +339,6 @@ checkUpdates().then(response => {
 /* Initialize slash commands in Discord's API */
 /**********************************************/
 
-slashManager.init(token);
-slashManager.generateData(client);
-slashManager.register();
+interactionManager.init(token);
+interactionManager.generateData(client);
+interactionManager.register();

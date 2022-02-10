@@ -27,7 +27,7 @@ module.exports = {
 
 	async register() {
 		try {
-			log("SlashManager", localizer._("Initializing slash commands on Discord..."), "info", true);
+			log("InteractionManager", localizer._("Initializing interactions and slash commands on Discord..."), "info", true);
 
 			/*
 				Send slash commands and other interactions to Discord API.
@@ -50,10 +50,10 @@ module.exports = {
 				);
 			};
 
-			log("SlashManager", localizer._("Slash commands initialized successfully."), "log", true);
+			log("InteractionManager", localizer._("Interaction and slash commands initialized successfully."), "log", true);
 			return true
 		} catch (error) {
-			log("SlashManager", localizer._("An error occured when initializing slash commands, here are the details: ") + error, "warn", true);
+			log("InteractionManager", localizer._("An error occured when initializing interactions and slash commands, here are the details: ") + error, "warn", true);
 			return false
 		};
 	}
