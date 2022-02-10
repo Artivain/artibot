@@ -175,6 +175,33 @@ for (const module of slashModules) {
 
 if (client.commands.size == 0) log("SlashManager", localizer.translate("No module to activate."), "log", true);
 
+/*****************************************/
+/* Initialize messages menu              */
+/*****************************************/
+
+log("SlashManager", localizer.translate("Activating context menu on messages:"), "info", true);
+
+const messageMenuModules = manifests.filter(manifest => {
+	for (const part of manifest.parts) if (part.type == "messagemenu") return true;
+});
+
+for (const module of messageMenuModules) {
+	log("InteractionManager", ` - ${localizer.translate("Activating module")} ${module.name}`, "log", true);
+	if (!module.supportedLocales.includes(config.locale)) {
+		log("InteractionManager", localizer.__(" -> This module does not support the [[0]] language!", { placeholders: [config.locale] }), "warn", true);
+	};
+	const parts = module.parts.filter(part => part.type == "messagemenu");
+	for (const part of parts) {
+		const filePath = `../ab-modules/${module.id}/${part.path}`;
+		const command = require(filePath);
+		const keyName = `MESSAGE ${command.data.name}`;
+		client.contextCommands.set(keyName, { command, part, module });
+		log("InteractionManager", "   - " + command.data.name, "log", true);
+	};
+};
+
+if (client.commands.size == 0) log("InteractionManager", localizer.translate("No module to activate."), "log", true);
+
 // /**********************************************************************/
 // // Initialisation du menu sur les messages
 

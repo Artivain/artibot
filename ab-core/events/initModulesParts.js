@@ -20,5 +20,12 @@ module.exports = {
 			};
 		});
 
+		// Execute init function of each context menu option if it's defined
+		client.contextCommands.forEach(({ command }) => {
+			if (typeof command.init === "function") {
+				command.init({client, ...commons});
+			};
+		});
+
 	}
 };

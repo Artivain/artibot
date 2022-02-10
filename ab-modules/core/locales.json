@@ -292,6 +292,14 @@
 
 		"Learn more about this bot.": {
 			"fr": "En apprendre plus sur ce bot."
+		},
+
+		"React": {
+			"fr": "Réaction"
+		},
+
+		"Reaction added": {
+			"fr": "Réaction ajoutée"
 		}
 	}
 }

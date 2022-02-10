@@ -1,11 +1,10 @@
-const { params, locale } = require("../../config.json");
-const config = params;
 const { log } = require("../logger");
 const Localizer = require("artibot-localizer");
 const path = require("path");
+const { commons } = require("../loader");
 
 const localizer = new Localizer({
-	lang: locale,
+	lang: commons.config.locale,
 	filePath: path.resolve(__dirname, "..", "locales.json")
 });
 
@@ -33,14 +32,12 @@ module.exports = {
 
 		if (interaction.targetType === "USER") {
 
-			const command = client.contextCommands.get(
-				"USER " + interaction.commandName
-			);
+			const { command } = client.contextCommands.get("USER " + interaction.commandName);
 
 			// A try to execute the interaction.
 
 			try {
-				await command.execute(interaction, config);
+				await command.execute(interaction, commons);
 				return;
 			} catch (err) {
 				log("InteractionManager", err, "warn", true);
@@ -54,14 +51,12 @@ module.exports = {
 		// Checks if the interaction target was a message
 		else if (interaction.targetType === "MESSAGE") {
 
-			const command = client.contextCommands.get(
-				"MESSAGE " + interaction.commandName
-			);
+			const { command } = client.contextCommands.get("MESSAGE " + interaction.commandName);
 
 			// A try to execute the interaction.
 
 			try {
-				await command.execute(interaction, config);
+				await command.execute(interaction, commons);
 				return;
 			} catch (err) {
 				log("InteractionManager", err, "warn", true);
