@@ -23,7 +23,7 @@ module.exports = {
 
 	/**
 	 * Get all index files of modules
-	 * @returns {{id: string, name: string, manifestVersion: Number, moduleVersion: string, supportedLocales: string[], parts: {id: string, type: string, path: string}[]}[]} - Array of manifests
+	 * @returns {{id: string, name: string, manifestVersion: Number, moduleVersion: string, supportedLocales: string[]|"any", parts: {id: string, type: string, path: string}[]}[]} - Array of manifests
 	 */
 	getManifests() {
 		let entries = [];

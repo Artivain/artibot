@@ -139,7 +139,7 @@ const commandsModules = manifests.filter(manifest => {
 
 for (const module of commandsModules) {
 	log("CommandManager", ` - ${localizer.translate("Activating module")} ${module.name} (v${module.moduleVersion})`, "log", true);
-	if (!module.supportedLocales.includes(config.locale)) {
+	if (module.supportedLocales != "any" && !module.supportedLocales.includes(config.locale)) {
 		log("CommandManager", localizer.__(" -> This module does not support the [[0]] language!", { placeholders: [config.locale] }), "warn", true);
 	};
 	const parts = module.parts.filter(part => part.type == "command");
@@ -163,7 +163,7 @@ const slashModules = manifests.filter(manifest => {
 
 for (const module of slashModules) {
 	log("SlashManager", ` - ${localizer.translate("Activating module")} ${module.name} (v${module.moduleVersion})`, "log", true);
-	if (!module.supportedLocales.includes(config.locale)) {
+	if (module.supportedLocales != "any" && !module.supportedLocales.includes(config.locale)) {
 		log("SlashManager", localizer.__(" -> This module does not support the [[0]] language!", { placeholders: [config.locale] }), "warn", true);
 	};
 	const parts = module.parts.filter(part => part.type == "slashcommand");
@@ -189,7 +189,7 @@ const messageMenuModules = manifests.filter(manifest => {
 
 for (const module of messageMenuModules) {
 	log("InteractionManager", ` - ${localizer.translate("Activating module")} ${module.name} (v${module.moduleVersion})`, "log", true);
-	if (!module.supportedLocales.includes(config.locale)) {
+	if (module.supportedLocales != "any" && !module.supportedLocales.includes(config.locale)) {
 		log("InteractionManager", localizer.__(" -> This module does not support the [[0]] language!", { placeholders: [config.locale] }), "warn", true);
 	};
 	const parts = module.parts.filter(part => part.type == "messagemenu");
@@ -218,7 +218,7 @@ const userMenuModules = manifests.filter(manifest => {
 
 for (const module of userMenuModules) {
 	log("InteractionManager", ` - ${localizer.translate("Activating module")} ${module.name} (v${module.moduleVersion})`, "log", true);
-	if (!module.supportedLocales.includes(config.locale)) {
+	if (module.supportedLocales != "any" && !module.supportedLocales.includes(config.locale)) {
 		log("InteractionManager", localizer.__(" -> This module does not support the [[0]] language!", { placeholders: [config.locale] }), "warn", true);
 	};
 	const parts = module.parts.filter(part => part.type == "usermenu");
@@ -245,7 +245,7 @@ const buttonModules = manifests.filter(manifest => {
 
 for (const module of buttonModules) {
 	log("ButtonManager", ` - ${localizer.translate("Activating module")} ${module.name} (v${module.moduleVersion})`, "log", true);
-	if (!module.supportedLocales.includes(config.locale)) {
+	if (module.supportedLocales != "any" && !module.supportedLocales.includes(config.locale)) {
 		log("ButtonManager", localizer.__(" -> This module does not support the [[0]] language!", { placeholders: [config.locale] }), "warn", true);
 	};
 	const parts = module.parts.filter(part => part.type == "button");
@@ -271,7 +271,7 @@ const dropdownModules = manifests.filter(manifest => {
 
 for (const module of dropdownModules) {
 	log("ButtonManager", ` - ${localizer.translate("Activating module")} ${module.name} (v${module.moduleVersion})`, "log", true);
-	if (!module.supportedLocales.includes(config.locale)) {
+	if (module.supportedLocales != "any" && !module.supportedLocales.includes(config.locale)) {
 		log("ButtonManager", localizer.__(" -> This module does not support the [[0]] language!", { placeholders: [config.locale] }), "warn", true);
 	};
 	const parts = module.parts.filter(part => part.type == "selectmenu");
@@ -297,7 +297,7 @@ const triggerModules = manifests.filter(manifest => {
 
 for (const module of triggerModules) {
 	log("TriggerManager", ` - ${localizer.translate("Activating module")} ${module.name} (v${module.moduleVersion})`, "log", true);
-	if (!module.supportedLocales.includes(config.locale)) {
+	if (module.supportedLocales != "any" && !module.supportedLocales.includes(config.locale)) {
 		log("TriggerManager", localizer.__(" -> This module does not support the [[0]] language!", { placeholders: [config.locale] }), "warn", true);
 	};
 	const parts = module.parts.filter(part => part.type == "trigger");
