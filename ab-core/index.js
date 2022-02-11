@@ -56,8 +56,7 @@ if (!clientId || !testGuildId || !enabledModules) {
 	process.exit(1);
 };
 
-// Depuis Discord.js v13, il est obligatoire de déclarer les intents
-
+// Since Discord.js v13, we must declare intents
 const client = new Client({
 	intents: [
 		Intents.FLAGS.GUILDS,
@@ -69,8 +68,9 @@ const client = new Client({
 	]
 });
 
-/**********************************************************************/
-// Gestion des events handler
+/*****************************************/
+/* Manage event handlers                 */
+/*****************************************/
 
 const eventFiles = fs
 	.readdirSync("./ab-core/events")
@@ -89,8 +89,9 @@ for (const file of eventFiles) {
 	};
 };
 
-/**********************************************************************/
-// Create collections
+/*****************************************/
+/* Create collections                   */
+/*****************************************/
 
 client.commands = new Collection();
 client.slashCommands = new Collection();
@@ -99,31 +100,32 @@ client.selectCommands = new Collection();
 client.contextCommands = new Collection();
 client.cooldowns = new Collection();
 client.triggers = new Collection();
-client.global = new Collection();
+client.globals = new Collection();
 
-/**********************************************************************/
-// Loading manifests
+/*****************************************/
+/* Load manifests                        */
+/*****************************************/
 
 log("Loader", localizer.translate("Loading manifests..."), "log", true);
 const manifests = loader.getManifests();
 log("Loader", localizer.translateWithPlaceholders("Found [[0]] modules.", { placeholders: [manifests.length] }), "log", true);
 
-// /**********************************************************************/
-// // Initialisation des global
+/*****************************************/
+/* Initialize globals                    */
+/*****************************************/
 
-// // Catégories des global (par dossier)
+const globalModules = manifests.filter(manifest => {
+	for (const part of manifest.parts) if (part.type == "global") return true;
+});
 
-// const globalFolders = fs.readdirSync("./ab-modules/global", { withFileTypes: true })
-// 	.filter(dirent => dirent.isDirectory())
-// 	.map(dirent => dirent.name)
-// 	.filter(name => enabledModules.includes(name) || name == "core");
-
-// // Enregistrer touts les global dans la collection
-
-// for (const folder of globalFolders) {
-// 	const global = require(`../ab-modules/global/${folder}/index.js`);
-// 	client.global.set(global.name, global);
-// };
+for (const module of globalModules) {
+	const parts = module.parts.filter(part => part.type == "global");
+	for (const part of parts) {
+		const filePath = `../ab-modules/${module.id}/${part.path}`;
+		const global = require(filePath);
+		client.globals.set(part.id, { global, part, module });
+	};
+};
 
 /*****************************************/
 /* Initialize commands                   */
@@ -136,7 +138,7 @@ const commandsModules = manifests.filter(manifest => {
 });
 
 for (const module of commandsModules) {
-	log("CommandManager", ` - ${localizer.translate("Activating module")} ${module.name}`, "log", true);
+	log("CommandManager", ` - ${localizer.translate("Activating module")} ${module.name} (v${module.moduleVersion})`, "log", true);
 	if (!module.supportedLocales.includes(config.locale)) {
 		log("CommandManager", localizer.__(" -> This module does not support the [[0]] language!", { placeholders: [config.locale] }), "warn", true);
 	};
@@ -160,7 +162,7 @@ const slashModules = manifests.filter(manifest => {
 });
 
 for (const module of slashModules) {
-	log("SlashManager", ` - ${localizer.translate("Activating module")} ${module.name}`, "log", true);
+	log("SlashManager", ` - ${localizer.translate("Activating module")} ${module.name} (v${module.moduleVersion})`, "log", true);
 	if (!module.supportedLocales.includes(config.locale)) {
 		log("SlashManager", localizer.__(" -> This module does not support the [[0]] language!", { placeholders: [config.locale] }), "warn", true);
 	};
@@ -186,7 +188,7 @@ const messageMenuModules = manifests.filter(manifest => {
 });
 
 for (const module of messageMenuModules) {
-	log("InteractionManager", ` - ${localizer.translate("Activating module")} ${module.name}`, "log", true);
+	log("InteractionManager", ` - ${localizer.translate("Activating module")} ${module.name} (v${module.moduleVersion})`, "log", true);
 	if (!module.supportedLocales.includes(config.locale)) {
 		log("InteractionManager", localizer.__(" -> This module does not support the [[0]] language!", { placeholders: [config.locale] }), "warn", true);
 	};
@@ -215,7 +217,7 @@ const userMenuModules = manifests.filter(manifest => {
 });
 
 for (const module of userMenuModules) {
-	log("InteractionManager", ` - ${localizer.translate("Activating module")} ${module.name}`, "log", true);
+	log("InteractionManager", ` - ${localizer.translate("Activating module")} ${module.name} (v${module.moduleVersion})`, "log", true);
 	if (!module.supportedLocales.includes(config.locale)) {
 		log("InteractionManager", localizer.__(" -> This module does not support the [[0]] language!", { placeholders: [config.locale] }), "warn", true);
 	};
@@ -242,7 +244,7 @@ const buttonModules = manifests.filter(manifest => {
 });
 
 for (const module of buttonModules) {
-	log("ButtonManager", ` - ${localizer.translate("Activating module")} ${module.name}`, "log", true);
+	log("ButtonManager", ` - ${localizer.translate("Activating module")} ${module.name} (v${module.moduleVersion})`, "log", true);
 	if (!module.supportedLocales.includes(config.locale)) {
 		log("ButtonManager", localizer.__(" -> This module does not support the [[0]] language!", { placeholders: [config.locale] }), "warn", true);
 	};
@@ -268,7 +270,7 @@ const dropdownModules = manifests.filter(manifest => {
 });
 
 for (const module of dropdownModules) {
-	log("ButtonManager", ` - ${localizer.translate("Activating module")} ${module.name}`, "log", true);
+	log("ButtonManager", ` - ${localizer.translate("Activating module")} ${module.name} (v${module.moduleVersion})`, "log", true);
 	if (!module.supportedLocales.includes(config.locale)) {
 		log("ButtonManager", localizer.__(" -> This module does not support the [[0]] language!", { placeholders: [config.locale] }), "warn", true);
 	};
@@ -294,7 +296,7 @@ const triggerModules = manifests.filter(manifest => {
 });
 
 for (const module of triggerModules) {
-	log("TriggerManager", ` - ${localizer.translate("Activating module")} ${module.name}`, "log", true);
+	log("TriggerManager", ` - ${localizer.translate("Activating module")} ${module.name} (v${module.moduleVersion})`, "log", true);
 	if (!module.supportedLocales.includes(config.locale)) {
 		log("TriggerManager", localizer.__(" -> This module does not support the [[0]] language!", { placeholders: [config.locale] }), "warn", true);
 	};

@@ -15,7 +15,8 @@ module.exports = {
 
 	manifest: {
 
-		version: 1,
+		manifestVersion: 1,
+		moduleVersion: require("../../package.json").version,
 		name: "Artibot Core",
 		supportedLocales: [
 			"en",
