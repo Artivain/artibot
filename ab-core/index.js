@@ -309,34 +309,6 @@ for (const module of triggerModules) {
 
 if (client.triggers.size == 0) log("TriggerManager", localizer.translate("No module to activate."), "log", true);
 
-// /**********************************************************************/
-// // Initialisation des triggers
-
-// // Catégories de triggers (par dossier)
-
-// const triggerFolders = fs.readdirSync("./ab-modules/triggers", { withFileTypes: true })
-// 	.filter(dirent => dirent.isDirectory())
-// 	.map(dirent => dirent.name)
-// 	.filter(name => enabledModules.includes(name) || name == "core");
-
-// // Enregistrer les triggers dans la collection
-
-// log("TriggerManager", localizer.translate("Activating triggers:"), "info", true);
-
-// for (const folder of triggerFolders) {
-// 	log("TriggerManager", ` - ${localizer.translate("Activating module")} ${folder}`, "log", true);
-// 	const triggerFiles = fs
-// 		.readdirSync(`./ab-modules/triggers/${folder}`)
-// 		.filter((file) => file.endsWith(".js"));
-// 	for (const file of triggerFiles) {
-// 		const trigger = require(`../ab-modules/triggers/${folder}/${file}`);
-// 		client.triggers.set(trigger.name, trigger);
-// 		log("TriggerManager", "   - " + trigger.name, "log", true);
-// 	};
-// };
-
-// if (client.triggers.size == 0) log("TriggerManager", localizer.translate("No module to activate."), "log", true);
-
 // Connect to Discord API
 client.login(token);
 
