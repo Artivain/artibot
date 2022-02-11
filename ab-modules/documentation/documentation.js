@@ -1,7 +1,9 @@
-/*
- * Module Documentation par GoudronViande24
- * Permet de faire une commande d'aide personalisée à partir d'un simple fichier json.
-*/
+/**
+ * Documentation module
+ * Allows to create a custom help command from a simple json file.
+ * @author GoudronViande24
+ * @since 1.0.0
+ */
 
 const { MessageEmbed } = require("discord.js");
 const { SlashCommandBuilder } = require("@discordjs/builders");
@@ -13,24 +15,24 @@ pages.forEach(page => choices.push([page.name, page.name]));
 module.exports = {
 	// Create command data to register it in Discord's API
 	data: new SlashCommandBuilder()
-	.setName(commandName)
-	.setDescription(commandDescription)
-	.addStringOption(option =>
-		option
-			.setName(argName)
-			.setDescription(argDescription)
-			.setRequired(true)
-			.addChoices(choices)
-	),
+		.setName(commandName)
+		.setDescription(commandDescription)
+		.addStringOption(option =>
+			option
+				.setName(argName)
+				.setDescription(argDescription)
+				.setRequired(true)
+				.addChoices(choices)
+		),
 
-	async execute(interaction, config) {
+	async execute(interaction, { config }) {
 		const page = pages.find(page => page.name == interaction.options.getString(argName));
 
 		var embed = new MessageEmbed()
 			.setColor(config.embedColor)
 			.setTitle(`${name} | ${page.name}`)
 			.setTimestamp()
-			.setFooter({text: config.botName, iconURL: config.botIcon})
+			.setFooter({ text: config.botName, iconURL: config.botIcon })
 			.setDescription(page.content);
 
 		if (page.icon) embed.setThumbnail(page.icon);
