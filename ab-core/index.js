@@ -257,33 +257,31 @@ for (const module of buttonModules) {
 
 if (client.buttonCommands.size == 0) log("ButtonManager", localizer.translate("No module to activate."), "log", true);
 
-// /**********************************************************************/
-// // Initialisation des menu déroulants
+/*****************************************/
+/* Initialize dropdown menus             */
+/*****************************************/
 
-// // Tous les menus déroulants
+log("ButtonManager", localizer.translate("Activating select menus:"), "info", true);
 
-// const selectMenus = fs.readdirSync("./ab-modules/select-menus", { withFileTypes: true })
-// 	.filter(dirent => dirent.isDirectory())
-// 	.map(dirent => dirent.name)
-// 	.filter(name => enabledModules.includes(name) || name == "core");
+const dropdownModules = manifests.filter(manifest => {
+	for (const part of manifest.parts) if (part.type == "selectmenu") return true;
+});
 
-// // Enregistrer les menus déroulants dans la collection
+for (const module of dropdownModules) {
+	log("ButtonManager", ` - ${localizer.translate("Activating module")} ${module.name}`, "log", true);
+	if (!module.supportedLocales.includes(config.locale)) {
+		log("ButtonManager", localizer.__(" -> This module does not support the [[0]] language!", { placeholders: [config.locale] }), "warn", true);
+	};
+	const parts = module.parts.filter(part => part.type == "selectmenu");
+	for (const part of parts) {
+		const filePath = `../ab-modules/${module.id}/${part.path}`;
+		const command = require(filePath);
+		client.selectCommands.set(command.id, { command, part, module });
+		log("ButtonManager", "   - " + command.id, "log", true);
+	};
+};
 
-// log("ButtonManager", localizer.translate("Activating select menus:"), "info", true);
-
-// for (const module of selectMenus) {
-// 	log("ButtonManager", ` - ${localizer.translate("Activating module")} ${module}`, "log", true);
-// 	const commandFiles = fs
-// 		.readdirSync(`./ab-modules/select-menus/${module}`)
-// 		.filter((file) => file.endsWith(".js"));
-// 	for (const commandFile of commandFiles) {
-// 		const command = require(`../ab-modules/select-menus/${module}/${commandFile}`);
-// 		client.selectCommands.set(command.id, command);
-// 		log("ButtonManager", "   - " + command.id, "log", true);
-// 	};
-// };
-
-// if (client.selectCommands.size == 0) log("ButtonManager", localizer.translate("No module to activate."), "log", true);
+if (client.selectCommands.size == 0) log("ButtonManager", localizer.translate("No module to activate."), "log", true);
 
 // /**********************************************************************/
 // // Initialisation des triggers
@@ -313,11 +311,13 @@ if (client.buttonCommands.size == 0) log("ButtonManager", localizer.translate("N
 
 // if (client.triggers.size == 0) log("TriggerManager", localizer.translate("No module to activate."), "log", true);
 
-// Connection à l'API Discord avec le bot
-
+// Connect to Discord API
 client.login(token);
 
-// Vérifier si une mise à jour existe sur le repo GitHub
+/**********************************************/
+/* Check for updates on GitHub                */
+/**********************************************/
+
 checkUpdates().then(response => {
 	if (response.upToDate) {
 		log("Updater", localizer.translateWithPlaceholders("Artibot is up to date (v[[0]]).", { placeholders: [response.currentVersion] }), "info", true);
@@ -327,9 +327,6 @@ checkUpdates().then(response => {
 		log("Updater", localizer.translateWithPlaceholders(" - Latest version: [[0]]", { placeholders: [response.remoteVersion] }), "info", true);
 	};
 });
-
-/**********************************************************************/
-// Initialisation des commandes slash dans l'API Discord
 
 /**********************************************/
 /* Initialize slash commands in Discord's API */

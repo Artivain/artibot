@@ -1,10 +1,10 @@
-const { log } = require("../logger");
-const { params, locale } = require("../../config.json");
 const Localizer = require("artibot-localizer");
 const path = require("path");
+const { commons } = require("../loader");
+const { log } = commons;
 
 const localizer = new Localizer({
-	lang: locale,
+	lang: commons.config.locale,
 	filePath: path.resolve(__dirname, "..", "locales.json")
 });
 
@@ -12,27 +12,26 @@ module.exports = {
 	name: "interactionCreate",
 
 	async execute(interaction) {
-		// Deconstructed client from interaction object.
 		const { client } = interaction;
 
-		// Checks if the interaction is a select menu interaction (to prevent weird bugs)
-
+		// Checks if the interaction is a select menu interaction
 		if (!interaction.isSelectMenu()) return;
 
-		const command = client.selectCommands.get(interaction.customId);
+		const data = client.selectCommands.get(interaction.customId);
 
-		// If the interaction is not a command in cache, return error message.
-
-		if (!command) {
+		// If the interaction is not a registered dropdown, return error message.
+		if (!data) {
 			await require("../messages/defaultSelectError").execute(interaction);
 			return
 		};
 
+		const { command } = data;
+
 		// A try to execute the interaction.
 
 		try {
-			await command.execute(interaction, params);
-			return;
+			await command.execute(interaction, commons);
+			return
 		} catch (err) {
 			log("ButtonManager", err, "warn", true);
 			await interaction.reply({

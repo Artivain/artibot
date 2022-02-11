@@ -27,5 +27,19 @@ module.exports = {
 			};
 		});
 
+		// Execute init function of each button if it's defined
+		client.buttonCommands.forEach(({ command }) => {
+			if (typeof command.init === "function") {
+				command.init({client, ...commons});
+			};
+		});
+
+		// Execute init function of each dropdown if it's defined
+		client.selectCommands.forEach(({ command }) => {
+			if (typeof command.init === "function") {
+				command.init({client, ...commons});
+			};
+		});
+
 	}
 };
