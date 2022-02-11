@@ -283,6 +283,32 @@ for (const module of dropdownModules) {
 
 if (client.selectCommands.size == 0) log("ButtonManager", localizer.translate("No module to activate."), "log", true);
 
+/*****************************************/
+/* Initialize triggers                   */
+/*****************************************/
+
+log("TriggerManager", localizer.translate("Activating triggers:"), "info", true);
+
+const triggerModules = manifests.filter(manifest => {
+	for (const part of manifest.parts) if (part.type == "trigger") return true;
+});
+
+for (const module of triggerModules) {
+	log("TriggerManager", ` - ${localizer.translate("Activating module")} ${module.name}`, "log", true);
+	if (!module.supportedLocales.includes(config.locale)) {
+		log("TriggerManager", localizer.__(" -> This module does not support the [[0]] language!", { placeholders: [config.locale] }), "warn", true);
+	};
+	const parts = module.parts.filter(part => part.type == "trigger");
+	for (const part of parts) {
+		const filePath = `../ab-modules/${module.id}/${part.path}`;
+		const command = require(filePath);
+		client.triggers.set(part.id, { command, part, module });
+		log("TriggerManager", "   - " + part.id, "log", true);
+	};
+};
+
+if (client.triggers.size == 0) log("TriggerManager", localizer.translate("No module to activate."), "log", true);
+
 // /**********************************************************************/
 // // Initialisation des triggers
 

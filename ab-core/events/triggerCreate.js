@@ -1,10 +1,10 @@
-const { log } = require("../logger");
-const { params, locale } = require("../../config.json");
 const Localizer = require("artibot-localizer");
 const path = require("path");
+const { commons } = require("../loader");
+const { log } = commons;
 
 const localizer = new Localizer({
-	lang: locale,
+	lang: commons.config.locale,
 	filePath: path.resolve(__dirname, "..", "locales.json")
 });
 
@@ -12,25 +12,21 @@ module.exports = {
 	name: "messageCreate",
 
 	async execute(message) {
-		const args = message.content.split(/ +/);
-
 		// Ignore bots
-
 		if (message.author.bot) return;
 
 		// Checking ALL triggers using every function and breaking out if a trigger was found.
-		let check;
+		let check = false;
 
-		await message.client.triggers.every(async (trigger) => {
-			if (check == 1) return false;
+		await message.client.triggers.every(async ({ trigger }) => {
+			if (check) return false;
 			await trigger.name.every(async (name) => {
-				if (check == 1) return false;
+				if (check) return false;
 
 				// If validated, it will try to execute the trigger.
-
 				if (message.content.includes(name)) {
 					try {
-						trigger.execute(message, params);
+						trigger.execute(message, commons);
 					} catch (error) {
 						// If checks fail, reply back!
 
@@ -40,7 +36,7 @@ module.exports = {
 						});
 					};
 
-					check = 1;
+					check = true;
 					return false
 				};
 			});

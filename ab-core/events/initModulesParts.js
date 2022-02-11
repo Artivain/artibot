@@ -41,5 +41,12 @@ module.exports = {
 			};
 		});
 
+		// Execute init function of each trigger if it's defined
+		client.triggers.forEach(({ command }) => {
+			if (typeof command.init === "function") {
+				command.init({client, ...commons});
+			};
+		});
+
 	}
 };
