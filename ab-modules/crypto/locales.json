@@ -1,0 +1,25 @@
+{
+	"version": "1.0.0",
+	"localizerVersion": 1,
+	"default": "en",
+	"contributors": [
+		"GoudronViande24"
+	],
+	"strings": {
+		"Get the current value of a cryptocurrency.": {
+			"fr": "Voir la valeur de certaines cryptomonaies."
+		},
+
+		"The cryptocurrency to look for": {
+			"fr": "La cryptomonnaie à vérifier"
+		},
+
+		"Actual value": {
+			"fr": "Valeur actuelle"
+		},
+
+		"Data fetched from Coinbase": {
+			"fr": "Données fournies par Coinbase"
+		}
+	}
+}
