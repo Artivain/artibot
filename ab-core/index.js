@@ -179,7 +179,7 @@ if (client.commands.size == 0) log("SlashManager", localizer.translate("No modul
 /* Initialize messages menu              */
 /*****************************************/
 
-log("SlashManager", localizer.translate("Activating context menu on messages:"), "info", true);
+log("InteractionManager", localizer.translate("Activating context menu on messages:"), "info", true);
 
 const messageMenuModules = manifests.filter(manifest => {
 	for (const part of manifest.parts) if (part.type == "messagemenu") return true;
@@ -202,35 +202,32 @@ for (const module of messageMenuModules) {
 
 if (client.commands.size == 0) log("InteractionManager", localizer.translate("No module to activate."), "log", true);
 
-// /**********************************************************************/
-// // Initialisation du menu sur les messages
+/*****************************************/
+/* Initialize users menu              */
+/*****************************************/
 
-// const messageMenus = fs.readdirSync("./ab-modules/message-menus", { withFileTypes: true })
-// 	.filter(dirent => dirent.isDirectory())
-// 	.map(dirent => dirent.name)
-// 	.filter(name => enabledModules.includes(name) || name == "core");
+log("InteractionManager", localizer.translate("Activating context menu on users:"), "info", true);
 
-// // Enregistrer le menu des messages dans la collection
+const userMenuModules = manifests.filter(manifest => {
+	for (const part of manifest.parts) if (part.type == "usermenu") return true;
+});
 
-// log("InteractionManager", localizer.translate("Activating context menu on messages:"), "info", true);
+for (const module of userMenuModules) {
+	log("InteractionManager", ` - ${localizer.translate("Activating module")} ${module.name}`, "log", true);
+	if (!module.supportedLocales.includes(config.locale)) {
+		log("InteractionManager", localizer.__(" -> This module does not support the [[0]] language!", { placeholders: [config.locale] }), "warn", true);
+	};
+	const parts = module.parts.filter(part => part.type == "usermenu");
+	for (const part of parts) {
+		const filePath = `../ab-modules/${module.id}/${part.path}`;
+		const command = require(filePath);
+		const keyName = `USER ${command.data.name}`;
+		client.contextCommands.set(keyName, { command, part, module });
+		log("InteractionManager", "   - " + command.data.name, "log", true);
+	};
+};
 
-// for (const folder of messageMenus) {
-// 	log("InteractionManager", ` - ${localizer.translate("Activating module")} ${folder}`, "log", true);
-// 	const files = fs
-// 		.readdirSync(`./ab-modules/message-menus/${folder}`)
-// 		.filter((file) => file.endsWith(".js"));
-
-// 	for (const file of files) {
-// 		const menu = require(`../ab-modules/message-menus/${folder}/${file}`);
-// 		const keyName = `MESSAGE ${menu.data.name}`;
-// 		client.contextCommands.set(keyName, menu);
-// 		log("InteractionManager", "   - " + menu.data.name, "log", true);
-// 	};
-// };
-
-// const interactionAmmount = client.contextCommands.size;
-
-// if (interactionAmmount == 0) log("InteractionManager", localizer.translate("No module to activate."), "log", true);
+if (client.commands.size == 0) log("InteractionManager", localizer.translate("No module to activate."), "log", true);
 
 // /**********************************************************************/
 // // Initialisation du menu sur les utilisateurs

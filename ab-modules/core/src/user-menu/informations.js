@@ -1,22 +1,21 @@
 const { MessageEmbed } = require("discord.js");
 const moment = require("moment");
 const humanizeDuration = require("humanize-duration");
-const { ownerId } = require("../../../config.json");
-const contributors = require("../../../contributors.json");
+const { localizer } = require("../../index");
 
 module.exports = {
 	data: {
-		name: "Informations",
+		name: localizer._("Informations"),
 		type: 2 // 2 is for user context menus
 	},
 
-	async execute(interaction, config) {
+	async execute(interaction, { config, contributors }) {
 
 		const infos = interaction.options._hoistedOptions[0].member;
-		var type = "Utilisateur";
+		var type = localizer._("User");
 		const now = moment();
 		const since = humanizeDuration(now - moment(infos.joinedTimestamp), {
-			language: "fr",
+			language: config.locale,
 			delimiter: ", ",
 			largest: 2,
 			round: true,
@@ -24,42 +23,40 @@ module.exports = {
 		});
 
 		if (infos.user.bot) {
-			type = "Bot";
+			type = localizer._("Bot");
 		} else if (infos.user.system) {
-			type = "Système";
+			type = localizer._("System");
 		};
 
 		var more = "";
 		if (infos.guild.ownerId === infos.user.id) {
-			more += "\nEst le propriétaire de ce serveur.";
-		}
-		if (ownerId === infos.user.id) {
-			more += "\nEst le propriétaire de ce bot.";
-		}
+			more += localizer._("\nIs the owner of this server.");
+		};
+		if (config.ownerId === infos.user.id) {
+			more += localizer._("\nIs the owner of this bot.");
+		};
 		if (contributors.devs.find(element => element.discordId === infos.user.id)) {
-			more += "\n**Est un des supers développeurs de ce bot!**";
-		}
+			more += localizer._("\n**Is one of the super devs of this bot!**");
+		};
 		if (contributors.donators.find(element => element.discordId === infos.user.id)) {
-			more += "\n**Est un des supers donateurs de ce bot!**";
-		}
+			more += localizer._("\n**Is one of the super donators of this bot!**");
+		};
 
 		const embed = new MessageEmbed()
 			.setColor(config.embedColor)
 			.setTimestamp()
-			.setFooter({text: config.botName, iconURL: config.botIcon})
-			.setTitle("Informations sur l'utilisateur")
+			.setFooter({ text: config.botName, iconURL: config.botIcon })
+			.setTitle(localizer._("Information on the user"))
 			.setDescription(
-				"Nom sur le serveur: " + (infos.nickname ? infos.nickname : infos.user.username) + "\n" +
-				"Tag: `" + infos.user.username + "#" + infos.user.discriminator + "`\n" +
-				"ID: `" + infos.user.id + "`" +
+				localizer._("Name on the server: ") + (infos.nickname ? infos.nickname : infos.user.username) + "\n" +
+				localizer._("Tag:") + " `" + infos.user.username + "#" + infos.user.discriminator + "`\n" +
+				localizer._("ID:") + " `" + infos.user.id + "`" +
 				more
 			)
-			.addField("Type", type)
-			.addField("Sur le serveur depuis", since);
+			.addField(localizer._("Type"), type)
+			.addField("On this server since", since);
 
-		await interaction.reply({
-			embeds: [embed]
-		});
+		await interaction.reply({ embeds: [embed] });
 		return;
 	},
 };

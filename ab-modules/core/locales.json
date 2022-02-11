@@ -300,6 +300,70 @@
 
 		"Reaction added": {
 			"fr": "Réaction ajoutée"
+		},
+
+		"Avatar": {
+			"fr": "Avatar"
+		},
+
+		"Here is the profile picture of <@[[0]]>:": {
+			"fr": "Voici la photo de profil de <@[[0]]>:"
+		},
+
+		"Informations": {
+			"fr": "Informations"
+		},
+
+		"User": {
+			"fr": "Utilisateur"
+		},
+
+		"Bot": {
+			"fr": "Bot"
+		},
+
+		"System": {
+			"fr": "Système"
+		},
+
+		"\nIs the owner of this server.": {
+			"fr": "\nEst le propriétaire de ce serveur."
+		},
+
+		"\nIs the owner of this bot.": {
+			"fr": "\nEst le propriétaire de ce bot."
+		},
+
+		"\n**Is one of the super devs of this bot!**": {
+			"fr": "\n**Est un des supers développeurs de ce bot!**"
+		},
+
+		"\n**Is one of the super donators of this bot!**": {
+			"fr": "\n**Est un des supers donateurs de ce bot!**"
+		},
+
+		"Information on the user": {
+			"fr": "Informations sur l'utilisateur"
+		},
+
+		"Name on the server: ": {
+			"fr": "Nom sur le serveur: "
+		},
+
+		"Tag:": {
+			"fr": "Tag:"
+		},
+
+		"ID:": {
+			"fr": "ID:"
+		},
+
+		"Type": {
+			"fr": "Type"
+		},
+
+		"On this server since": {
+			"fr": "Sur le serveur depuis"
 		}
 	}
 }
