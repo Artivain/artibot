@@ -2,8 +2,8 @@ const { MessageActionRow, MessageButton, MessageEmbed } = require('discord.js');
 const { localizer } = require("../../index");
 
 module.exports = {
-	name: "resetslashcmd",
-	description: localizer._("Deletes the cache of the slash commands in Discord's API."),
+	name: "resetinteractions",
+	description: localizer._("Deletes the cache of the interactions and slash commands in Discord's API."),
 	ownerOnly: true,
 
 	async execute(message, args, { config, log }) {
@@ -42,7 +42,7 @@ module.exports = {
 								const row = new MessageActionRow()
 									.addComponents(
 										new MessageButton()
-											.setCustomId("registerslashcommands")
+											.setCustomId("registerinteractions")
 											.setLabel(localizer._("Now"))
 											.setStyle("PRIMARY")
 											.setEmoji("✅"),

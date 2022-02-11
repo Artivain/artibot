@@ -1,7 +1,7 @@
 module.exports = {
 	id: "delete",
 
-	async execute(interaction, config) {
+	async execute(interaction) {
 		await interaction.message.delete();
 		return
 	}

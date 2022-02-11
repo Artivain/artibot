@@ -200,7 +200,9 @@ for (const module of messageMenuModules) {
 	};
 };
 
-if (client.commands.size == 0) log("InteractionManager", localizer.translate("No module to activate."), "log", true);
+const interactionAmmount = client.contextCommands.size;
+
+if (interactionAmmount == 0) log("InteractionManager", localizer.translate("No module to activate."), "log", true);
 
 /*****************************************/
 /* Initialize users menu              */
@@ -227,63 +229,33 @@ for (const module of userMenuModules) {
 	};
 };
 
-if (client.commands.size == 0) log("InteractionManager", localizer.translate("No module to activate."), "log", true);
+if (interactionAmmount == client.contextCommands.size) log("InteractionManager", localizer.translate("No module to activate."), "log", true);
 
-// /**********************************************************************/
-// // Initialisation du menu sur les utilisateurs
+/*****************************************/
+/* Initialize buttons                    */
+/*****************************************/
 
-// const userMenus = fs.readdirSync("./ab-modules/user-menus", { withFileTypes: true })
-// 	.filter(dirent => dirent.isDirectory())
-// 	.map(dirent => dirent.name)
-// 	.filter(name => enabledModules.includes(name) || name == "core");
+log("ButtonManager", localizer.translate("Activating buttons:"), "info", true);
 
-// // Enregistrer le menu des utilisateurs dans la collection
+const buttonModules = manifests.filter(manifest => {
+	for (const part of manifest.parts) if (part.type == "button") return true;
+});
 
-// log("InteractionManager", localizer.translate("Activating context menu on users:"), "info", true);
+for (const module of buttonModules) {
+	log("ButtonManager", ` - ${localizer.translate("Activating module")} ${module.name}`, "log", true);
+	if (!module.supportedLocales.includes(config.locale)) {
+		log("ButtonManager", localizer.__(" -> This module does not support the [[0]] language!", { placeholders: [config.locale] }), "warn", true);
+	};
+	const parts = module.parts.filter(part => part.type == "button");
+	for (const part of parts) {
+		const filePath = `../ab-modules/${module.id}/${part.path}`;
+		const command = require(filePath);
+		client.buttonCommands.set(command.id, { command, part, module });
+		log("ButtonManager", "   - " + command.id, "log", true);
+	};
+};
 
-// for (const folder of userMenus) {
-// 	log("InteractionManager", ` - ${localizer.translate("Activating module")} ${folder}`, "log", true);
-// 	const files = fs
-// 		.readdirSync(`./ab-modules/user-menus/${folder}`)
-// 		.filter((file) => file.endsWith(".js"));
-// 	for (const file of files) {
-// 		const menu = require(`../ab-modules/user-menus/${folder}/${file}`);
-// 		const keyName = `USER ${menu.data.name}`;
-// 		client.contextCommands.set(keyName, menu);
-// 		log("InteractionManager", "   - " + menu.data.name, "log", true);
-// 	};
-// };
-
-// if (interactionAmmount == client.contextCommands.size) log("InteractionManager", localizer.translate("No module to activate."), "log", true);
-
-// /**********************************************************************/
-// // Initialisation des bouton
-
-// // Tous les bouton
-
-// const buttonCommands = fs.readdirSync("./ab-modules/buttons", { withFileTypes: true })
-// 	.filter(dirent => dirent.isDirectory())
-// 	.map(dirent => dirent.name)
-// 	.filter(name => enabledModules.includes(name) || name == "core");
-
-// // Enregistrer tous les boutons dans la collection
-
-// log("ButtonManager", localizer.translate("Activating buttons:"), "info", true);
-
-// for (const module of buttonCommands) {
-// 	log("ButtonManager", ` - ${localizer.translate("Activating module")} ${module}`, "log", true);
-// 	const commandFiles = fs
-// 		.readdirSync(`./ab-modules/buttons/${module}`)
-// 		.filter((file) => file.endsWith(".js"));
-
-// 	for (const commandFile of commandFiles) {
-// 		const command = require(`../ab-modules/buttons/${module}/${commandFile}`);
-// 		client.buttonCommands.set(command.id, command);
-// 		log("ButtonManager", "   - " + command.id, "log", true);
-// 	};
-// };
-
-// if (client.buttonCommands.size == 0) log("ButtonManager", localizer.translate("No module to activate."), "log", true);
+if (client.buttonCommands.size == 0) log("ButtonManager", localizer.translate("No module to activate."), "log", true);
 
 // /**********************************************************************/
 // // Initialisation des menu déroulants

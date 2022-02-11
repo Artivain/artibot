@@ -50,9 +50,9 @@ module.exports = {
 				path: "src/commands/reload.js"
 			},
 			{
-				id: "resetslashcmd",
+				id: "resetinteractions",
 				type: "command",
-				path: "src/commands/resetslashcmd.js"
+				path: "src/commands/resetinteractions.js"
 			},
 
 			// Slash commands
@@ -103,9 +103,9 @@ module.exports = {
 				path: "src/buttons/delete.js"
 			},
 			{
-				id: "registerslashcommands.js",
+				id: "registerinteractions",
 				type: "button",
-				path: "src/buttons/registerslashcommands.js"
+				path: "src/buttons/registerinteractions.js"
 			}
 		]
 	}

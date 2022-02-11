@@ -130,8 +130,8 @@
 			"fr": "Il y a eu une erreur lors du rechargement de la commande `[[0]]`:\n`[[1]]`"
 		},
 
-		"Deletes the cache of the slash commands in Discord's API.": {
-			"fr": "Supprime le cache des commandes slash auprès de L'API Discord."
+		"Deletes the cache of the interactions and slash commands in Discord's API.": {
+			"fr": "Supprime le cache des intéractions et des commandes slash auprès de L'API Discord."
 		},
 
 		"Deleting saved slash commands from the bot and test server...\nThis can take some time.": {
@@ -364,6 +364,22 @@
 
 		"On this server since": {
 			"fr": "Sur le serveur depuis"
+		},
+
+		"You do not have the authorization to do this.": {
+			"fr": "Vous n'avez pas l'autorisation de faire ceci."
+		},
+
+		"Initializing interactions...\nThis can take some time.": {
+			"fr": "Initialisation des intéractions...\nCeci peut prendre du temps."
+		},
+
+		"The interactions have been initialized in Discord API.": {
+			"fr": "Les intéractions ont bien été initialisées auprès de Discord."
+		},
+
+		"An error occured while initializing interactions in Discord API.\nCheck the console for more details.": {
+			"fr": "Une erreur est survenue avec l'initialisation des intéractions auprès de Discord.\nConsulter la console pour plus de détails."
 		}
 	}
 }
