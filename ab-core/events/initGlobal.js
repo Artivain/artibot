@@ -26,6 +26,9 @@ module.exports = {
 
 		client.globals.forEach(({ global, part, module }) => {
 			log(logPrefix, " - " + global.name + " (v" + (part.version ? part.version : module.moduleVersion) + ")", "log", true);
+			if (!module.supportedLocales.includes(commons.config.locale)) {
+				log(logPrefix, localizer.__(" -> This module does not support the [[0]] language!", { placeholders: [commons.config.locale] }), "warn", true);
+			};
 			setTimeout(() => {
 				global.execute({ client, ...commons });
 			}, 1000);
