@@ -1,5 +1,13 @@
 const { MessageEmbed } = require("discord.js");
 const axios = require("axios").default;
+const Localizer = require("artibot-localizer");
+const path = require("path");
+const { locale } = require("../../config.json");
+
+const localizer = new Localizer({
+	lang: locale,
+	filePath: path.resolve(__dirname, "locales.json")
+});
 
 const options = {
 	url: "https://icanhazdadjoke.com/",
@@ -12,17 +20,17 @@ const options = {
 
 module.exports = {
 	name: "dadjoke",
-	description: "Dit une blague de Chuck Norris.",
+	description: localizer._("Tells a dad joke."),
 
-	async execute(message, args, config) {
+	async execute(message, args, { config }) {
 		const reponse = await axios(options);
 		const joke = reponse.data.joke;
 
 		let embed = new MessageEmbed()
 			.setColor(config.embedColor)
-			.setTitle("Dad joke")
+			.setTitle(localizer._("Dad joke"))
 			.setDescription(joke)
-			.setFooter({text: config.botName, iconURL: config.botIcon})
+			.setFooter({ text: config.botName, iconURL: config.botIcon })
 			.setTimestamp();
 
 		await message.reply({

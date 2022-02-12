@@ -26,7 +26,7 @@ module.exports = {
 				// If validated, it will try to execute the trigger.
 				if (message.content.includes(trigger)) {
 					try {
-						trigger.execute(message, commons);
+						command.execute(message, commons);
 					} catch (error) {
 						// If checks fail, reply back!
 

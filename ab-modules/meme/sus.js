@@ -1,9 +1,9 @@
 module.exports = {
-	name: [" sus "],
+	triggers: [" sus ", " sus", "sus "],
 
 	execute(message) {
 		message.reply({
-			content: ":sus:",
+			content: "ඞ",
 		});
-	},
+	}
 };
