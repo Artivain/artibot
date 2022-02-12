@@ -1,7 +1,8 @@
-/*
- * Module Giveaways par GoudronViande24
- * Basé sur le module discord-giveaways par @androz2091
-*/
+/**
+ * Giveaway module based on discord-giveaways by androz2091
+ * @author GoudronViande24
+ * @since 1.0.0
+ */
 
 const { MessageEmbed, Permissions } = require("discord.js");
 const { SlashCommandBuilder } = require("@discordjs/builders");
@@ -9,7 +10,14 @@ const { GiveawaysManager } = require('discord-giveaways');
 const fs = require("fs");
 const path = require("path");
 const ms = require('ms');
+const Localizer = require("artibot-localizer");
+const { locale } = require("../../config.json");
+
 var manager;
+const localizer = new Localizer({
+	filePath: path.resolve(__dirname, "locales.json"),
+	lang: locale
+});
 
 module.exports = {
 	// ########################################
@@ -18,40 +26,38 @@ module.exports = {
 
 	data: new SlashCommandBuilder()
 		.setName("giveaway")
-		.setDescription(
-			"Créer et gérer des giveaways."
-		)
+		.setDescription(localizer._("Create and manage giveaways."))
 		.addSubcommand(subcommand =>
 			subcommand
 				.setName('create')
-				.setDescription('Créer un giveaway')
+				.setDescription(localizer._("Create a giveaway"))
 				.addStringOption(option =>
 					option
-						.setName("prix")
-						.setDescription("Le prix qui sera à gagner dans le giveaway.")
+						.setName("prize")
+						.setDescription(localizer._("The prize to win in this giveaway."))
 						.setRequired(true)
 				)
 				.addStringOption(option =>
 					option
-						.setName("durée")
-						.setDescription("Le temps avant la fin du giveaway. Exemples: '5h', '2d'")
+						.setName("duration")
+						.setDescription(localizer._("Time before the end of the giveaway. Examples: '5h', '2d'"))
 						.setRequired(true)
 				)
 				.addIntegerOption(option =>
 					option
-						.setName("gagnants")
-						.setDescription("Nombre de gagnants.")
+						.setName("winners")
+						.setDescription(localizer._("How much people will win the prize."))
 						.setRequired(true)
 				)
 				.addUserOption(option =>
 					option
-						.setName("créateur")
-						.setDescription("Utilisateur qui héberge le giveaway (sponsor, donateur, etc.). Par défaut, c'est toi.")
+						.setName("host")
+						.setDescription(localizer._("User that will host the giveaway (sponsor, donator, etc.). By default, it is you."))
 				)
 				.addChannelOption(option =>
 					option
 						.setName("channel")
-						.setDescription("Le salon dans lequel le giveaway sera publié.")
+						.setDescription(localizer._("The channel in which to publish the giveaway."))
 				)
 		)
 		.addSubcommand(subcommand =>
@@ -60,72 +66,72 @@ module.exports = {
 				.setDescription('Créer un drop')
 				.addStringOption(option =>
 					option
-						.setName("prix")
-						.setDescription("Le prix qui sera à gagner dans le drop.")
+						.setName("prize")
+						.setDescription(localizer._("The prize to win in this drop."))
 						.setRequired(true)
 				)
 				.addIntegerOption(option =>
 					option
-						.setName("gagnants")
-						.setDescription("Nombre de gagnants.")
+						.setName("winners")
+						.setDescription(localizer._("How much people will win the prize."))
 						.setRequired(true)
 				)
 				.addUserOption(option =>
 					option
-						.setName("créateur")
-						.setDescription("Utilisateur qui héberge le drop (sponsor, donateur, etc.). Par défaut, c'est toi.")
+						.setName("host")
+						.setDescription(localizer._("User that will host the giveaway (sponsor, donator, etc.). By default, it is you."))
 				)
 				.addChannelOption(option =>
 					option
 						.setName("channel")
-						.setDescription("Le salon dans lequel le drop sera lancé.")
+						.setDescription(localizer._("The channel in which to start the drop."))
 				)
 		)
 		.addSubcommand(subcommand =>
 			subcommand
 				.setName('reroll')
-				.setDescription('Trouver un ou plusieurs nouveau(x) gagnant(s) pour un giveaway terminé')
+				.setDescription(localizer._("Find new winner(s) for an ended giveaway"))
 				.addStringOption(option =>
 					option
 						.setName("id")
-						.setDescription("Le ID du message du giveaway.")
+						.setDescription(localizer._("The giveaway's message ID."))
 						.setRequired(true)
 				)
 		)
 		.addSubcommand(subcommand =>
 			subcommand
 				.setName('edit')
-				.setDescription('Modifier un giveaway.')
+				.setDescription(localizer._("Edit a giveaway."))
 				.addStringOption(option =>
 					option
 						.setName("id")
-						.setDescription("Le ID du message du giveaway.")
+						.setDescription(localizer._("The giveaway's message ID."))
 						.setRequired(true)
 				)
 				.addStringOption(option =>
 					option
 						.setName("option")
-						.setDescription("Quelle option modifier dans le giveaway?")
-						.addChoice("Nombre de gagnants", "winnerCount")
-						.addChoice("Prix à gagner", "prize")
-						.addChoice("Ajouter du temps", "time")
+						.setDescription(localizer._("What to edit in the giveaway?"))
+						.addChoice(localizer._("How much people will win the prize."), "winnerCount")
+						.addChoice(localizer._("Prize to win"), "prize")
+						.addChoice(localizer._("Add time"), "time")
 						.setRequired(true)
 				)
 				.addStringOption(option =>
 					option
-						.setName("valeur")
-						.setDescription("La valeur de la modification.")
+						.setName("value")
+						.setDescription(localizer._("The value of the option to edit."))
 						.setRequired(true)
 				)
 		)
 		.addSubcommand(subcommand =>
 			subcommand
 				.setName('end')
-				.setDescription('Termine immédiatement un giveaway.')
+				.setDescription(localizer._("Ends a giveaway immediately."))
 				.addStringOption(option =>
 					option
 						.setName("id")
-						.setDescription("Le ID du message du giveaway.")
+						.setDescription(localizer._("The giveaway's message ID."))
 						.setRequired(true)
 				)
 		),
@@ -134,11 +140,11 @@ module.exports = {
 	// Initialize the manager on bot statup
 	// ########################################
 
-	async init(client, config) {
+	async init({ client, config, log }) {
 		// Verify that the data directory exists
 		if (!fs.existsSync(path.resolve(__dirname, "data", "giveaways.json"))) {
 			if (!fs.existsSync(path.resolve(__dirname, "data"))) {
-				console.log("[Giveaways] Création du dossier pour le stockage des données");
+				log("Giveaways", localizer._("Creating the directory to store the data"));
 				fs.mkdirSync(path.resolve(__dirname, "data"));
 			};
 		};
@@ -154,10 +160,10 @@ module.exports = {
 			}
 		});
 
-		console.log("[Giveaways] Prêt.");
+		log("Giveaways", localizer._("Ready."));
 	},
 
-	async execute(interaction, config) {
+	async execute(interaction, { config }) {
 		const command = interaction.options.getSubcommand();
 
 		// ########################################
@@ -173,8 +179,8 @@ module.exports = {
 					.setColor("RED")
 					.setTitle("Giveaways")
 					.setTimestamp()
-					.setFooter({text: config.botName, iconURL: config.botIcon})
-					.setDescription("Giveaway introuvable.");
+					.setFooter({ text: config.botName, iconURL: config.botIcon })
+					.setDescription(localizer._("Giveaway not found."));
 
 				await interaction.reply({
 					embeds: [errorEmbed],
@@ -192,8 +198,8 @@ module.exports = {
 					.setColor("RED")
 					.setTitle("Giveaways")
 					.setTimestamp()
-					.setFooter({text: config.botName, iconURL: config.botIcon})
-					.setDescription("**Vous ne pouvez pas exécuter cette commande.**\nVous devez avoir les permissions administrateur ou être celui qui héberge le giveaway.");
+					.setFooter({ text: config.botName, iconURL: config.botIcon })
+					.setDescription(localizer._("**You cannot execute this command.**\nYou must have the administrator permissions or be the host of the giveaway."));
 
 				await interaction.reply({
 					embeds: [errorEmbed],
@@ -208,8 +214,8 @@ module.exports = {
 					.setColor("RED")
 					.setTitle("Giveaways")
 					.setTimestamp()
-					.setFooter({text: config.botName, iconURL: config.botIcon})
-					.setDescription("Le giveaway est déjà terminé.");
+					.setFooter({ text: config.botName, iconURL: config.botIcon })
+					.setDescription(localizer._("The giveaway is already ended."));
 
 				await interaction.reply({
 					embeds: [errorEmbed],
@@ -224,16 +230,16 @@ module.exports = {
 					.setColor(config.embedColor)
 					.setTitle("Giveaways")
 					.setTimestamp()
-					.setFooter({text: config.botName, iconURL: config.botIcon})
-					.setDescription("Le giveaway a bien été terminé.");
+					.setFooter({ text: config.botName, iconURL: config.botIcon })
+					.setDescription(localizer._("The giveaway has been ended successfully."));
 			})
 				.catch(() => {
 					return new MessageEmbed()
 						.setColor("RED")
 						.setTitle("Giveaways")
 						.setTimestamp()
-						.setFooter({text: config.botName, iconURL: config.botIcon})
-						.setDescription("Une erreur est survenue.");
+						.setFooter({ text: config.botName, iconURL: config.botIcon })
+						.setDescription(localizer._("An error occured."));
 				});
 		};
 
@@ -250,8 +256,8 @@ module.exports = {
 					.setColor("RED")
 					.setTitle("Giveaways")
 					.setTimestamp()
-					.setFooter({text: config.botName, iconURL: config.botIcon})
-					.setDescription("Giveaway introuvable.");
+					.setFooter({ text: config.botName, iconURL: config.botIcon })
+					.setDescription(localizer._("Giveaway not found."));
 
 				await interaction.reply({
 					embeds: [errorEmbed],
@@ -269,8 +275,8 @@ module.exports = {
 					.setColor("RED")
 					.setTitle("Giveaways")
 					.setTimestamp()
-					.setFooter({text: config.botName, iconURL: config.botIcon})
-					.setDescription("**Vous ne pouvez pas exécuter cette commande.**\nVous devez avoir les permissions administrateur ou être celui qui héberge le giveaway.");
+					.setFooter({ text: config.botName, iconURL: config.botIcon })
+					.setDescription(localizer._("**You cannot execute this command.**\nYou must have the administrator permissions or be the host of the giveaway."));
 
 				await interaction.reply({
 					embeds: [errorEmbed],
@@ -285,8 +291,8 @@ module.exports = {
 					.setColor("RED")
 					.setTitle("Giveaways")
 					.setTimestamp()
-					.setFooter({text: config.botName, iconURL: config.botIcon})
-					.setDescription("Impossible de modifier un giveaway terminé.");
+					.setFooter({ text: config.botName, iconURL: config.botIcon })
+					.setDescription(localizer._("Cannot edit an ended giveaway."));
 
 				await interaction.reply({
 					embeds: [errorEmbed],
@@ -297,7 +303,7 @@ module.exports = {
 			};
 
 			const option = interaction.options.getString("option");
-			const value = interaction.options.getString("valeur");
+			const value = interaction.options.getString("value");
 
 			if (option == "winnerCount") {
 				if (!isNaN(value) && parseInt(value) > 0) {
@@ -307,8 +313,8 @@ module.exports = {
 						.setColor("RED")
 						.setTitle("Giveaways")
 						.setTimestamp()
-						.setFooter({text: config.botName, iconURL: config.botIcon})
-						.setDescription("La valeur entrée est invalide.");
+						.setFooter({ text: config.botName, iconURL: config.botIcon })
+						.setDescription(localizer._("Entered value is invalid."));
 
 					await interaction.reply({
 						embeds: [errorEmbed],
@@ -332,16 +338,16 @@ module.exports = {
 					.setColor(config.embedColor)
 					.setTitle("Giveaways")
 					.setTimestamp()
-					.setFooter({text: config.botName, iconURL: config.botIcon})
-					.setDescription("Le giveaway a bien été modifié.");
+					.setFooter({ text: config.botName, iconURL: config.botIcon })
+					.setDescription(localizer._("The giveaway has been edited."));
 			})
 				.catch(() => {
 					return new MessageEmbed()
 						.setColor("RED")
 						.setTitle("Giveaways")
 						.setTimestamp()
-						.setFooter({text: config.botName, iconURL: config.botIcon})
-						.setDescription("Une erreur est survenue.");
+						.setFooter({ text: config.botName, iconURL: config.botIcon })
+						.setDescription(localizer._("An error occured."));
 				});
 		};
 
@@ -358,8 +364,8 @@ module.exports = {
 					.setColor("RED")
 					.setTitle("Giveaways")
 					.setTimestamp()
-					.setFooter({text: config.botName, iconURL: config.botIcon})
-					.setDescription("Giveaway introuvable.");
+					.setFooter({ text: config.botName, iconURL: config.botIcon })
+					.setDescription(localizer._("Giveaway not found."));
 
 				await interaction.reply({
 					embeds: [errorEmbed],
@@ -377,8 +383,8 @@ module.exports = {
 					.setColor("RED")
 					.setTitle("Giveaways")
 					.setTimestamp()
-					.setFooter({text: config.botName, iconURL: config.botIcon})
-					.setDescription("**Vous ne pouvez pas exécuter cette commande.**\nVous devez avoir les permissions administrateur ou être celui qui héberge le giveaway.");
+					.setFooter({ text: config.botName, iconURL: config.botIcon })
+					.setDescription(localizer._("**You cannot execute this command.**\nYou must have the administrator permissions or be the host of the giveaway."));
 
 				await interaction.reply({
 					embeds: [errorEmbed],
@@ -391,24 +397,24 @@ module.exports = {
 			var embed = await manager.reroll(messageId, {
 				winnerCount: 1,
 				messages: {
-					congrat: "🎉 Félicitations, {winners}! 🎉\nVous avez gagné **{this.prize}**!",
-					error: "Aucun participant valide, impossible de désigner un gagnant pour **{this.prize}**."
+					congrat: localizer._("Congratulations, {winners}! 🎉\nYou just won **{this.prize}**!"),
+					error: localizer._("No valid entry, impossible to choose a new winner for **{this.prize}**.")
 				}
 			}).then(() => {
 				return new MessageEmbed()
 					.setColor(config.embedColor)
 					.setTitle("Giveaways")
 					.setTimestamp()
-					.setFooter({text: config.botName, iconURL: config.botIcon})
-					.setDescription("Le reroll a été effectué.");
+					.setFooter({ text: config.botName, iconURL: config.botIcon })
+					.setDescription(localizer._("Giveaway has been rerolled."));
 			})
 				.catch(() => {
 					return new MessageEmbed()
 						.setColor("RED")
 						.setTitle("Giveaways")
 						.setTimestamp()
-						.setFooter({text: config.botName, iconURL: config.botIcon})
-						.setDescription("Une erreur est survenue.");
+						.setFooter({ text: config.botName, iconURL: config.botIcon })
+						.setDescription(localizer._("An error occured."));
 				});
 		};
 
@@ -426,8 +432,8 @@ module.exports = {
 					.setColor("RED")
 					.setTitle("Giveaways")
 					.setTimestamp()
-					.setFooter({text: config.botName, iconURL: config.botIcon})
-					.setDescription("**Vous ne pouvez pas exécuter cette commande.**\nVous devez avoir les permissions administrateur.");
+					.setFooter({ text: config.botName, iconURL: config.botIcon })
+					.setDescription(localizer._("**You cannot execute this command.**\nYou must have the administrator permissions."));
 
 				await interaction.reply({
 					embeds: [errorEmbed],
@@ -437,15 +443,15 @@ module.exports = {
 				return
 			};
 
-			const duration = interaction.options.getString("durée"),
-				winnerCount = interaction.options.getInteger('gagnants'),
-				prize = interaction.options.getString('prix');
+			const duration = interaction.options.getString("duration"),
+				winnerCount = interaction.options.getInteger('winners'),
+				prize = interaction.options.getString('prize');
 
 			if (interaction.options.getChannel("channel")) {
 				var channel = interaction.options.getChannel("channel");
 				if (channel.type !== "GUILD_TEXT") {
 					return interaction.reply({
-						content: "Impossible de créer le giveaway dans ce channel.",
+						content: localizer._("Impossible to create a giveaway in this channel."),
 						ephemeral: true
 					});
 				};
@@ -453,8 +459,8 @@ module.exports = {
 				var channel = interaction.channel;
 			}
 
-			if (interaction.options.getUser("créateur")) {
-				var hostedBy = interaction.options.getUser("créateur");
+			if (interaction.options.getUser("host")) {
+				var hostedBy = interaction.options.getUser("host");
 			} else {
 				var hostedBy = interaction.member.user;
 			};
@@ -465,18 +471,18 @@ module.exports = {
 				prize,
 				hostedBy,
 				messages: {
-					giveawayEnded: "Giveaway terminé.",
-					inviteToParticipate: "Réagis avec 🎉 pour participer!",
-					winMessage: "🎉 Félicitations, {winners}! 🎉\nVous avez gagné **{this.prize}**!",
-					drawing: "Tirage ({this.winnerCount} gagnant(s)): {timestamp}.",
+					giveawayEnded: localizer._("Giveaway ended."),
+					inviteToParticipate: localizer._("React with 🎉 to participate!"),
+					winMessage: localizer._("🎉 Congratulations, {winners}! 🎉\nYou just won **{this.prize}**!"),
+					drawing: localizer._("Draw ({this.winnerCount} winner(s)): {timestamp}."),
 					embedFooter: {
 						text: config.botName,
 						iconURL: config.botIcon
 					},
-					noWinner: "Giveaway annulé, aucun participant n'est éligible.",
-					winners: "Gagnant(s):",
-					endedAt: "Terminait le",
-					hostedBy: "Présenté par {this.hostedBy}"
+					noWinner: localizer._("Giveaway canceled, no valid entry."),
+					winners: localizer._("Winner(s):"),
+					endedAt: localizer._("Ended on"),
+					hostedBy: localizer._("Hosted by {this.hostedBy}")
 				}
 			});
 
@@ -484,8 +490,8 @@ module.exports = {
 				.setColor(config.embedColor)
 				.setTitle("Giveaways")
 				.setTimestamp()
-				.setFooter({text: config.botName, iconURL: config.botIcon})
-				.setDescription("Le giveaway a bien été créé!");
+				.setFooter({ text: config.botName, iconURL: config.botIcon })
+				.setDescription(localizer._("The giveaway has been created!"));
 		};
 
 		// ########################################
@@ -502,8 +508,8 @@ module.exports = {
 					.setColor("RED")
 					.setTitle("Giveaways")
 					.setTimestamp()
-					.setFooter({text: config.botName, iconURL: config.botIcon})
-					.setDescription("**Vous ne pouvez pas exécuter cette commande.**\nVous devez avoir les permissions administrateur.");
+					.setFooter({ text: config.botName, iconURL: config.botIcon })
+					.setDescription(localizer._("**You cannot execute this command.**\nYou must have the administrator permissions."));
 
 				await interaction.reply({
 					embeds: [errorEmbed],
@@ -513,14 +519,14 @@ module.exports = {
 				return
 			};
 
-			const winnerCount = interaction.options.getInteger('gagnants'),
-				prize = interaction.options.getString('prix');
+			const winnerCount = interaction.options.getInteger("winners"),
+				prize = interaction.options.getString("prize");
 
 			if (interaction.options.getChannel("channel")) {
 				var channel = interaction.options.getChannel("channel");
 				if (channel.type !== "GUILD_TEXT") {
 					return interaction.reply({
-						content: "Impossible de créer le drop dans ce channel.",
+						content: localizer._("Impossible to create a giveaway in this channel."),
 						ephemeral: true
 					});
 				};
@@ -528,8 +534,8 @@ module.exports = {
 				var channel = interaction.channel;
 			}
 
-			if (interaction.options.getUser("créateur")) {
-				var hostedBy = interaction.options.getUser("créateur");
+			if (interaction.options.getUser("host")) {
+				var hostedBy = interaction.options.getUser("host");
 			} else {
 				var hostedBy = interaction.member.user;
 			};
@@ -540,17 +546,17 @@ module.exports = {
 				prize,
 				hostedBy,
 				messages: {
-					dropMessage: "Soyez le premier à réagir avec 🎉 pour gagner!\n{this.winnerCount} gagnant(s)",
-					giveawayEnded: "Drop terminé.",
-					winMessage: "🎉 Félicitations, {winners}! 🎉\nVous avez gagné **{this.prize}**!",
+					dropMessage: localizer._("Be the first to react with 🎉 to win!\n{this.winnerCount} winner(s)"),
+					giveawayEnded: localizer._("Drop ended."),
+					winMessage: localizer._("🎉 Congratulations, {winners}! 🎉\nYou just won **{this.prize}**!"),
 					embedFooter: {
 						text: config.botName,
 						iconURL: config.botIcon
 					},
-					noWinner: "Giveaway annulé, aucun participant n'est éligible.",
-					winners: "Gagnant(s):",
-					endedAt: "Terminait le",
-					hostedBy: "Présenté par {this.hostedBy}"
+					noWinner: localizer._("Drop canceled, no valid entry."),
+					winners: localizer._("Winner(s):"),
+					endedAt: localizer._("Ended on"),
+					hostedBy: localizer._("Hosted by {this.hostedBy}")
 				},
 				isDrop: true
 			});
@@ -559,8 +565,8 @@ module.exports = {
 				.setColor(config.embedColor)
 				.setTitle("Giveaways")
 				.setTimestamp()
-				.setFooter({text: config.botName, iconURL: config.botIcon})
-				.setDescription("Le drop a bien été lancé!");
+				.setFooter({ text: config.botName, iconURL: config.botIcon })
+				.setDescription(localizer._("The drop has been started!"));
 		};
 
 		await interaction.reply({

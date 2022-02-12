@@ -1,0 +1,205 @@
+{
+	"version": "1.0.0",
+	"localizerVersion": 1,
+	"default": "en",
+	"contributors": [
+		"GoudronViande24"
+	],
+	"strings": {
+		"Get the current value of a cryptocurrency.": {
+			"fr": "Voir la valeur de certaines cryptomonaies."
+		},
+
+		"The cryptocurrency to look for": {
+			"fr": "La cryptomonnaie à vérifier"
+		},
+
+		"Actual value": {
+			"fr": "Valeur actuelle"
+		},
+
+		"Data fetched from Coinbase": {
+			"fr": "Données fournies par Coinbase"
+		},
+
+		"Create and manage giveaways.": {
+			"fr": "Créer et gérer des giveaways."
+		},
+
+		"Create a giveaway": {
+			"fr": "Créer un giveaway"
+		},
+
+		"The prize to win in this giveaway.": {
+			"fr": "Le prix qui sera à gagner dans le giveaway."
+		},
+
+		"Time before the end of the giveaway. Examples: '5h', '2d'": {
+			"fr": "Le temps avant la fin du giveaway. Exemples: '5h', '2d'"
+		},
+
+		"How much people will win the prize.": {
+			"fr": "Nombre de gagnants."
+		},
+
+		"User that will host the giveaway (sponsor, donator, etc.). By default, it is you.": {
+			"fr": "Utilisateur qui héberge le giveaway (sponsor, donateur, etc.). Par défaut, c'est toi."
+		},
+
+		"The channel in which to publish the giveaway.": {
+			"fr": "Le salon dans lequel le giveaway sera publié."
+		},
+
+		"The prize to win in this drop.": {
+			"fr": "Le prix qui sera à gagner dans le drop."
+		},
+
+		"The channel in which to start the drop.": {
+			"fr": "Le salon dans lequel le drop sera lancé."
+		},
+
+		"Find new winner(s) for an ended giveaway": {
+			"fr": "Trouver un ou plusieurs nouveau(x) gagnant(s) pour un giveaway terminé"
+		},
+
+		"The giveaway's message ID.": {
+			"fr": "Le ID du message du giveaway."
+		},
+
+		"Edit a giveaway.": {
+			"fr": "Modifier un giveaway."
+		},
+
+		"What to edit in the giveaway?": {
+			"fr": "Quelle option modifier dans le giveaway?"
+		},
+
+		"Prize to win": {
+			"fr": "Prix à gagner"
+		},
+
+		"Add time": {
+			"fr": "Ajouter du temps"
+		},
+
+		"The value of the option to edit.": {
+			"fr": "La valeur de la modification."
+		},
+
+		"Ends a giveaway immediately.": {
+			"fr": "Termine immédiatement un giveaway."
+		},
+
+		"Creating the directory to store the data": {
+			"fr": "Création du dossier pour le stockage des données"
+		},
+
+		"Ready.": {
+			"fr": "Prêt."
+		},
+
+		"Giveaway not found.": {
+			"fr": "Giveaway introuvable."
+		},
+
+		"**You cannot execute this command.**\nYou must have the administrator permissions or be the host of the giveaway.": {
+			"fr": "**Vous ne pouvez pas exécuter cette commande.**\nVous devez avoir les permissions administrateur ou être celui qui héberge le giveaway."
+		},
+
+		"The giveaway is already ended.": {
+			"fr": "Le giveaway est déjà terminé."
+		},
+
+		"The giveaway has been ended successfully.": {
+			"fr": "Le giveaway a bien été terminé."
+		},
+
+		"An error occured.": {
+			"fr": "Une erreur est survenue."
+		},
+
+		"Cannot edit an ended giveaway.": {
+			"fr": "Impossible de modifier un giveaway terminé."
+		},
+
+		"Entered value is invalid.": {
+			"fr": "La valeur entrée est invalide."
+		},
+		
+		"The giveaway has been edited.": {
+			"fr": "Le giveaway a bien été modifié."
+		},
+
+		"Congratulations, {winners}! 🎉\nYou just won **{this.prize}**!": {
+			"fr": "🎉 Félicitations, {winners}! 🎉\nVous avez gagné **{this.prize}**!"
+		},
+
+		"No valid entry, impossible to choose a new winner for **{this.prize}**.": {
+			"fr": "Aucun participant valide, impossible de désigner un gagnant pour **{this.prize}**."
+		},
+
+		"Giveaway has been rerolled.": {
+			"fr": "Le reroll a été effectué."
+		},
+
+		"**You cannot execute this command.**\nYou must have the administrator permissions.": {
+			"fr": "**Vous ne pouvez pas exécuter cette commande.**\nVous devez avoir les permissions administrateur."
+		},
+
+		"Impossible to create a giveaway in this channel.": {
+			"fr": "Impossible de créer le giveaway dans ce channel."
+		},
+
+		"Giveaway ended.": {
+			"fr": "Giveaway terminé."
+		},
+
+		"React with 🎉 to participate!": {
+			"fr": "Réagis avec 🎉 pour participer!"
+		},
+
+		"🎉 Congratulations, {winners}! 🎉\nYou just won **{this.prize}**!": {
+			"fr": "🎉 Félicitations, {winners}! 🎉\nVous avez gagné **{this.prize}**!"
+		},
+
+		"Draw ({this.winnerCount} winner(s)): {timestamp}.": {
+			"fr": "Tirage ({this.winnerCount} gagnant(s)): {timestamp}."
+		},
+
+		"Giveaway canceled, no valid entry.": {
+			"fr": "Giveaway annulé, aucun participant n'est éligible."
+		},
+
+		"Winner(s):": {
+			"fr": "Gagnant(s):"
+		},
+
+		"Ended on": {
+			"fr": "Terminait le"
+		},
+
+		"Hosted by {this.hostedBy}": {
+			"fr": "Présenté par {this.hostedBy}"
+		},
+
+		"The giveaway has been created!": {
+			"fr": "Le giveaway a bien été créé!"
+		},
+
+		"Be the first to react with 🎉 to win!\n{this.winnerCount} winner(s)": {
+			"fr": "Soyez le premier à réagir avec 🎉 pour gagner!\n{this.winnerCount} gagnant(s)"
+		},
+
+		"Drop ended.": {
+			"fr": "Drop terminé."
+		},
+
+		"Drop canceled, no valid entry.": {
+			"fr": "Drop annulé, aucun participant n'est éligible."
+		},
+
+		"The drop has been started!": {
+			"fr": "Le drop a bien été lancé!"
+		}
+	}
+}
