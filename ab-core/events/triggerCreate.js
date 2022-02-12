@@ -18,13 +18,13 @@ module.exports = {
 		// Checking ALL triggers using every function and breaking out if a trigger was found.
 		let check = false;
 
-		await message.client.triggers.every(async ({ trigger }) => {
+		await message.client.triggers.every(async ({ command }) => {
 			if (check) return false;
-			await trigger.name.every(async (name) => {
+			await command.triggers.every(async (trigger) => {
 				if (check) return false;
 
 				// If validated, it will try to execute the trigger.
-				if (message.content.includes(name)) {
+				if (message.content.includes(trigger)) {
 					try {
 						trigger.execute(message, commons);
 					} catch (error) {
