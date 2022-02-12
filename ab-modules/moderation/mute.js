@@ -1,47 +1,54 @@
-/*
+/**
  * Mute command
- * By GoudronViande24
- * Uses Discord timeout function added to Discord.js 13.4.0
-*/
+ * Uses Discord timeout feature added in Discord.js 13.4.0
+ * @author GoudronViande24
+ * @since 1.0.0
+ */
 
 const { MessageEmbed, Permissions } = require("discord.js");
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const ms = require("ms");
 const humanizeDuration = require("humanize-duration");
+const Localizer = require("artibot-localizer");
+const path = require("path");
+const { locale } = require("../../config.json");
+
+const localizer = new Localizer({
+	lang: locale,
+	filePath: path.resolve(__dirname, "locales.json")
+});
 
 module.exports = {
 	// The data needed to register slash commands to Discord.
 	data: new SlashCommandBuilder()
 		.setName("mute")
-		.setDescription(
-			"Réduire au silence total un utilisateur."
-		)
+		.setDescription(localizer._("Mute a user."))
 		.addUserOption(option =>
-			option.setName("utilisateur")
-				.setDescription("L'utilisateur à rendre muet.")
+			option.setName("user")
+				.setDescription(localizer._("The user to mute."))
 				.setRequired(true)
 		)
 		.addStringOption(option =>
 			option
-				.setName("temps")
-				.setDescription("Le temps pendant lequel l'utilisateur sera muet. Exemples: '5m', '1h'.")
+				.setName("duration")
+				.setDescription(localizer._("How much time the user must stay muted. Examples: '5m', '1h'."))
 				.setRequired(true)
 		)
 		.addStringOption(option =>
 			option
-				.setName("raison")
-				.setDescription("La raison du mute de l'utilisateur.")
+				.setName("reason")
+				.setDescription(localizer._("The reason why the user gets muted."))
 		),
 
-	async execute(interaction, config) {
-		const user = interaction.options.getUser("utilisateur"),
+	async execute(interaction, { config, log }) {
+		const user = interaction.options.getUser("user"),
 			guild = interaction.guild,
 			moderator = interaction.member,
-			time = interaction.options.getString("temps"),
-			reason = interaction.options.getString("raison"),
-			logsReason = `${moderator.user.username} -> ${reason ? reason : "Aucune raison fournie."}`,
+			time = interaction.options.getString("duration"),
+			reason = interaction.options.getString("reason"),
+			logsReason = `${moderator.user.username} -> ${reason ? reason : localizer._("No reason given.")}`,
 			humanTime = humanizeDuration(ms(time), {
-				language: "fr",
+				language: config.locale,
 				delimiter: ", ",
 				largest: 2,
 				round: true,
@@ -53,9 +60,9 @@ module.exports = {
 			const errorEmbed = new MessageEmbed()
 				.setColor("RED")
 				.setTitle("Mute")
-				.setFooter({text: config.botName, iconURL: config.botIcon})
+				.setFooter({ text: config.botName, iconURL: config.botIcon })
 				.setTimestamp()
-				.setDescription("Vous n'avez pas la permission de faire cette commande!");
+				.setDescription(localizer._("You don't have the required permissions to execute this command!"));
 
 			return await interaction.reply({
 				embeds: [errorEmbed],
@@ -68,9 +75,9 @@ module.exports = {
 			const errorEmbed = new MessageEmbed()
 				.setColor("RED")
 				.setTitle("Mute")
-				.setFooter({text: config.botName, iconURL: config.botIcon})
+				.setFooter({ text: config.botName, iconURL: config.botIcon })
 				.setTimestamp()
-				.setDescription("`" + time + "` n'est pas une durée valide.");
+				.setDescription(localizer.__("`[[0]]` is not a valid duration.", { placeholders: [time] }));
 
 			return await interaction.reply({
 				embeds: [errorEmbed],
@@ -87,28 +94,28 @@ module.exports = {
 				const dmEmbed = new MessageEmbed()
 					.setColor(config.embedColor)
 					.setTitle("Mute")
-					.setFooter({text: config.botName, iconURL: config.botIcon})
+					.setFooter({ text: config.botName, iconURL: config.botIcon })
 					.setTimestamp()
-					.setDescription(`Vous avez été réduit au silence par ${moderator} pendant ${humanTime} sur **${guild.name}.**.`);
+					.setDescription(localizer.__("You have been muted by [[0]] for [[1]] on **[[1]]** server.", { placeholders: [moderator, humanTime, guild.name] }));
 
-				if (reason) dmEmbed.addField("Raison", reason);
+				if (reason) dmEmbed.addField("Reason", reason);
 
 				const embed = new MessageEmbed()
 					.setColor(config.embedColor)
 					.setTitle("Mute")
-					.setFooter({text: config.botName, iconURL: config.botIcon})
+					.setFooter({ text: config.botName, iconURL: config.botIcon })
 					.setTimestamp()
-					.setDescription(`${member} a bien été réduit au silence pour ${humanTime}.`);
+					.setDescription(localizer.__("[[0]] has been muted for [[1]].", { placeholders: [member, humanTime] }));
 
 				// Send DM to muted user to inform him of the reason and the moderator
 				await member.send({ embeds: [dmEmbed] })
 					.catch(error => {
 						if (error == "DiscordAPIError: Cannot send messages to this user") {
-							embed.addField("Note", "Cet utilisateur n'accepte pas les messages privés et n'a donc pas été averti en privé.").setColor("YELLOW");
+							embed.addField(localizer._("Note"), localizer._("This user does not accept DMs and so has not been warned in DM.")).setColor("YELLOW");
 						} else {
-							embed.addField("Note", "Une erreur est survenue en essayant d'avertir l'utilisateur en privé.").setColor("ORANGE");
-							console.log(error);
-						}
+							embed.addField(localizer._("Note"), localizer._("An error occured while trying to send a DM to the user.")).setColor("ORANGE");
+							log("Moderation", error);
+						};
 					});
 
 				return embed
@@ -118,17 +125,17 @@ module.exports = {
 					var errorEmbed = new MessageEmbed()
 						.setColor("RED")
 						.setTitle("Mute")
-						.setFooter({text: config.botName, iconURL: config.botIcon})
+						.setFooter({ text: config.botName, iconURL: config.botIcon })
 						.setTimestamp()
-						.setDescription(`Je n'ai pas les permissions requises pour rendre muet cet utilisateur!`);
+						.setDescription(localizer._("I don't have required permissions to mute this user!"));
 				} else {
 					console.log(error);
 					var errorEmbed = new MessageEmbed()
 						.setColor("RED")
 						.setTitle("Mute")
-						.setFooter({text: config.botName, iconURL: config.botIcon})
+						.setFooter({ text: config.botName, iconURL: config.botIcon })
 						.setTimestamp()
-						.setDescription(`Une erreur est survenue.`);
+						.setDescription(localizer._("An error occured."));
 				};
 
 				return errorEmbed
