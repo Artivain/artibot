@@ -1,8 +1,16 @@
 const { MessageEmbed } = require("discord.js");
 const moment = require('moment');
 const humanizeDuration = require("humanize-duration");
+const Localizer = require("artibot-localizer");
+const path = require("path");
 const config = require('./config.json');
 config.private = require("./private.json");
+const { locale } = require("../../config.json");
+
+const localizer = new Localizer({
+	lang: locale,
+	filePath: path.resolve(__dirname, "locales.json")
+});
 
 class LiveEmbed {
 	static createForStream(streamData) {
@@ -26,23 +34,23 @@ class LiveEmbed {
 
 		// Title
 		if (isLive) {
-			msgEmbed.setTitle(`:red_circle: **${streamData.user_name} est en live sur Twitch!**`);
-			msgEmbed.addField("Titre", streamData.title, false);
+			msgEmbed.setTitle(":red_circle: " + localizer.__("**[[0]] is live on Twitch!**", { placeholders: [streamData.user_name] }));
+			msgEmbed.addField(localizer._("Title"), streamData.title, false);
 		} else {
-			msgEmbed.setTitle(`:white_circle: ${streamData.user_name} était en live sur Twitch.`);
-			msgEmbed.setDescription('Le live est maintenant terminé.');
+			msgEmbed.setTitle(":white_circle: " + localizer.__("[[0]] was live on Twitch.", { placeholders: [streamData.user_name] }));
+			msgEmbed.setDescription(localizer._("The stream has ended."));
 
-			msgEmbed.addField("Titre", streamData.title, true);
+			msgEmbed.addField(localizer._("Title"), streamData.title, true);
 		}
 
 		// Add game
 		if (streamData.game && config.showGame) {
-			msgEmbed.addField("Jeu", streamData.game.name, false);
+			msgEmbed.addField(localizer._("Game"), streamData.game.name, false);
 		}
 
 		if (isLive) {
 			// Add status
-			if (config.showViews) msgEmbed.addField("Visionnements", isLive ? `Actuellement ${streamData.viewer_count}` : 'Le live est terminé', true);
+			if (config.showViews) msgEmbed.addField(localizer._("Viewers"), isLive ? localizer.__("Currently [[0]]", { placeholders: [streamData.viewer_count] }) : localizer._("The stream has ended."), true);
 
 			// Set main image (stream preview)
 			if (config.showThumbnail) {
@@ -59,8 +67,8 @@ class LiveEmbed {
 				let now = moment();
 				let startedAt = moment(streamData.started_at);
 
-				msgEmbed.addField("En ligne depuis", humanizeDuration(now - startedAt, {
-					language: "fr",
+				msgEmbed.addField(localizer._("Online since"), humanizeDuration(now - startedAt, {
+					language: locale,
 					delimiter: ", ",
 					largest: 2,
 					round: true,

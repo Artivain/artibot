@@ -1,14 +1,39 @@
-/* 
- * Module TwitchMonitor pour Artibot
- * Par GoudronViande24 (https://github.com/GoudronViande24)
- * Inspiré de Timbot (https://github.com/roydejong/timbot), par roydejong (https://github.com/roydejong)
- * La plupart du code est simplement adapté de ce projet.
-*/
+/** 
+ * TwitchMonitor Module for Artibot
+ * Based on Timbot (https://github.com/roydejong/timbot), par roydejong (https://github.com/roydejong)
+ * Most of the code is just adapted for this project.
+ * @author GoudronViande24
+ * @author roydejong
+ */
+
+const Localizer = require("artibot-localizer");
+const path = require("path");
 
 module.exports = {
 	name: "TwitchMonitor",
 
-	async execute(client, config) {
+	manifest: {
+		manifestVersion: 1,
+		moduleVersion: "3.0.0",
+		name: "TwitchMonitor",
+		supportedLocales: [
+			"en",
+			"fr"
+		],
+		parts: [
+			{
+				id: "twitch",
+				type: "global",
+				path: "index.js"
+			}
+		]
+	},
+
+	async execute({ client, config, log }) {
+		const localizer = new Localizer({
+			lang: config.locale,
+			filePath: path.resolve(__dirname, "locales.json")
+		});
 
 		config.twitch = require("./config.json");
 		config.twitch.private = require("./private.json");
@@ -17,11 +42,12 @@ module.exports = {
 		const LiveEmbed = require("./liveEmbed");
 		const MiniDb = require("./miniDb");
 		const TwitchMonitor = require("./twitchMonitor");
+		TwitchMonitor.init(log, localizer);
 
 		let targetChannels = [];
 
 		let syncServerList = (logMembership) => {
-			targetChannels = DiscordChannelSync.getChannelList(client, config.twitch.notificationChannel, logMembership);
+			targetChannels = DiscordChannelSync.getChannelList(client, config.twitch.notificationChannel, logMembership, log, localizer);
 		};
 
 		// Init list of connected servers, and determine which channels we are announcing to
@@ -52,7 +78,7 @@ module.exports = {
 		// ---------------------------------------------------------------------------------------------------------------------
 		// Live events
 
-		let liveMessageDb = new MiniDb('live-messages');
+		let liveMessageDb = new MiniDb('live-messages', log, localizer);
 		let messageHistory = liveMessageDb.get("history") || {};
 
 		TwitchMonitor.onChannelLiveUpdate((streamData) => {
@@ -67,7 +93,7 @@ module.exports = {
 			StreamActivity.setChannelOnline(streamData);
 
 			// Generate message
-			const msgFormatted = `**${streamData.user_name}** est en live sur Twitch!`;
+			const msgFormatted = localizer.__("**[[0]]** is live on Twitch!", { placeholders: [streamData.user_name] });
 			const msgEmbed = LiveEmbed.createForStream(streamData);
 
 			// Broadcast to all target channels
@@ -132,10 +158,7 @@ module.exports = {
 									if (roleData) {
 										mentionMode = `<@&${roleData.id}>`;
 									} else {
-										console.log(
-											'[TwitchMonitor]', `Impossible de mentionner le rôle: ${mentionMode}`,
-											`(le rôle n'existe pas sur le serveur ${discordChannel.guild.name})`
-										);
+										log("TwitchMonitor", localizer.__("Cannot tag [[0]] role (role not found on server [[1]])", { placeholders: [mentionMode, discordChannel.guild.name] }));
 										mentionMode = null;
 									}
 								}
@@ -152,19 +175,25 @@ module.exports = {
 								embeds: [msgEmbed]
 							})
 								.then((message) => {
-									console.log('[TwitchMonitor]', `Annonce envoyée sur #${discordChannel.name} sur ${discordChannel.guild.name}`)
+									log('TwitchMonitor', localizer.__("Announcement sent in #[[0]] on [[1]]", { placeholders: [discordChannel.name, discordChannel.guild.name] }));
 
 									messageHistory[liveMsgDiscrim] = message.id;
 									liveMessageDb.put('history', messageHistory);
 								})
 								.catch((err) => {
-									console.log('[TwitchMonitor]', `Impossible d'envoyer l'annonce sur #${discordChannel.name} sur ${discordChannel.guild.name}:`, err.message);
+									log('TwitchMonitor', localizer.__("Cannot send the announcement in #[[0]] on [[1]]: [[2]]", {
+										placeholders: [
+											discordChannel.name,
+											discordChannel.guild.name,
+											err.message
+										]
+									}));
 								});
 						}
 
 						anySent = true;
 					} catch (e) {
-						console.warn('[TwitchMonitor]', "Erreur lors de l'envoi du message:", e);
+						log('TwitchMonitor', localizer._("An error occured while sending the message: ") + e, "warn");
 					}
 				}
 			}

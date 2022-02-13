@@ -8,7 +8,7 @@ class DiscordChannelSync {
 	 * @param {boolean} verbose If true, log guild membership info to stdout (debug / info purposes).
 	 * @return {Channel[]} List of Discord.js channels
 	 */
-	static getChannelList(client, channelName, verbose) {
+	static getChannelList(client, channelName, verbose, log, localizer) {
 		let nextTargetChannels = [];
 
 		client.guilds.cache.forEach((guild) => {
@@ -16,27 +16,27 @@ class DiscordChannelSync {
 
 			if (!targetChannel) {
 				if (verbose) {
-					console.warn('[TwitchMonitor]', 'Problème de configuration:', `Le serveur ${guild.name} ne contient pas le salon #${channelName}!`);
-				}
+					log('TwitchMonitor', localizer.__("Configuration error: The server [[0]] does not have a #[[1]] channel!", { placeholders: [guild.name, channelName] }));
+				};
 			} else {
 				let permissions = targetChannel.permissionsFor(guild.me);
 
 				if (verbose) {
-					console.log('[TwitchMonitor]', ' --> ', `pour le serveur ${guild.name}, le salon d'annonces est #${targetChannel.name}`);
-				}
+					log('TwitchMonitor', localizer.__(" --> for the [[0]] server, the announcements channel is #[[1]]", { placeholders: [guild.name, targetChannel.name] }));
+				};
 
 				if (!permissions.has("SEND_MESSAGES")) {
 					if (verbose) {
-						console.warn('[TwitchMonitor]', 'Problème de configuration:', `Le bot n'a pas la permission SEND_MESSAGES sur le salon #${targetChannel.name} sur le serveur ${guild.name}. L'envoi des annonces ne fonctionnera pas.`);
-					}
-				}
+						log('TwitchMonitor', localizer.__("Configuration error: The bot does not have SEND_MESSAGES permission in #[[0]] channel on [[1]] server. The announcements will not be sent.", { placeholders: [targetChannel.name, guild.name] }));
+					};
+				};
 
 				nextTargetChannels.push(targetChannel);
-			}
+			};
 		});
 
 		if (verbose) {
-			console.log('[TwitchMonitor]', `Total de ${nextTargetChannels.length} salons pour le nom ${channelName}.`);
+			log('TwitchMonitor', localizer.__("Total of [[0]] #[[1]] channels.", { placeholders: [nextTargetChannels.length, channelName] }));
 		}
 
 		return nextTargetChannels;

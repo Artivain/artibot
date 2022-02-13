@@ -5,6 +5,11 @@ config.private = require("./private.json");
 // Twitch Helix API helper ("New Twitch API").
 
 class TwitchApi {
+	static init(log, localizer) {
+		this.logToConsole = log;
+		this.localizer = localizer;
+	}
+
 	static get requestOptions() {
 		// Automatically remove "oauth:" prefix if it's present
 		const oauthPrefix = "oauth:";
@@ -26,9 +31,9 @@ class TwitchApi {
 		const res = err.response || {};
 
 		if (res.data && res.data.message) {
-			console.error('[TwitchMonitor]', 'API request failed with Helix error:', res.data.message, `(${res.data.error}/${res.data.status})`);
+			this.logToConsole('TwitchMonitor', this.localizer.__("API request failed with Helix error: [[0]] ([[1]]/[[2]])", { placeholders: [res.data.message, res.data.error, res.data.status] }), "error");
 		} else {
-			console.error('[TwitchMonitor]', 'API request failed with error:', err.message || err);
+			this.logToConsole('TwitchMonitor', this.localizer._("API request failed with error: ") + (err.message || err), "error");
 		}
 	}
 

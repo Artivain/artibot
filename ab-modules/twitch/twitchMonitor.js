@@ -5,9 +5,12 @@ const MiniDb = require('./miniDb');
 const moment = require('moment');
 
 class TwitchMonitor {
-	static __init() {
-		this._userDb = new MiniDb("twitch-users");
-		this._gameDb = new MiniDb("twitch-games");
+	static init(log, localizer) {
+		this.logToConsole = log;
+		this.localizer = localizer;
+
+		this._userDb = new MiniDb("twitch-users", this.logToConsole, this.localizer);
+		this._gameDb = new MiniDb("twitch-games", this.logToConsole, this.localizer);
 
 		this._lastUserRefresh = this._userDb.get("last-update") || null;
 		this._pendingUserRefresh = false;
@@ -22,7 +25,7 @@ class TwitchMonitor {
 		// Load channel names from config
 		this.channelNames = config.twitchChannels;
 		if (!this.channelNames.length) {
-			console.warn('[TwitchMonitor]', 'Pas de chaînes à écouter. Vous devriez désactiver le module pour sauver des ressources système.');
+			this.logToConsole('TwitchMonitor', this.localizer._("No channels to listen to. Maybe you should disable this module in the config to free up some system resources."), "warn");
 			return;
 		}
 
@@ -33,21 +36,26 @@ class TwitchMonitor {
 			checkIntervalMs = TwitchMonitor.MIN_POLL_INTERVAL_MS;
 		}
 		setInterval(() => {
-			this.refresh("Vérification périodique");
+			this.refresh(this.localizer._("Periodic check"));
 		}, checkIntervalMs + 1000);
 
 		// Immediate refresh after startup
 		setTimeout(() => {
-			this.refresh("Vérification initiale");
+			this.refresh(this.localizer._("Initial check"));
 		}, 1000);
 
 		// Ready!
-		console.log('[TwitchMonitor]', `Écoute:`, this.channelNames.join(', '), `(Vérification chaque ${checkIntervalMs}ms)`);
+		this.logToConsole('TwitchMonitor', this.localizer.__("Listens to: [[0]] (Checks every [[1]]ms)", {
+			placeholders: [
+				this.channelNames.join(', '),
+				checkIntervalMs
+			]
+		}));
 	}
 
 	static refresh(reason) {
 		const now = moment();
-		if (config.debug) console.log('[TwitchMonitor]', `Rafraichissement (${reason ? reason : "Aucune raison"})`);
+		if (config.debug) this.logToConsole('TwitchMonitor', `${this.localizer._("Refreshing")} (${reason ? reason : this.localizer._("No reason")})`);
 
 		// Refresh all users periodically
 		if (this._lastUserRefresh === null || now.diff(moment(this._lastUserRefresh), 'minutes') >= 10) {
@@ -56,7 +64,7 @@ class TwitchMonitor {
 					this.handleUserList(users);
 				})
 				.catch((err) => {
-					console.warn('[TwitchMonitor]', 'Erreur pendant la mise à jour de l\'utilisateur:', err);
+					this.logToConsole('TwitchMonitor', this.localizer._("An error occured while updating the user: ") + err, "warn");
 				})
 				.then(() => {
 					if (this._pendingUserRefresh) {
@@ -72,7 +80,7 @@ class TwitchMonitor {
 					this.handleGameList(games);
 				})
 				.catch((err) => {
-					console.warn('[TwitchMonitor]', 'Erreur pendant la mise à jour du jeu:', err);
+					this.logToConsole('TwitchMonitor', this.localizer._("An error occured while updating the game: ") + err, "warn");
 				})
 				.then(() => {
 					if (this._pendingGameRefresh) {
@@ -88,7 +96,7 @@ class TwitchMonitor {
 					this.handleStreamList(channels);
 				})
 				.catch((err) => {
-					console.warn('[TwitchMonitor]', 'Erreur dans la mise à jour des streams:', err);
+					this.logToConsole('TwitchMonitor', this.localizer._("An error occured while updating streams: "), err);
 				});
 		}
 	}
@@ -106,7 +114,7 @@ class TwitchMonitor {
 		});
 
 		if (gotChannelNames.length) {
-			if (config.debug) console.log('[TwitchMonitor]', 'Mise à jour des données des utilisateurs:', gotChannelNames.join(', '));
+			if (config.debug) this.logToConsole('TwitchMonitor', this.localizer._("Updating users data: ") + gotChannelNames.join(', '), "debug");
 		}
 
 		this._lastUserRefresh = moment();
@@ -128,7 +136,7 @@ class TwitchMonitor {
 		});
 
 		if (gotGameNames.length) {
-			if (config.debug) console.log('[TwitchMonitor]', 'Mise à jour des données de jeux:', gotGameNames.join(', '));
+			if (config.debug) this.logToConsole('TwitchMonitor', this.localizer._("Updating games data: ") + gotGameNames.join(', '), "debug");
 		}
 
 		this._lastGameRefresh = moment();
@@ -168,7 +176,7 @@ class TwitchMonitor {
 
 			if (this.activeStreams.indexOf(_chanName) === -1) {
 				// Stream was not in the list before
-				console.log('[TwitchMonitor]', 'Le stream est maintenant en ligne:', _chanName);
+				this.logToConsole('TwitchMonitor', this.localizer._("The stream is now online: ") + _chanName);
 			}
 
 			if (!this.handleChannelLiveUpdate(this.streamData[_chanName], true)) {
@@ -182,7 +190,7 @@ class TwitchMonitor {
 
 			if (nextOnlineList.indexOf(_chanName) === -1) {
 				// Stream was in the list before, but no longer
-				console.log('[TwitchMonitor]', 'Le stream n\'est plus en ligne:', _chanName);
+				this.logToConsole('TwitchMonitor', this.localizer._("The stream is now offline: ") + _chanName);
 				this.streamData[_chanName].type = "detected_offline";
 				this.handleChannelOffline(this.streamData[_chanName]);
 			}
@@ -192,14 +200,14 @@ class TwitchMonitor {
 			// Notify OK, update list
 			this.activeStreams = nextOnlineList;
 		} else {
-			console.log('[TwitchMonitor]', 'Impossible d\'envoyer la notification, une autre tentative sera faite à la prochaine mise à jour.');
+			this.logToConsole('TwitchMonitor', this.localizer._("Cannot send the announcement, another try will be done on next update."));
 		}
 
 		if (!this._watchingGameIds.hasEqualValues(nextGameIdList)) {
 			// We need to refresh game info
 			this._watchingGameIds = nextGameIdList;
 			this._pendingGameRefresh = true;
-			this.refresh("Mise à jour des données de jeux");
+			this.refresh(this.localizer._("Updating games data: "));
 		}
 	}
 
@@ -251,5 +259,3 @@ TwitchMonitor.channelOfflineCallbacks = [];
 TwitchMonitor.MIN_POLL_INTERVAL_MS = 30000;
 
 module.exports = TwitchMonitor;
-
-TwitchMonitor.__init();
