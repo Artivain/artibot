@@ -1,0 +1,77 @@
+{
+	"version": "1.0.0",
+	"localizerVersion": 1,
+	"default": "en",
+	"contributors": [
+		"GoudronViande24"
+	],
+	"strings": {
+		"Get info on a domain": {
+			"fr": "Obtenir des informations sur un nom de domaine"
+		},
+
+		"The domain to verify": {
+			"fr": "Le domaine à vérifier"
+		},
+
+		"`[[0]]` is not a valid domain.\nThis WHOIS only supports `.com`, `.net` and `.edu` TLDs.": {
+			"fr": "`[[0]]` n'est pas un domaine valide.\nCe WHOIS ne supporte que les extensions `.com`, `.net` et `.edu.`"
+		},
+
+		"An error occured.": {
+			"fr": "Une erreur est survenue."
+		},
+
+		"Domain `[[0]]` not found.": {
+			"fr": "Impossible de trouver le domaine `[[0]]`."
+		},
+
+		"Name not found": {
+			"fr": "Nom introuvable"
+		},
+
+		"Here are the results for [[0]]": {
+			"fr": "Voici les résultats pour [[0]]"
+		},
+
+		"See complete list online": {
+			"fr": "Voir la fiche complète en ligne"
+		},
+
+		"Registrar": {
+			"fr": "Registraire"
+		},
+
+		"Registrar WHOIS server": {
+			"fr": "Serveur WHOIS du registraire"
+		},
+
+		"Domain registration date": {
+			"fr": "Date d'enregistrement du domaine"
+		},
+
+		"Email for abuse report": {
+			"fr": "Courriel pour le signalement d'abus"
+		},
+
+		"Domain status (ICANN)": {
+			"fr": "Statut du domain (ICANN)"
+		},
+
+		"Owner's name": {
+			"fr": "Nom du propriétaire"
+		},
+
+		"DNSSEC status": {
+			"fr": "Statut DNSSEC"
+		},
+
+		"DNS server(s)": {
+			"fr": "Serveur(s) DNS"
+		},
+
+		"Reseller": {
+			"fr": "Revendeur"
+		}
+	}
+}

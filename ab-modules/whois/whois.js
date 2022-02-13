@@ -1,34 +1,42 @@
-/*
- * Whois command
- * By GoudronViande24
- * Uses Node WHOIS module to get infos about a domain
-*/
+/**
+ * WHOIS slash command
+ * Uses Node.js WHOIS module to get info about a domain
+ * @author GoudronViande24
+ */
 
 const whois = require('whois');
 const { MessageEmbed } = require("discord.js");
 const { SlashCommandBuilder } = require("@discordjs/builders");
+const Localizer = require("artibot-localizer");
+const { locale } = require("../../config.json");
+const path = require('path');
+
+const localizer = new Localizer({
+	lang: locale,
+	filePath: path.resolve(__dirname, "locales.json")
+});
 
 module.exports = {
 	// The data needed to register slash commands to Discord.
 	data: new SlashCommandBuilder()
 		.setName("whois")
-		.setDescription("Obtenir des informations sur un nom de domaine")
+		.setDescription(localizer._("Get info on a domain"))
 		.addStringOption(option =>
-			option.setName("domaine")
-				.setDescription("Le domaine à vérifier")
+			option.setName("domain")
+				.setDescription(localizer._("The domain to verify"))
 				.setRequired(true)
 		),
 
-	async execute(interaction, config) {
-		const domain = interaction.options.getString("domaine");
+	async execute(interaction, { config }) {
+		const domain = interaction.options.getString("domain");
 
 		if (!domain.endsWith(".com") && !domain.endsWith(".net") && !domain.endsWith(".edu")) {
 			const errorEmbed = new MessageEmbed()
 				.setColor("RED")
 				.setTitle(`WHOIS - ${domain}`)
-				.setFooter({text: config.botName, iconURL: config.botIcon})
+				.setFooter({ text: config.botName, iconURL: config.botIcon })
 				.setTimestamp()
-				.setDescription(`\`${domain}\` n'est pas un domaine valide.\nCe WHOIS ne supporte que les \`.com\`, \`.net\` et \`.edu.\``);
+				.setDescription(localizer.__("`[[0]]` is not a valid domain.\nThis WHOIS only supports `.com`, `.net` and `.edu` TLDs.", { placeholders: [domain] }));
 
 			return await interaction.reply({
 				embeds: [errorEmbed],
@@ -42,9 +50,9 @@ module.exports = {
 				const errorEmbed = new MessageEmbed()
 					.setColor("RED")
 					.setTitle(`WHOIS - ${domain}`)
-					.setFooter({text: config.botName, iconURL: config.botIcon})
+					.setFooter({ text: config.botName, iconURL: config.botIcon })
 					.setTimestamp()
-					.setDescription("Une erreur est survenue.");
+					.setDescription(localizer._("An error occured."));
 
 				return await interaction.reply({
 					embeds: [errorEmbed],
@@ -86,9 +94,9 @@ module.exports = {
 				const errorEmbed = new MessageEmbed()
 					.setColor("RED")
 					.setTitle(`WHOIS - ${domain}`)
-					.setFooter({text: config.botName, iconURL: config.botIcon})
+					.setFooter({ text: config.botName, iconURL: config.botIcon })
 					.setTimestamp()
-					.setDescription(`Impossible de trouver le domaine ${domain}`);
+					.setDescription(localizer.__("Domain `[[0]]` not found.", { placeholders: [domain] }));
 
 				return await interaction.reply({
 					embeds: [errorEmbed],
@@ -123,26 +131,26 @@ module.exports = {
 			} else if (results.registrantName) {
 				var name = results.registrantName;
 			} else {
-				var name = "Nom introuvable";
+				var name = localizer._("Name not found");
 			};
 
 			const embed = new MessageEmbed()
 				.setColor(config.embedColor)
 				.setTitle(`WHOIS - ${domain}`)
-				.setFooter({text: config.botName, iconURL: config.botIcon})
+				.setFooter({ text: config.botName, iconURL: config.botIcon })
 				.setTimestamp()
-				.setDescription(`Voici les résultats pour ${domain}\n[Voir la fiche complète en ligne](https://who.is/whois/${domain})`)
-				.addField("Registraire", `[${results.registrar}](${results.registrarURL})`, true)
-				.addField("Serveur WHOIS du registraire", results.registrarWHOISServer, true)
-				.addField("Date d'enregistrement du domaine", results.creationDate, true)
-				.addField("Courriel pour le signalement d'abus", results.registrarAbuseContactEmail, true)
-				.addField("Statut du domain (ICANN)", status, true)
-				.addField("Nom du propriétaire", name, true)
-				.addField("Statut DNSSEC", results.dnssec, true)
-				.addField("Serveur(s) DNS", ns, true);
+				.setDescription(`${localizer.__("Here are the results for [[0]]", { placeholders: [domain] })}\n[${localizer._("See complete list online")}](https://who.is/whois/${domain})`)
+				.addField(localizer._("Registrar"), `[${results.registrar}](${results.registrarURL})`, true)
+				.addField(localizer._("Registrar WHOIS server"), results.registrarWHOISServer, true)
+				.addField(localizer._("Domain registration date"), results.creationDate, true)
+				.addField(localizer._("Email for abuse report"), results.registrarAbuseContactEmail, true)
+				.addField(localizer._("Domain status (ICANN)"), status, true)
+				.addField(localizer._("Owner's name"), name, true)
+				.addField(localizer._("DNSSEC status"), results.dnssec, true)
+				.addField(localizer._("DNS server(s)"), ns, true);
 
 			if (results.reseller) {
-				embed.addField("Revendeur", results.reseller, true);
+				embed.addField(localizer._("Reseller"), results.reseller, true);
 			};
 
 			return await interaction.reply({
