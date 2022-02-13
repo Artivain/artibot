@@ -319,6 +319,12 @@ client.login(token);
 /**********************************************/
 
 checkUpdates().then(response => {
+	/**
+	 * If check for updates is disabled, don't do anything
+	 * @since 2.0.0
+	 */
+	if (!response) return;
+
 	if (response.upToDate) {
 		log("Updater", localizer.translateWithPlaceholders("Artibot is up to date (v[[0]]).", { placeholders: [response.currentVersion] }), "info", true);
 	} else {
