@@ -1,0 +1,49 @@
+{
+	"version": "1.0.0",
+	"localizerVersion": 1,
+	"default": "en",
+	"contributors": [
+		"GoudronViande24"
+	],
+	"strings": {
+		"[[0]] joined [[1]]": {
+			"fr": "[[0]] vient de rejoindre [[1]]"
+		},
+
+		"[[0]] is not in configuration file.": {
+			"fr": "[[0]] n'est pas dans le fichier de configuration."
+		},
+
+		"Welcome in [[0]] server!": {
+			"fr": "Bienvenue dans le serveur [[0]]!"
+		},
+
+		"We are now **[[0]]** members.": {
+			"fr": "Nous sommes maintenant **[[0]]** membres."
+		},
+
+		"[[0]] joined the server!": {
+			"fr": "[[0]] vient de rejoindre le serveur!"
+		},
+
+		"Infos": {
+			"fr": "Informations"
+		},
+
+		"[[0]] left [[1]]": {
+			"fr": "[[0]] vient de quitter [[1]]"
+		},
+
+		"We hope to see you back soon!": {
+			"fr": "On espère te revoir bientôt!"
+		},
+
+		"[[0]] left the server.": {
+			"fr": "[[0]] vient de quitter le serveur."
+		},
+
+		"Ready.": {
+			"fr": "Prêt."
+		}
+	}
+}
