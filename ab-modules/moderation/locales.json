@@ -1,0 +1,89 @@
+{
+	"version": "1.0.0",
+	"localizerVersion": 1,
+	"default": "en",
+	"contributors": [
+		"GoudronViande24"
+	],
+	"strings": {
+		"Mute a user.": {
+			"fr": "Réduire au silence total un utilisateur."
+		},
+
+		"The user to mute.": {
+			"fr": "L'utilisateur à rendre muet."
+		},
+
+		"How much time the user must stay muted. Examples: '5m', '1h'.": {
+			"fr": "Le temps pendant lequel l'utilisateur sera muet. Exemples: '5m', '1h'."
+		},
+
+		"The reason why the user gets muted.": {
+			"fr": "La raison du mute de l'utilisateur."
+		},
+
+		"No reason given.": {
+			"fr": "Aucune raison fournie."
+		},
+
+		"You don't have the required permissions to execute this command!": {
+			"fr": "Vous n'avez pas la permission de faire cette commande!"
+		},
+
+		"`[[0]]` is not a valid duration.": {
+			"fr": "`[[0]]` n'est pas une durée valide."
+		},
+
+		"You have been muted by [[0]] for [[1]] on **[[1]]** server.": {
+			"fr": "Vous avez été réduit au silence par [[0]] pendant [[1]] sur **[[1]]**."
+		},
+
+		"Reason": {
+			"fr": "Raison"
+		},
+
+		"[[0]] has been muted for [[1]].": {
+			"fr": "[[0]] a bien été réduit au silence pour [[1]]."
+		},
+
+		"Note": {
+			"fr": "Note"
+		},
+
+		"This user does not accept DMs and so has not been warned in DM.": {
+			"fr": "Cet utilisateur n'accepte pas les messages privés et n'a donc pas été averti en privé."
+		},
+
+		"An error occured while trying to send a DM to the user.": {
+			"fr": "Une erreur est survenue en essayant d'avertir l'utilisateur en privé."
+		},
+
+		"I don't have required permissions to mute this user!": {
+			"fr": "Je n'ai pas les permissions requises pour rendre muet cet utilisateur!"
+		},
+
+		"An error occured.": {
+			"fr": "Une erreur est survenue."
+		},
+
+		"Unmutes a user.": {
+			"fr": "Redonner le droit de parole à un utilisateur."
+		},
+
+		"The user to unmute.": {
+			"fr": "L'utilisateur auquel rendre la parole."
+		},
+
+		"This user is not muted...\nA second mouth would be weird, right?": {
+			"fr": "Cet utilisateur n'est pas muet...\nUne deuxième bouche serait bizarre, non?"
+		},
+
+		"[[0]] unmuted you on **[[1]]**.": {
+			"fr": "[[0]] vient de vous redonner le droit de parler sur **[[1]]**."
+		},
+
+		"[[0]] got his voice back.": {
+			"fr": "[[0]] a bien retrouvé sa voix."
+		}
+	}
+}

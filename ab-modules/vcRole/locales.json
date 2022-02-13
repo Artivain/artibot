@@ -1,0 +1,17 @@
+{
+	"version": "1.0.0",
+	"localizerVersion": 1,
+	"default": "en",
+	"contributors": [
+		"GoudronViande24"
+	],
+	"strings": {
+		"Ready.": {
+			"fr": "Prêt."
+		},
+
+		"Cannot find [[0]] role in server [[1]]": {
+			"fr": "Impossible de trouver le rôle [[0]] dans le serveur [[1]]"
+		}
+	}
+}

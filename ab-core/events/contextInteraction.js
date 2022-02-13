@@ -1,5 +1,12 @@
-const config = require("../../config.json").params;
 const { log } = require("../logger");
+const Localizer = require("artibot-localizer");
+const path = require("path");
+const { commons } = require("../loader");
+
+const localizer = new Localizer({
+	lang: commons.config.locale,
+	filePath: path.resolve(__dirname, "..", "locales.json")
+});
 
 module.exports = {
 	name: "interactionCreate",
@@ -15,7 +22,7 @@ module.exports = {
 		// Don't execute interactions in DM channels
 
 		if (!interaction.channel) return interaction.reply({
-			content: "Ceci est désactivé dans les messages privés.",
+			content: localizer._("This is disabled in DM channels."),
 			ephemeral: true
 		});
 
@@ -25,19 +32,17 @@ module.exports = {
 
 		if (interaction.targetType === "USER") {
 
-			const command = client.contextCommands.get(
-				"USER " + interaction.commandName
-			);
+			const { command } = client.contextCommands.get("USER " + interaction.commandName);
 
 			// A try to execute the interaction.
 
 			try {
-				await command.execute(interaction, config);
+				await command.execute(interaction, commons);
 				return;
 			} catch (err) {
 				log("InteractionManager", err, "warn", true);
 				await interaction.reply({
-					content: "Il y a eu un problème avec l'exécution de l'interaction...",
+					content: localizer._("An error occured when executing this interaction..."),
 					ephemeral: true,
 				});
 				return;
@@ -46,19 +51,17 @@ module.exports = {
 		// Checks if the interaction target was a message
 		else if (interaction.targetType === "MESSAGE") {
 
-			const command = client.contextCommands.get(
-				"MESSAGE " + interaction.commandName
-			);
+			const { command } = client.contextCommands.get("MESSAGE " + interaction.commandName);
 
 			// A try to execute the interaction.
 
 			try {
-				await command.execute(interaction, config);
+				await command.execute(interaction, commons);
 				return;
 			} catch (err) {
 				log("InteractionManager", err, "warn", true);
 				await interaction.reply({
-					content: "Il y a eu un problème avec l'exécution de l'interaction...",
+					content: localizer._("An error occured when executing this interaction..."),
 					ephemeral: true,
 				});
 				return;
@@ -68,7 +71,7 @@ module.exports = {
 		// Practically not possible, but we are still catching the bug.
 		// Possible Fix is a restart!
 		else {
-			return log("InteractionManager", "Quelque chose de suspect est survenue avec le menu. Réception d'un type de menu inconnu.", "warn", true);
+			return log("InteractionManager", localizer._("Something weird happened with the menu. Received an unknown menu type."), "warn", true);
 		};
 	}
 };

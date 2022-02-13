@@ -1,0 +1,149 @@
+{
+	"version": "1.0.0",
+	"localizerVersion": 1,
+	"default": "en",
+	"contributors": [
+		"GoudronViande24"
+	],
+	"strings": {
+		"**[[0]]** is live on Twitch!": {
+			"fr": "**[[0]]** est en live sur Twitch!"
+		},
+
+		"Cannot tag [[0]] role (role not found on server [[1]])": {
+			"fr": "Impossible de mentionner le rôle: [[0]] (le rôle n'existe pas sur le serveur [[1]])"
+		},
+
+		"Announcement sent in #[[0]] on [[1]]": {
+			"fr": "Annonce envoyée dans #[[0]] sur [[1]]"
+		},
+
+		"Cannot send the announcement in #[[0]] on [[1]]: [[2]]": {
+			"fr": "Impossible d'envoyer l'annonce dans #[[0]] sur [[1]]: [[2]]"
+		},
+
+		"An error occured while sending the message: ": {
+			"fr": "Erreur lors de l'envoi du message: "
+		},
+
+		"**[[0]] is live on Twitch!**": {
+			"fr": "**[[0]] est en live sur Twitch!**"
+		},
+
+		"Title": {
+			"fr": "Titre"
+		},
+
+		"[[0]] was live on Twitch.": {
+			"fr": "[[0]] était en live sur Twitch."
+		},
+
+		"The stream has ended.": {
+			"fr": "Le live est maintenant terminé."
+		},
+
+		"Game": {
+			"fr": "Jeu"
+		},
+
+		"Viewers": {
+			"fr": "Visionnements"
+		},
+
+		"Currently [[0]]": {
+			"fr": "Actuellement [[0]]"
+		},
+
+		"Online since": {
+			"fr": "En ligne depuis"
+		},
+
+		"Configuration error: The server [[0]] does not have a #[[1]] channel!": {
+			"fr": "Problème de configuration: Le serveur [[0]] ne contient pas le salon #[[1]]!"
+		},
+
+		" --> for the [[0]] server, the announcements channel is #[[1]]": {
+			"fr": " --> pour le serveur [[0]], le salon d'annonces est #[[1]]"
+		},
+
+		"Configuration error: The bot does not have SEND_MESSAGES permission in #[[0]] channel on [[1]] server. The announcements will not be sent.": {
+			"fr": "Problème de configuration: Le bot n'a pas la permission SEND_MESSAGES dans le salon #[[0]] sur le serveur [[1]]. L'envoi des annonces ne fonctionnera pas."
+		},
+
+		"Total of [[0]] #[[1]] channels.": {
+			"fr": "Total de [[0]] salons pour le nom [[1]]."
+		},
+
+		"Creating directory for minidb: [[0]]": {
+			"fr": "Création du dossier pour minidb: [[0]]"
+		},
+
+		"Writing error: [[0]], [[1]]": {
+			"fr": "Erreur d'écriture: [[0]], [[1]]"
+		},
+
+		"API request failed with Helix error: [[0]] ([[1]]/[[2]])": {
+			"fr": "La requête sur l'API Helix a eu une erreur: [[0]] ([[1]]/[[2]])"
+		},
+		
+		"API request failed with error: ": {
+			"fr": "La requête sur l'API a eu une error: "
+		},
+
+		"No channels to listen to. Maybe you should disable this module in the config to free up some system resources.": {
+			"fr": "Pas de chaînes à écouter. Vous devriez désactiver le module pour sauver des ressources système."
+		},
+
+		"Periodic check": {
+			"fr": "Vérification périodique"
+		},
+
+		"Initial check": {
+			"fr": "Vérification initiale"
+		},
+
+		"Listens to: [[0]] (Checks every [[1]]ms)": {
+			"fr": "Écoute: [[0]] (Vérification chaque [[1]]ms)"
+		},
+
+		"Refreshing": {
+			"fr": "Rafraichissement"
+		},
+
+		"No reason": {
+			"fr": "Aucune raison"
+		},
+
+		"An error occured while updating the user: ": {
+			"fr": "Erreur pendant la mise à jour de l'utilisateur: "
+		},
+
+		"An error occured while updating the game: ": {
+			"fr": "Erreur pendant la mise à jour du jeu: "
+		},
+
+		"An error occured while updating streams: ": {
+			"fr": "Erreur dans la mise à jour des streams: "
+		},
+
+		"Updating users data: ": {
+			"fr": "Mise à jour des données des utilisateurs: "
+		},
+
+		"Updating games data: ": {
+			"fr": "Mise à jour des données de jeux: "
+		},
+
+		"The stream is now online: ": {
+			"fr": "Le stream est maintenant en ligne: "
+		},
+
+		"The stream is now offline: ": {
+			"fr": "Le stream n'est plus en ligne: "
+		},
+
+		"Cannot send the announcement, another try will be done on next update.": {
+			"fr": "Impossible d'envoyer la notification, une autre tentative sera faite à la prochaine mise à jour."
+		}
+	}
+}

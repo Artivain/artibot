@@ -1,7 +1,16 @@
 const { Collection, MessageEmbed } = require("discord.js");
 const { prefix, ownerId } = require("../../config.json");
 const { log } = require("../logger");
-const config = require("../../config.json").params;
+const { params, locale } = require("../../config.json");
+const config = params;
+const Localizer = require("artibot-localizer");
+const path = require("path");
+const { commons } = require("../loader");
+
+const localizer = new Localizer({
+	lang: locale,
+	filePath: path.resolve(__dirname, "..", "locales.json")
+});
 
 // Prefix regex, we will use to match in mention prefix.
 
@@ -53,25 +62,25 @@ module.exports = {
 		if (!message.content.startsWith(matchedPrefix) || message.author.bot)
 			return;
 
-		const command =
+		const data =
 			client.commands.get(commandName) ||
-			client.commands.find(
-				(cmd) => cmd.aliases && cmd.aliases.includes(commandName)
-			);
+			client.commands.find(({ command }) => command.aliases && command.aliases.includes(commandName));
 
-		// It it's not a command, return :)
+		// It it's not a command, don't try to execute anything
 
-		if (!command) return;
+		if (!data) return;
+
+		const { command } = data;
 
 		// Owner Only Property, add in your command properties if true.
 
 		if (command.ownerOnly && message.author.id !== ownerId) {
 			let embedOwner = new MessageEmbed()
 				.setColor("RED")
-				.setFooter(config.botName, config.botIcon)
+				.setFooter({ text: config.botName, iconURL: config.botIcon })
 				.setTimestamp()
-				.setTitle("Aide sur la commande")
-				.setDescription(`Cette commande ne peut être exécutée que par <@${ownerId}>.`);
+				.setTitle(localizer._("Help on this command"))
+				.setDescription(localizer.__("This command can only be executed by [[0]].", { placeholders: [`<@${ownerId}>`] }));
 			return message.reply({ embeds: [embedOwner] });
 		}
 
@@ -79,7 +88,7 @@ module.exports = {
 
 		if (command.guildOnly && message.channel.type === "dm") {
 			return message.reply({
-				content: "Je ne peux pas exécuter cette commande dans une conversation privée!",
+				content: localizer._("I can't execute this command in a DM channel!"),
 			});
 		}
 
@@ -88,17 +97,17 @@ module.exports = {
 		if (command.permissions) {
 			const authorPerms = message.channel.permissionsFor(message.author);
 			if (!authorPerms || !authorPerms.has(command.permissions)) {
-				return message.reply({ content: "Tu n'as pas la permission d'utiliser cette commande!" });
+				return message.reply({ content: localizer._("You do not have the permission to execute this command!") });
 			}
 		}
 
 		// Args missing
 
 		if (command.args && !args.length) {
-			let reply = `Tu n'as pas fourni d'argument, ${message.author}!`;
+			let reply = localizer.__("You did not give any argument, [[0]]!", { placeholders: [message.author] });
 
 			if (command.usage) {
-				reply += `\nL'utilisation appropriée est: \`${prefix}${command.name} ${command.usage}\``;
+				reply += localizer.__("\nCorrect usage is `[[0]][[1]] [[2]]`", { placeholders: [prefix, command.name, command.usage] })
 			}
 
 			return message.channel.send({ content: reply });
@@ -122,9 +131,7 @@ module.exports = {
 			if (now < expirationTime) {
 				const timeLeft = (expirationTime - now) / 1000;
 				return message.reply({
-					content: `Tu dois attendre encore ${timeLeft.toFixed(
-						1
-					)} seconde(s) avant de réutiliser la commande \`${command.name}\`.`,
+					content: localizer.__("You must wait [[0]] seconds before using the `[[1]]` command again.", { placeholders: [timeLeft.toFixed(1), command.name] })
 				});
 			}
 		}
@@ -135,12 +142,12 @@ module.exports = {
 		// execute the final command. Put everything above this.
 
 		try {
-			command.execute(message, args, config);
+			command.execute(message, args, commons);
 		} catch (error) {
 			log("CommandManager", error, "warn", true);
 			message.reply({
-				content: "Il y a eu une erreur lors de l'exécution de cette commande.",
+				content: localizer._("An error occured while trying to run this command.")
 			});
 		}
-	},
+	}
 };

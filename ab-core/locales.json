@@ -1,0 +1,207 @@
+{
+	"version": "1.0.0",
+	"localizerVersion": 1,
+	"default": "en",
+	"contributors": [
+		"GoudronViande24"
+	],
+	"strings": {
+
+		"Configuration error: The [[0]] file does not exist.": {
+			"fr": "Erreur de configuration: Le fichier [[0]] est introuvable."
+		},
+
+		"Configuration error: The [[0]] file is invalid.": {
+			"fr": "Erreur de configuration: Le fichier [[0]] est invalide."
+		},
+
+		"Activating commands:": {
+			"fr": "Activation des commandes:"
+		},
+
+		"Activating slash commands:": {
+			"fr": "Activation des commandes slash:"
+		},
+
+		"Activating context menu on messages:": {
+			"fr": "Activation du menu contextuel sur les messages:"
+		},
+
+		"Activating context menu on users:": {
+			"fr": "Activation du menu contextuel sur les utilisateurs:"
+		},
+
+		"Activating buttons:": {
+			"fr": "Activation des boutons:"
+		},
+
+		"Activating select menus:": {
+			"fr": "Activation des menus déroulants:"
+		},
+
+		"Activating triggers:": {
+			"fr": "Activation des triggers:"
+		},
+
+		"Activating module": {
+			"fr": "Activation du module"
+		},
+
+		"No module to activate.": {
+			"fr": "Aucun module à charger."
+		},
+
+		"Artibot is up to date (v[[0]]).": {
+			"fr": "Artibot est à jour (v[[0]])."
+		},
+
+		"An update for Artibot is available!": {
+			"fr": "Une mise à jour est disponible pour Artibot!"
+		},
+
+		" - Installed version: [[0]]": {
+			"fr": " - Version actuelle: [[0]]"
+		},
+
+		" - Latest version: [[0]]": {
+			"fr": " - Dernière version: [[0]]"
+		},
+
+		"Configuration error!": {
+			"fr": "Erreur de configuration!"
+		},
+
+		"Check for updates is disabled in config": {
+			"fr": "Vérification des mises à jours désactivée dans la configuration"
+		},
+
+		"Initializing interactions and slash commands on Discord...": {
+			"fr": "Initialisation des intéractions et des commandes slash auprès de Discord..."
+		},
+
+		"Interaction and slash commands initialized successfully.": {
+			"fr": "Intéractions et commandes slash initialisées avec succès."
+		},
+
+		"An error occured when initializing interactions and slash commands, here are the details: ": {
+			"fr": "Une erreur est survenue avec l'initialisation des intéractions et commandes slash, voici les détais: "
+		},
+
+		"An error occured when executing this button...": {
+			"fr": "Il y a eu un problème lors de l'exécution de ce bouton..."
+		},
+
+		"This is disabled in DM channels.": {
+			"fr": "Ceci est désactivé dans les messages privés."
+		},
+
+		"An error occured when executing this interaction...": {
+			"fr": "Il y a eu un problème avec l'exécution de l'interaction..."
+		},
+
+		"Something weird happened with the menu. Received an unknown menu type.": {
+			"fr": "Quelque chose de suspect est survenue avec le menu. Réception d'un type de menu inconnu."
+		},
+
+		"Added to a new server: ": {
+			"fr": "Ajouté à un nouveau serveur: "
+		},
+
+		"Removed from server: ": {
+			"fr": "Retiré du serveur: "
+		},
+
+		"Initializing modules...": {
+			"fr": "Initialisation des modules..."
+		},
+
+		"No module to load.": {
+			"fr": "Aucun module à charger."
+		},
+
+		"Loading [[0]] module[[1]]:": {
+			"fr": "Lancement de [[0]] module[[1]]:"
+		},
+
+		"Help on this command": {
+			"fr": "Aide sur cette commande"
+		},
+
+		"This command can only be executed by [[0]].": {
+			"fr": "Cette commande ne peut être exécutée que par [[0]]."
+		},
+
+		"I can't execute this command in a DM channel!": {
+			"fr": "Je ne peux pas exécuter cette commande dans une conversation privée!"
+		},
+
+		"You do not have the permission to execute this command!": {
+			"fr": "Tu n'as pas la permission d'utiliser cette commande!"
+		},
+
+		"You did not give any argument, [[0]]!": {
+			"fr": "Tu n'as pas fourni d'argument, [[0]]!"
+		},
+
+		"\nCorrect usage is `[[0]][[1]] [[2]]`": {
+			"fr": "\nL'utilisation appropriée est: `[[0]][[1]] [[2]]`"
+		},
+
+		"You must wait [[0]] seconds before using the `[[1]]` command again.": {
+			"fr": "Tu dois attendre encore [[0]] seconde(s) avant de réutiliser la commande `[[1]]`."
+		},
+
+		"An error occured while trying to run this command.": {
+			"fr": "Il y a eu une erreur lors de l'exécution de cette commande."
+		},
+
+		"Ready! Connected as [[0]].": {
+			"fr": "Prêt! Connecté en tant que [[0]]."
+		},
+
+		"An error occured while executing this menu option.": {
+			"fr": "Il y a eu une erreur avec l'exécution de cette option du menu."
+		},
+
+		"An error occured while executing this command.": {
+			"fr": "Il y a eu une erreur avec l'exécution de cette commande."
+		},
+
+		"An error occured while trying to execute a trigger.": {
+			"fr": "Il y a eu une erreur avec l'exécution d'un trigger."
+		},
+
+		"Bot name updated to [[0]].": {
+			"fr": "Nom du bot mis à jour pour [[0]]."
+		},
+
+		"There was an error with this button!": {
+			"fr": "Il y a eu une erreur avec ce bouton!"
+		},
+
+		"There was an error with this menu option!": {
+			"fr": "Il y a eu une erreur avec cette option du menu!"
+		},
+
+		"Hello [[0]]! My prefix is `[[1]]`, you can get help with the `[[1]]help` command.": {
+			"fr": "Bonjour [[0]]! Mon préfixe est `[[1]]`, tu peux obtenir de l'aide en faisait `[[1]]help`."
+		},
+
+		"An error occured while trying to load manifest file of module [[0]].": {
+			"fr": "Une erreur est survenue lors du chargement du fichier manifeste du module [[0]]."
+		},
+
+		"Loading manifests...": {
+			"fr": "Chargement des manifestes..."
+		},
+
+		"Found [[0]] modules.": {
+			"fr": "[[0]] modules trouvés."
+		},
+
+		" -> This module does not support the [[0]] language!": {
+			"fr": " -> Ce module ne supporte pas la langue [[0]]!"
+		}
+
+	}
+}

@@ -1,0 +1,29 @@
+{
+	"version": "1.0.0",
+	"localizerVersion": 1,
+	"default": "en",
+	"contributors": [
+		"GoudronViande24"
+	],
+	"strings": {
+		"Tells a Chuck Norris joke.": {
+			"fr": "Dit une blague de Chuck Norris."
+		},
+
+		"Chuck Norris joke": {
+			"fr": "Blague de Chuck Norris"
+		},
+
+		"An error occured while executing this command.": {
+			"fr": "Une erreur est survenue pendant l'utilisation de cette commande."
+		},
+
+		"Tells a dad joke.": {
+			"fr": "Dit une blague de papa."
+		},
+
+		"Dad joke": {
+			"fr": "Blague de papa"
+		}
+	}
+}

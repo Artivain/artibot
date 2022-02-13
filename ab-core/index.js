@@ -1,65 +1,76 @@
-const slashManager = require("./slashManager");
+const interactionManager = require("./interactionManager");
 const { checkUpdates } = require("./updater");
 const { log } = require("./logger");
+const Localizer = require("artibot-localizer");
+const loader = require("./loader");
 
-try {
-	var fs = require("fs");
-	var { Client, Collection, Intents } = require("discord.js");
-	var chalk = require("chalk");
-	var figlet = require("figlet");
-} catch (error) {
-	if (error.code !== 'MODULE_NOT_FOUND') {
-		// Re-throw not "Module not found" errors
-		throw error;
-	} else {
-		log("Artibot", "Erreur de configuration: Les modules Node.js ne sont pas installés correctement.", "err", true);
-		process.exit(1);
-	};
-};
+const fs = require("fs");
+const { Client, Collection, Intents } = require("discord.js");
+const chalk = require("chalk");
+const figlet = require("figlet");
+const path = require("path");
 
 console.log(chalk.blue(figlet.textSync('Artibot', {
 	font: 'ANSI Shadow',
 	horizontalLayout: 'fitted'
 })));
 
-try { var { clientId, testGuildId, enabledModules } = require("../config.json"); } catch (error) {
+// Initialize localizer
+const localizer = new Localizer({
+	filePath: path.resolve(__dirname, "locales.json")
+});
+
+try {
+	var config = require("../config.json");
+	var { clientId, testGuildId, enabledModules } = config;
+} catch (error) {
 	if (error.code !== 'MODULE_NOT_FOUND') {
 		// Re-throw not "Module not found" errors 
 		throw error;
 	} else {
-		log("Artibot", "Erreur de configuration: Le fichier config.json est introuvable.", "err", true);
+		log("Artibot", localizer.translateWithPlaceholders("Configuration error: [[0]] file does not exist.", { placeholders: ["config.json"] }), "err", true);
 		process.exit(1);
 	};
 };
+
+// Set localizer lang with the config one
+localizer.setLocale(config.locale);
 
 try { var token = require("../private.json").botToken; } catch (error) {
 	if (error.code !== 'MODULE_NOT_FOUND') {
 		// Re-throw not "Module not found" errors 
 		throw error;
 	} else {
-		log("Artibot", "Erreur de configuration: Le fichier private.json est introuvable.", "err", true);
+		log("Artibot", localizer.translateWithPlaceholders("Configuration error: [[0]] file does not exist.", { placeholders: ["private.json"] }), "err", true);
 		process.exit(1);
 	};
 };
 
 if (!token) {
-	log("Artibot", "Erreur de configuration: Le fichier private.json est invalide.", "err", true);
+	log("Artibot", localizer.translateWithPlaceholders("Configuration error: [[0]] file is invalid.", { placeholders: ["private.json"] }), "err", true);
 	process.exit(1);
 };
 
 if (!clientId || !testGuildId || !enabledModules) {
-	log("Artibot", "Erreur de configuration: Le fichier config.json est invalide.", "err", true);
+	log("Artibot", localizer.translateWithPlaceholders("Configuration error: [[0]] file is invalid.", { placeholders: ["config.json"] }), "err", true);
 	process.exit(1);
 };
 
-// Depuis Discord.js v13, il est obligatoire de déclarer les intents
-
+// Since Discord.js v13, we must declare intents
 const client = new Client({
-	intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS, Intents.FLAGS.GUILD_VOICE_STATES, Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILD_PRESENCES],
+	intents: [
+		Intents.FLAGS.GUILDS,
+		Intents.FLAGS.GUILD_MESSAGES,
+		Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
+		Intents.FLAGS.GUILD_VOICE_STATES,
+		Intents.FLAGS.GUILD_MEMBERS,
+		Intents.FLAGS.GUILD_PRESENCES
+	]
 });
 
-/**********************************************************************/
-// Gestion des events handler
+/*****************************************/
+/* Manage event handlers                 */
+/*****************************************/
 
 const eventFiles = fs
 	.readdirSync("./ab-core/events")
@@ -78,8 +89,9 @@ for (const file of eventFiles) {
 	};
 };
 
-/**********************************************************************/
-// Définir les collections des commandes, commandes slash et cooldowns
+/*****************************************/
+/* Create collections                   */
+/*****************************************/
 
 client.commands = new Collection();
 client.slashCommands = new Collection();
@@ -88,242 +100,244 @@ client.selectCommands = new Collection();
 client.contextCommands = new Collection();
 client.cooldowns = new Collection();
 client.triggers = new Collection();
-client.global = new Collection();
+client.globals = new Collection();
 
-/**********************************************************************/
-// Initialisation des global
+/*****************************************/
+/* Load manifests                        */
+/*****************************************/
 
-// Catégories des global (par dossier)
+log("Loader", localizer.translate("Loading manifests..."), "log", true);
+const manifests = loader.getManifests();
+log("Loader", localizer.translateWithPlaceholders("Found [[0]] modules.", { placeholders: [manifests.length] }), "log", true);
 
-const globalFolders = fs.readdirSync("./ab-modules/global", { withFileTypes: true })
-	.filter(dirent => dirent.isDirectory())
-	.map(dirent => dirent.name)
-	.filter(name => enabledModules.includes(name) || name == "core");
+/*****************************************/
+/* Initialize globals                    */
+/*****************************************/
 
-// Enregistrer touts les global dans la collection
+const globalModules = manifests.filter(manifest => {
+	for (const part of manifest.parts) if (part.type == "global") return true;
+});
 
-for (const folder of globalFolders) {
-	const global = require(`../ab-modules/global/${folder}/index.js`);
-	client.global.set(global.name, global);
+for (const module of globalModules) {
+	const parts = module.parts.filter(part => part.type == "global");
+	for (const part of parts) {
+		const filePath = `../ab-modules/${module.id}/${part.path}`;
+		const global = require(filePath);
+		client.globals.set(part.id, { global, part, module });
+	};
 };
 
-/**********************************************************************/
-// Initialisation des commandes par message
+/*****************************************/
+/* Initialize commands                   */
+/*****************************************/
 
-// Catégories de commandes (par dossier)
+log("CommandManager", localizer.translate("Activating commands:"), "info", true);
 
-const commandFolders = fs.readdirSync("./ab-modules/commands", { withFileTypes: true })
-	.filter(dirent => dirent.isDirectory())
-	.map(dirent => dirent.name)
-	.filter(name => enabledModules.includes(name) || name == "core");
+const commandsModules = manifests.filter(manifest => {
+	for (const part of manifest.parts) if (part.type == "command") return true;
+});
 
-// Enregistrer toutes les commandes dans la collection
-
-log("CommandManager", "Activation des commandes:", "info", true);
-
-for (const folder of commandFolders) {
-	log("CommandManager", " - Activation du module " + folder, "log", true);
-	const commandFiles = fs
-		.readdirSync(`./ab-modules/commands/${folder}`)
-		.filter((file) => file.endsWith(".js"));
-	for (const file of commandFiles) {
-		const command = require(`../ab-modules/commands/${folder}/${file}`);
-		client.commands.set(command.name, command);
+for (const module of commandsModules) {
+	log("CommandManager", ` - ${localizer.translate("Activating module")} ${module.name} (v${module.moduleVersion})`, "log", true);
+	if (module.supportedLocales != "any" && !module.supportedLocales.includes(config.locale)) {
+		log("CommandManager", localizer.__(" -> This module does not support the [[0]] language!", { placeholders: [config.locale] }), "warn", true);
+	};
+	const parts = module.parts.filter(part => part.type == "command");
+	for (const part of parts) {
+		const filePath = `../ab-modules/${module.id}/${part.path}`;
+		const command = require(filePath);
+		client.commands.set(command.name, { command, part, module });
 		log("CommandManager", "   - " + command.name, "log", true);
 	};
 };
 
-if (client.commands.size == 0) log("CommandManager", "Aucun module à charger.", "log", true);
+/*****************************************/
+/* Initialize slash commands             */
+/*****************************************/
 
-/**********************************************************************/
-// Initialisation des commandes slash
+log("SlashManager", localizer.translate("Activating slash commands:"), "info", true);
 
-// Toutes les commandes slash
+const slashModules = manifests.filter(manifest => {
+	for (const part of manifest.parts) if (part.type == "slashcommand") return true;
+});
 
-const slashCommands = fs.readdirSync("./ab-modules/slash-commands", { withFileTypes: true })
-	.filter(dirent => dirent.isDirectory())
-	.map(dirent => dirent.name)
-	.filter(name => enabledModules.includes(name) || name == "core");
-
-// Enregistrer les commandes slash dans la collection
-
-log("SlashManager", "Activation des commandes slash:", "info", true);
-
-for (const module of slashCommands) {
-	log("SlashManager", " - Activation du module " + module, "log", true);
-	const commandFiles = fs
-		.readdirSync(`./ab-modules/slash-commands/${module}`)
-		.filter((file) => file.endsWith(".js"));
-
-	for (const commandFile of commandFiles) {
-		const command = require(`../ab-modules/slash-commands/${module}/${commandFile}`);
-		client.slashCommands.set(command.data.name, command);
+for (const module of slashModules) {
+	log("SlashManager", ` - ${localizer.translate("Activating module")} ${module.name} (v${module.moduleVersion})`, "log", true);
+	if (module.supportedLocales != "any" && !module.supportedLocales.includes(config.locale)) {
+		log("SlashManager", localizer.__(" -> This module does not support the [[0]] language!", { placeholders: [config.locale] }), "warn", true);
+	};
+	const parts = module.parts.filter(part => part.type == "slashcommand");
+	for (const part of parts) {
+		const filePath = `../ab-modules/${module.id}/${part.path}`;
+		const command = require(filePath);
+		client.slashCommands.set(command.data.name, { command, part, module });
 		log("SlashManager", "   - " + command.data.name, "log", true);
 	};
 };
 
-if (client.slashCommands.size == 0) log("SlashManager", "Aucun module à charger.", "log", true);
+if (client.commands.size == 0) log("SlashManager", localizer.translate("No module to activate."), "log", true);
 
-/**********************************************************************/
-// Initialisation du menu sur les messages
+/*****************************************/
+/* Initialize messages menu              */
+/*****************************************/
 
-const messageMenus = fs.readdirSync("./ab-modules/message-menus", { withFileTypes: true })
-	.filter(dirent => dirent.isDirectory())
-	.map(dirent => dirent.name)
-	.filter(name => enabledModules.includes(name) || name == "core");
+log("InteractionManager", localizer.translate("Activating context menu on messages:"), "info", true);
 
-// Enregistrer le menu des messages dans la collection
+const messageMenuModules = manifests.filter(manifest => {
+	for (const part of manifest.parts) if (part.type == "messagemenu") return true;
+});
 
-log("InteractionManager", "Activation du menu contextuel sur les messages:", "info", true);
-
-for (const folder of messageMenus) {
-	log("InteractionManager", " - Activation du module " + folder, "log", true);
-	const files = fs
-		.readdirSync(`./ab-modules/message-menus/${folder}`)
-		.filter((file) => file.endsWith(".js"));
-
-	for (const file of files) {
-		const menu = require(`../ab-modules/message-menus/${folder}/${file}`);
-		const keyName = `MESSAGE ${menu.data.name}`;
-		client.contextCommands.set(keyName, menu);
-		log("InteractionManager", "   - " + menu.data.name, "log", true);
+for (const module of messageMenuModules) {
+	log("InteractionManager", ` - ${localizer.translate("Activating module")} ${module.name} (v${module.moduleVersion})`, "log", true);
+	if (module.supportedLocales != "any" && !module.supportedLocales.includes(config.locale)) {
+		log("InteractionManager", localizer.__(" -> This module does not support the [[0]] language!", { placeholders: [config.locale] }), "warn", true);
+	};
+	const parts = module.parts.filter(part => part.type == "messagemenu");
+	for (const part of parts) {
+		const filePath = `../ab-modules/${module.id}/${part.path}`;
+		const command = require(filePath);
+		const keyName = `MESSAGE ${command.data.name}`;
+		client.contextCommands.set(keyName, { command, part, module });
+		log("InteractionManager", "   - " + command.data.name, "log", true);
 	};
 };
 
 const interactionAmmount = client.contextCommands.size;
 
-if (interactionAmmount == 0) log("InteractionManager", "Aucun module à charger.", "log", true);
+if (interactionAmmount == 0) log("InteractionManager", localizer.translate("No module to activate."), "log", true);
 
-/**********************************************************************/
-// Initialisation du menu sur les utilisateurs
+/*****************************************/
+/* Initialize users menu              */
+/*****************************************/
 
-const userMenus = fs.readdirSync("./ab-modules/user-menus", { withFileTypes: true })
-	.filter(dirent => dirent.isDirectory())
-	.map(dirent => dirent.name)
-	.filter(name => enabledModules.includes(name) || name == "core");
+log("InteractionManager", localizer.translate("Activating context menu on users:"), "info", true);
 
-// Enregistrer le menu des utilisateurs dans la collection
+const userMenuModules = manifests.filter(manifest => {
+	for (const part of manifest.parts) if (part.type == "usermenu") return true;
+});
 
-log("InteractionManager", "Activation du menu contextuel sur les utilisateurs:", "info", true);
-
-for (const folder of userMenus) {
-	log("InteractionManager", " - Activation du module " + folder, "log", true);
-	const files = fs
-		.readdirSync(`./ab-modules/user-menus/${folder}`)
-		.filter((file) => file.endsWith(".js"));
-	for (const file of files) {
-		const menu = require(`../ab-modules/user-menus/${folder}/${file}`);
-		const keyName = `USER ${menu.data.name}`;
-		client.contextCommands.set(keyName, menu);
-		log("InteractionManager", "   - " + menu.data.name, "log", true);
+for (const module of userMenuModules) {
+	log("InteractionManager", ` - ${localizer.translate("Activating module")} ${module.name} (v${module.moduleVersion})`, "log", true);
+	if (module.supportedLocales != "any" && !module.supportedLocales.includes(config.locale)) {
+		log("InteractionManager", localizer.__(" -> This module does not support the [[0]] language!", { placeholders: [config.locale] }), "warn", true);
+	};
+	const parts = module.parts.filter(part => part.type == "usermenu");
+	for (const part of parts) {
+		const filePath = `../ab-modules/${module.id}/${part.path}`;
+		const command = require(filePath);
+		const keyName = `USER ${command.data.name}`;
+		client.contextCommands.set(keyName, { command, part, module });
+		log("InteractionManager", "   - " + command.data.name, "log", true);
 	};
 };
 
-if (interactionAmmount == client.contextCommands.size) log("InteractionManager", "Aucun module à charger.", "log", true);
+if (interactionAmmount == client.contextCommands.size) log("InteractionManager", localizer.translate("No module to activate."), "log", true);
 
-/**********************************************************************/
-// Initialisation des bouton
+/*****************************************/
+/* Initialize buttons                    */
+/*****************************************/
 
-// Tous les bouton
+log("ButtonManager", localizer.translate("Activating buttons:"), "info", true);
 
-const buttonCommands = fs.readdirSync("./ab-modules/buttons", { withFileTypes: true })
-	.filter(dirent => dirent.isDirectory())
-	.map(dirent => dirent.name)
-	.filter(name => enabledModules.includes(name) || name == "core");
+const buttonModules = manifests.filter(manifest => {
+	for (const part of manifest.parts) if (part.type == "button") return true;
+});
 
-// Enregistrer tous les boutons dans la collection
-
-log("ButtonManager", "Activation des boutons:", "info", true);
-
-for (const module of buttonCommands) {
-	log("ButtonManager", " - Activation du module " + module, "log", true);
-	const commandFiles = fs
-		.readdirSync(`./ab-modules/buttons/${module}`)
-		.filter((file) => file.endsWith(".js"));
-
-	for (const commandFile of commandFiles) {
-		const command = require(`../ab-modules/buttons/${module}/${commandFile}`);
-		client.buttonCommands.set(command.id, command);
+for (const module of buttonModules) {
+	log("ButtonManager", ` - ${localizer.translate("Activating module")} ${module.name} (v${module.moduleVersion})`, "log", true);
+	if (module.supportedLocales != "any" && !module.supportedLocales.includes(config.locale)) {
+		log("ButtonManager", localizer.__(" -> This module does not support the [[0]] language!", { placeholders: [config.locale] }), "warn", true);
+	};
+	const parts = module.parts.filter(part => part.type == "button");
+	for (const part of parts) {
+		const filePath = `../ab-modules/${module.id}/${part.path}`;
+		const command = require(filePath);
+		client.buttonCommands.set(command.id, { command, part, module });
 		log("ButtonManager", "   - " + command.id, "log", true);
 	};
 };
 
-if (client.buttonCommands.size == 0) log("ButtonManager", "Aucun module à charger.", "log", true);
+if (client.buttonCommands.size == 0) log("ButtonManager", localizer.translate("No module to activate."), "log", true);
 
-/**********************************************************************/
-// Initialisation des menu déroulants
+/*****************************************/
+/* Initialize dropdown menus             */
+/*****************************************/
 
-// Tous les menus déroulants
+log("ButtonManager", localizer.translate("Activating select menus:"), "info", true);
 
-const selectMenus = fs.readdirSync("./ab-modules/select-menus", { withFileTypes: true })
-	.filter(dirent => dirent.isDirectory())
-	.map(dirent => dirent.name)
-	.filter(name => enabledModules.includes(name) || name == "core");
+const dropdownModules = manifests.filter(manifest => {
+	for (const part of manifest.parts) if (part.type == "selectmenu") return true;
+});
 
-// Enregistrer les menus déroulants dans la collection
-
-log("ButtonManager", "Activation des menus déroulants:", "info", true);
-
-for (const module of selectMenus) {
-	log("ButtonManager", " - Activation du module " + module, "log", true);
-	const commandFiles = fs
-		.readdirSync(`./ab-modules/select-menus/${module}`)
-		.filter((file) => file.endsWith(".js"));
-	for (const commandFile of commandFiles) {
-		const command = require(`../ab-modules/select-menus/${module}/${commandFile}`);
-		client.selectCommands.set(command.id, command);
+for (const module of dropdownModules) {
+	log("ButtonManager", ` - ${localizer.translate("Activating module")} ${module.name} (v${module.moduleVersion})`, "log", true);
+	if (module.supportedLocales != "any" && !module.supportedLocales.includes(config.locale)) {
+		log("ButtonManager", localizer.__(" -> This module does not support the [[0]] language!", { placeholders: [config.locale] }), "warn", true);
+	};
+	const parts = module.parts.filter(part => part.type == "selectmenu");
+	for (const part of parts) {
+		const filePath = `../ab-modules/${module.id}/${part.path}`;
+		const command = require(filePath);
+		client.selectCommands.set(command.id, { command, part, module });
 		log("ButtonManager", "   - " + command.id, "log", true);
 	};
 };
 
-if (client.selectCommands.size == 0) log("ButtonManager", "Aucun module à charger.", "log", true);
+if (client.selectCommands.size == 0) log("ButtonManager", localizer.translate("No module to activate."), "log", true);
 
-/**********************************************************************/
-// Initialisation des triggers
+/*****************************************/
+/* Initialize triggers                   */
+/*****************************************/
 
-// Catégories de triggers (par dossier)
+log("TriggerManager", localizer.translate("Activating triggers:"), "info", true);
 
-const triggerFolders = fs.readdirSync("./ab-modules/triggers", { withFileTypes: true })
-	.filter(dirent => dirent.isDirectory())
-	.map(dirent => dirent.name)
-	.filter(name => enabledModules.includes(name) || name == "core");
+const triggerModules = manifests.filter(manifest => {
+	for (const part of manifest.parts) if (part.type == "trigger") return true;
+});
 
-// Enregistrer les triggers dans la collection
-
-log("TriggerManager", "Activation des triggers:", "info", true);
-
-for (const folder of triggerFolders) {
-	log("TriggerManager", " - Activation du module " + folder, "log", true);
-	const triggerFiles = fs
-		.readdirSync(`./ab-modules/triggers/${folder}`)
-		.filter((file) => file.endsWith(".js"));
-	for (const file of triggerFiles) {
-		const trigger = require(`../ab-modules/triggers/${folder}/${file}`);
-		client.triggers.set(trigger.name, trigger);
-		log("TriggerManager", "   - " + trigger.name, "log", true);
+for (const module of triggerModules) {
+	log("TriggerManager", ` - ${localizer.translate("Activating module")} ${module.name} (v${module.moduleVersion})`, "log", true);
+	if (module.supportedLocales != "any" && !module.supportedLocales.includes(config.locale)) {
+		log("TriggerManager", localizer.__(" -> This module does not support the [[0]] language!", { placeholders: [config.locale] }), "warn", true);
+	};
+	const parts = module.parts.filter(part => part.type == "trigger");
+	for (const part of parts) {
+		const filePath = `../ab-modules/${module.id}/${part.path}`;
+		const command = require(filePath);
+		client.triggers.set(part.id, { command, part, module });
+		log("TriggerManager", "   - " + part.id, "log", true);
 	};
 };
 
-if (client.triggers.size == 0) log("TriggerManager", "Aucun module à charger.", "log", true);
+if (client.triggers.size == 0) log("TriggerManager", localizer.translate("No module to activate."), "log", true);
 
-// Connection à l'API Discord avec le bot
-
+// Connect to Discord API
 client.login(token);
 
-// Vérifier si une mise à jour existe sur le repo GitHub
+/**********************************************/
+/* Check for updates on GitHub                */
+/**********************************************/
+
 checkUpdates().then(response => {
+	/**
+	 * If check for updates is disabled, don't do anything
+	 * @since 2.0.0
+	 */
+	if (!response) return;
+
 	if (response.upToDate) {
-		log("Updater", `Artibot est à jour (v${response.currentVersion}).`, "info", true);
+		log("Updater", localizer.translateWithPlaceholders("Artibot is up to date (v[[0]]).", { placeholders: [response.currentVersion] }), "info", true);
 	} else {
-		log("Updater", `Une mise à jour est disponible pour Artibot!`, "warn", true);
-		log("Updater", ` - Version actuelle: ${response.currentVersion}`, "info", true);
-		log("Updater", ` - Dernière version: ${response.remoteVersion}`, "info", true);
+		log("Updater", localizer.translate("An update for Artibot is available!"), "warn", true);
+		log("Updater", localizer.translateWithPlaceholders(" - Installed version: [[0]]", { placeholders: [response.currentVersion] }), "info", true);
+		log("Updater", localizer.translateWithPlaceholders(" - Latest version: [[0]]", { placeholders: [response.remoteVersion] }), "info", true);
 	};
 });
 
-/**********************************************************************/
-// Initialisation des commandes slash dans l'API Discord
+/**********************************************/
+/* Initialize slash commands in Discord's API */
+/**********************************************/
 
-slashManager.init(token);
-slashManager.generateData(client);
-slashManager.register();
+interactionManager.init(token);
+interactionManager.generateData(client);
+interactionManager.register();
