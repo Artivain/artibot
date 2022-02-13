@@ -4,7 +4,7 @@ module.exports = {
 	manifest: {
 
 		manifestVersion: 1,
-		moduleVersion: "2.1.0",
+		moduleVersion: "2.1.1",
 		name: "Giveaways",
 		supportedLocales: [
 			"en",

@@ -1,5 +1,5 @@
 {
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"localizerVersion": 1,
 	"default": "en",
 	"contributors": [
@@ -38,8 +38,8 @@
 			"fr": "Le temps avant la fin du giveaway. Exemples: '5h', '2d'"
 		},
 
-		"How much people will win the prize.": {
-			"fr": "Nombre de gagnants."
+		"How much people will win the prize": {
+			"fr": "Nombre de gagnants"
 		},
 
 		"User that will host the giveaway (sponsor, donator, etc.). By default, it is you.": {
@@ -200,6 +200,14 @@
 
 		"The drop has been started!": {
 			"fr": "Le drop a bien été lancé!"
+		},
+
+		"`[[0]]` is not a valid duration.": {
+			"fr": "`[[0]]` n'est pas une durée valide."
+		},
+
+		"You must have at least one winner!": {
+			"fr": "Il doit y avoir au moins un gagnant!"
 		}
 	}
 }

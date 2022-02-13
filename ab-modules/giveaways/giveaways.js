@@ -112,7 +112,7 @@ module.exports = {
 					option
 						.setName("option")
 						.setDescription(localizer._("What to edit in the giveaway?"))
-						.addChoice(localizer._("How much people will win the prize."), "winnerCount")
+						.addChoice(localizer._("How much people will win the prize"), "winnerCount")
 						.addChoice(localizer._("Prize to win"), "prize")
 						.addChoice(localizer._("Add time"), "time")
 						.setRequired(true)
@@ -330,6 +330,26 @@ module.exports = {
 			};
 
 			if (option == "time") {
+				/**
+				 * Check if duration is valid
+				 * @since 2.1.1
+				 */
+				if (!ms(value)) {
+					const errorEmbed = new MessageEmbed()
+						.setColor("RED")
+						.setTitle("Giveaways")
+						.setTimestamp()
+						.setFooter({ text: config.botName, iconURL: config.botIcon })
+						.setDescription(localizer.__("`[[0]]` is not a valid duration.", { placeholders: [duration] }));
+
+					await interaction.reply({
+						embeds: [errorEmbed],
+						ephemeral: true
+					});
+
+					return
+				};
+
 				var settings = { addTime: ms(value) };
 			};
 
@@ -465,6 +485,46 @@ module.exports = {
 				var hostedBy = interaction.member.user;
 			};
 
+			/**
+			 * Check if duration is valid
+			 * @since 2.1.1
+			 */
+			if (!ms(duration) || ms(duration) < 1) {
+				const errorEmbed = new MessageEmbed()
+					.setColor("RED")
+					.setTitle("Giveaways")
+					.setTimestamp()
+					.setFooter({ text: config.botName, iconURL: config.botIcon })
+					.setDescription(localizer.__("`[[0]]` is not a valid duration.", { placeholders: [duration] }));
+
+				await interaction.reply({
+					embeds: [errorEmbed],
+					ephemeral: true
+				});
+
+				return
+			};
+
+			/**
+			 * Check if there is at least one winner
+			 * @since 2.1.1
+			 */
+			if (!winnerCount || winnerCount < 1) {
+				const errorEmbed = new MessageEmbed()
+					.setColor("RED")
+					.setTitle("Giveaways")
+					.setTimestamp()
+					.setFooter({ text: config.botName, iconURL: config.botIcon })
+					.setDescription(localizer._("You must have at least one winner!"));
+
+				await interaction.reply({
+					embeds: [errorEmbed],
+					ephemeral: true
+				});
+
+				return
+			};
+
 			await manager.start(channel, {
 				duration: ms(duration),
 				winnerCount,
@@ -538,6 +598,26 @@ module.exports = {
 				var hostedBy = interaction.options.getUser("host");
 			} else {
 				var hostedBy = interaction.member.user;
+			};
+
+			/**
+			 * Check if there is at least one winner
+			 * @since 2.1.1
+			 */
+			if (!winnerCount || winnerCount < 1) {
+				const errorEmbed = new MessageEmbed()
+					.setColor("RED")
+					.setTitle("Giveaways")
+					.setTimestamp()
+					.setFooter({ text: config.botName, iconURL: config.botIcon })
+					.setDescription(localizer._("You must have at least one winner!"));
+
+				await interaction.reply({
+					embeds: [errorEmbed],
+					ephemeral: true
+				});
+
+				return
 			};
 
 			await manager.start(channel, {
