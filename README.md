@@ -1,7 +1,31 @@
 # Artibot
 Bot open-source fait par Artivain et les contributeurs.
 
-[![CodeFactor](https://www.codefactor.io/repository/github/artivain/artibot/badge)](https://www.codefactor.io/repository/github/artivain/artibot)
+![Code quality:](https://img.shields.io/badge/Code%20quality-%3A-gray?style=flat-square)&nbsp;&nbsp;
+[![CodeFactor](https://www.codefactor.io/repository/github/artivain/artibot/badge?style=flat-square)](https://www.codefactor.io/repository/github/artivain/artibot)
+![GitHub repo size](https://img.shields.io/github/repo-size/Artivain/artibot?style=flat-square)
+[![GitHub license](https://img.shields.io/github/license/Artivain/artibot?style=flat-square)](https://github.com/Artivain/artibot/blob/main/LICENSE)
+<br>
+![Repo stats:](https://img.shields.io/badge/Repo%20stats-%3A-gray?style=flat-square)&nbsp;&nbsp;
+[![GitHub issues](https://img.shields.io/github/issues/Artivain/artibot?style=flat-square)](https://github.com/Artivain/artibot/issues)
+[![GitHub forks](https://img.shields.io/github/forks/Artivain/artibot?style=flat-square)](https://github.com/Artivain/artibot/network)
+[![GitHub stars](https://img.shields.io/github/stars/Artivain/artibot?style=flat-square)](https://github.com/Artivain/artibot/stargazers)
+<br>
+![Made with:](https://img.shields.io/badge/Made%20with-%3A-gray?style=flat-square)&nbsp;&nbsp;
+[![Node.js](https://img.shields.io/badge/Node.js-16.13.1-blue?style=flat-square)](https://github.com/Artivain/artibot/blob/main/.node-version)
+[![GitHub package.json dependency version (prod)](https://img.shields.io/github/package-json/dependency-version/Artivain/artibot/discord.js?style=flat-square)](https://discord.js.org/#/)
+[![GitHub package.json dependency version (prod)](https://img.shields.io/github/package-json/dependency-version/Artivain/artibot/axios?style=flat-square)](https://axios-http.com/)
+<br>
+![Versions:](https://img.shields.io/badge/Versions-%3A-gray?style=flat-square)&nbsp;&nbsp;
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/Artivain/artibot?label=latest&style=flat-square&color=green)](https://github.com/Artivain/artibot/releases/latest)
+[![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/Artivain/artibot?color=yellow&include_prereleases&label=beta&style=flat-square)](https://github.com/Artivain/artibot/releases)
+[![GitHub package.json version](https://img.shields.io/github/package-json/v/Artivain/artibot?color=orange&label=alpha&style=flat-square)](https://github.com/Artivain/artibot)
+[![GitHub package.json version (branch)](https://img.shields.io/github/package-json/v/Artivain/artibot/unstable?color=red&label=unstable&style=flat-square)](https://github.com/Artivain/artibot/tree/unstable)
+<br>
+![See also:](https://img.shields.io/badge/See%20also-%3A-gray?style=flat-square)&nbsp;&nbsp;
+[![Discord](https://img.shields.io/discord/784679956717240391?label=Discord%20support%20server&style=flat-square)](https://discord.artivain.com)
+<br>
+![GitHub all releases](https://img.shields.io/github/downloads/Artivain/artibot/total?label=total%20downloads&style=flat-square)
 
 ## But du projet
 Faire un bot modulaire, moderne, performant et bien documenté disponible pour tous. 
