@@ -11,10 +11,7 @@ module.exports = {
 		manifestVersion: 1,
 		moduleVersion: "1.1.0",
 		name: "ReactionRoles",
-		supportedLocales: [
-			"en",
-			"fr"
-		],
+		supportedLocales: "any",
 		parts: [
 			{
 				id: "reactionrole",
