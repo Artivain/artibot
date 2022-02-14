@@ -49,7 +49,11 @@ Thanks go to these wonderful people ([emoji key](https://allcontributors.org/doc
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
-
+<table>
+  <tr>
+    <td align="center"><a href="https://artivain.com"><img src="https://avatars.githubusercontent.com/u/42936037?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Thomas Fournier</b></sub></a><br /><a href="https://github.com/Artivain/artibot/commits?author=GoudronViande24" title="Code">💻</a></td>
+  </tr>
+</table>
 
 <!-- markdownlint-restore -->
 <!-- prettier-ignore-end -->
