@@ -88,7 +88,7 @@ Un gros merci à tous ceux qui participent au projet ([définition des emojis](h
 This project follows the [all-contributors](https://allcontributors.org) specification.
 Contributions of any kind are welcome!
 
-Ce projet suit les normes [all-contributors](https://allcontributors.org). Toute sorte de contribution est bienvenue!
+Ce projet suit les normes [all-contributors](https://allcontributors.org). Toutes sortes de contribution est bienvenue!
 
 ---
 
