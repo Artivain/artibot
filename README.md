@@ -1,4 +1,6 @@
 # Artibot
+Open source Discord bot made by Artivain and the community.
+
 Bot open-source fait par Artivain et les contributeurs.
 
 ![Code quality:](https://img.shields.io/badge/Code%20quality-%3A-gray?style=flat-square)&nbsp;&nbsp;
@@ -27,24 +29,45 @@ Bot open-source fait par Artivain et les contributeurs.
 <br>
 ![GitHub all releases](https://img.shields.io/github/downloads/Artivain/artibot/total?label=total%20downloads&style=flat-square)
 
+---
+
+## Goal of the project
+Make a modular, modern, efficient and well documented Discord bot available for everyone.
+
+Unlike other popular bots likes MEE6, Artibot does not have paid functionalities. All the functionalities are available for everyone.
+
 ## But du projet
+
 Faire un bot modulaire, moderne, performant et bien documenté disponible pour tous. 
 
-Contrairement aux autres bots populaires comme MEE6, Artibot n'a pas de tier payant et toutes les fonctionnalités sont disponibles pour tous. 
+Contrairement aux autres bots populaires comme MEE6, Artibot n'a pas de tier payant et toutes les fonctionnalités sont disponibles pour tous.
 
-> Ce projet est encore en début de développement. Toutes les contributions sont bienvenues!
+---
 
-### Comment participer
+## How to contribute
+[Learn more on the wiki](https://github.com/Artivain/artibot/wiki/Comment-participer)
+
+## Comment participer
 [Informations sur le wiki](https://github.com/Artivain/artibot/wiki/Comment-participer)
 
+---
+
 ## Artivain
+[Learn more about Artivain](https://artivain.com/)
+
+This project is managed by Artivain. You can come discuss with us and get help on our [Discord server](https://discord.artivain.com/).
+
 [En apprendre plus sur Artivain](https://artivain.com/)
 
 Ce projet est géré par Artivain. Vous pouvez venir discuter avec nous et obtenir du support sur [notre serveur Discord](https://discord.artivain.com/).
 
-## Contributeurs
+---
 
-Thanks go to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+## Contributions
+
+Thanks to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+Un gros merci à tous ceux qui participent au projet ([définition des emojis](https://allcontributors.org/docs/en/emoji-key)):
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
@@ -65,8 +88,22 @@ Thanks go to these wonderful people ([emoji key](https://allcontributors.org/doc
 This project follows the [all-contributors](https://allcontributors.org) specification.
 Contributions of any kind are welcome!
 
+Ce projet suit les normes [all-contributors](https://allcontributors.org). Toute sorte de contribution est bienvenue!
+
+---
+
 ## Installation
+[Learn more on the wiki](https://github.com/Artivain/artibot/wiki/Installation)
+
 [Informations sur le wiki](https://github.com/Artivain/artibot/wiki/Installation)
+
+---
+
+## License
+Artibot is licensed under [GPL 3.0](LICENSE).
+
+> Even if the license does not enforce you to keep the credit in the info command, keeping it helps very much this project.
+It gives it more visibility and so helps us continue to develop it. If you still want to remove it, please consider making a donation to help us pursue the project!
 
 ## Licence
 Artibot est sous licence [GPL 3.0](LICENSE).
