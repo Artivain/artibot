@@ -44,19 +44,20 @@ Ce projet est géré par Artivain. Vous pouvez venir discuter avec nous et obten
 
 ## Contributeurs
 
-### Développeurs
-Voici la liste des gens (avec leur tag Discord) qui contribuent en développant Artibot.
+Thanks go to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
 
-Vous pouvez, vous aussi, apparaître ici. Commencez par ouvrir un pull request avec quelques modifications ou testez le bot pour trouver un bug et ouvrez un issue.
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
 
- - [Artivain](https://github.com/Artivain)
- - [Thomas Fournier](https://github.com/GoudronViande24) (GoudronViande24#7211)
- - [Alexis Trudeau](https://github.com/Zariaa27) (🆃🅷🅴 zariaa#0294)
 
-### Donateurs
-Voici la liste des gens qui aident à développer le projet avec des dons. Sans eux, il serait difficile d'avoir des serveurs de développements et donc on ne serait pas aussi loin!
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
 
- - [Artivain](https://github.com/Artivain)
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://allcontributors.org) specification.
+Contributions of any kind are welcome!
 
 ## Installation
 [Informations sur le wiki](https://github.com/Artivain/artibot/wiki/Installation)
