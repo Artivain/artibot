@@ -27,6 +27,18 @@
         "translation",
         "test"
       ]
+    },
+    {
+      "login": "Zariaa27",
+      "name": "Alexis Trudeau",
+      "avatar_url": "https://avatars.githubusercontent.com/u/75556887?v=4",
+      "profile": "https://zariaa.tk",
+      "contributions": [
+        "bug",
+        "code",
+        "infra",
+        "translation"
+      ]
     }
   ],
   "files": [
