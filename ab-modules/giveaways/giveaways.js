@@ -46,7 +46,7 @@ module.exports = {
 				.addIntegerOption(option =>
 					option
 						.setName("winners")
-						.setDescription(localizer._("How much people will win the prize."))
+						.setDescription(localizer._("How much people will win the prize"))
 						.setRequired(true)
 				)
 				.addUserOption(option =>
@@ -73,7 +73,7 @@ module.exports = {
 				.addIntegerOption(option =>
 					option
 						.setName("winners")
-						.setDescription(localizer._("How much people will win the prize."))
+						.setDescription(localizer._("How much people will win the prize"))
 						.setRequired(true)
 				)
 				.addUserOption(option =>
