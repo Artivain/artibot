@@ -13,19 +13,8 @@
       "contributions": [
         "code",
         "doc",
-        "design",
-        "example",
         "financial",
-        "ideas",
-        "infra",
-        "maintenance",
-        "mentoring",
-        "projectManagement",
-        "question",
-        "review",
-        "security",
-        "translation",
-        "test"
+        "translation"
       ]
     },
     {
