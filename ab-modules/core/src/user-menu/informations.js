@@ -54,9 +54,9 @@ module.exports = {
 				more
 			)
 			.addField(localizer._("Type"), type)
-			.addField("On this server since", since);
+			.addField(localizer._("On this server since"), since);
 
 		await interaction.reply({ embeds: [embed] });
-		return;
-	},
+		return
+	}
 };
