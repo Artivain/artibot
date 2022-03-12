@@ -76,15 +76,15 @@
 		},
 
 		"Initializing interactions and slash commands on Discord...": {
-			"fr": "Initialisation des intéractions et des commandes slash auprès de Discord..."
+			"fr": "Initialisation des interactions et des commandes slash auprès de Discord..."
 		},
 
 		"Interaction and slash commands initialized successfully.": {
-			"fr": "Intéractions et commandes slash initialisées avec succès."
+			"fr": "Interactions et commandes slash initialisées avec succès."
 		},
 
 		"An error occured when initializing interactions and slash commands, here are the details: ": {
-			"fr": "Une erreur est survenue avec l'initialisation des intéractions et commandes slash, voici les détais: "
+			"fr": "Une erreur est survenue avec l'initialisation des interactions et commandes slash, voici les détais: "
 		},
 
 		"An error occured when executing this button...": {
