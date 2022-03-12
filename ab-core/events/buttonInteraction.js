@@ -19,7 +19,13 @@ module.exports = {
 
 		if (!interaction.isButton()) return;
 
-		const data = client.buttonCommands.get(interaction.customId);
+		let data = client.buttonCommands.get(interaction.customId);
+
+		if (!data) data = client.buttonCommands.find((v, id) => {
+			/** @type {string[]} */
+			const parts = id.split("*");
+			return interaction.customId.startsWith(parts[0]);
+		});
 
 		// If the interaction is not a registered button, return error message.
 
