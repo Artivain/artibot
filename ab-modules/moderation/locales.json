@@ -84,6 +84,30 @@
 
 		"[[0]] got his voice back.": {
 			"fr": "[[0]] a bien retrouvé sa voix."
+		},
+
+		"Mass delete messages.": {
+			"fr": "Supprimer en masse des messages."
+		},
+
+		"How much messages to delete?": {
+			"fr": "Combien de messages supprimer?"
+		},
+
+		"Deleted [[0]] messages.": {
+			"fr": "[[0]] messages supprimés."
+		},
+
+		"By the way, I cannot delete messages older than 2 weeks.": {
+			"fr": "En passant, je ne peux pas supprimer les messages plus vieux que 2 semaines."
+		},
+
+		"**Error:** You do not have the required permissions to use this command!": {
+			"fr": "**Erreur:** Vous n'avez pas les permissions requises pour utiliser cette commande!"
+		},
+
+		"Delete [[0]] more": {
+			"fr": "Supprimer [[0]] de plus"
 		}
 	}
 }

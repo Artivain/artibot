@@ -4,7 +4,7 @@ module.exports = {
 	manifest: {
 
 		manifestVersion: 1,
-		moduleVersion: "1.1.0",
+		moduleVersion: "1.2.0",
 		name: "Moderation",
 		supportedLocales: [
 			"en",
@@ -21,6 +21,18 @@ module.exports = {
 				id: "unmute",
 				type: "slashcommand",
 				path: "unmute.js"
+			},
+
+			{
+				id: "purge",
+				type: "slashcommand",
+				path: "purge.js"
+			},
+
+			{
+				id: "purge-*",
+				type: "button",
+				path: "purgebutton.js"
 			}
 		]
 	}
