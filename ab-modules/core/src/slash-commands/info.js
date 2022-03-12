@@ -8,7 +8,7 @@
  * https://github.com/Artivain/artibot#licence
 */
 
-const { MessageEmbed } = require("discord.js");
+const { MessageEmbed, MessageActionRow, MessageButton } = require("discord.js");
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const { localizer } = require("../../index");
 
@@ -58,8 +58,17 @@ module.exports = {
 			.addField(localizer._("Developers"), devs, true)
 			.addField(localizer._("Donators"), donators, true);
 
+		const row = new MessageActionRow()
+			.addComponents(
+				new MessageButton()
+					.setLabel(localizer._("Learn more"))
+					.setStyle("LINK")
+					.setURL("https://github.com/Artivain/artibot")
+			);
+
 		interaction.reply({
-			embeds: [embed]
+			embeds: [embed],
+			components: [row]
 		});
 	},
 };

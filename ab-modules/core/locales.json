@@ -380,6 +380,10 @@
 
 		"An error occured while initializing interactions in Discord API.\nCheck the console for more details.": {
 			"fr": "Une erreur est survenue avec l'initialisation des intéractions auprès de Discord.\nConsulter la console pour plus de détails."
+		},
+
+		"Learn more": {
+			"fr": "En savoir plus"
 		}
 	}
 }
