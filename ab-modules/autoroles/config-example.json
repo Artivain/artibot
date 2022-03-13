@@ -1,0 +1,11 @@
+{
+	"allowNewPickers": true,
+	
+	"reactionRoles": [
+		{
+			"messageId": "919056960865828865",
+			"reaction": "✅",
+			"roleId": "919056998727835660"
+		}
+	]
+}

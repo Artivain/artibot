@@ -1,0 +1,53 @@
+{
+	"version": "1.0.0",
+	"localizerVersion": 1,
+	"default": "en",
+	"contributors": [
+		"GoudronViande24"
+	],
+	"strings": {
+		"Requested mode is not valid!": {
+			"fr": "Le mode demandé n'est pas valide!"
+		},
+
+		"You no longer have the [[0]] role.": {
+			"fr": "Vous n'avez désormais plus le rôle [[0]]."
+		},
+
+		"You now have the [[0]] role.": {
+			"fr": "Vous avez maintenant le rôle [[0]]."
+		},
+
+		"Create a role picker.": {
+			"fr": "Créer un sélecteur de rôles."
+		},
+
+		"<list of buttons to create (following the text:mode:id format) (ex.: Sample role:toggle:796899707045543946, Add-only role:addonly:796899707045543946)>": {
+			"fr": "<liste de boutons à créer (suivant le format text:mode:id) (ex.: Rôle d'exemple:toggle:796899707045543946, Rôle en ajout seulement:addonly:796899707045543946)>"
+		},
+
+		"Configuration file not found or invalid.": {
+			"fr": "Le fichier de configuration est introuvable ou est invalide."
+		},
+
+		"[[0]] is not valid.": {
+			"fr": "[[0]] n'est pas valide."
+		},
+
+		"No arguments! Use the `help createrolepicker` command to learn more.": {
+			"fr": "Pas d'arguments! Utilisez la commande `help createrolepicker` pour en savoir plus."
+		},
+
+		"You must be an administrator to use this command.": {
+			"fr": "Vous devez être un administrateur pour utiliser cette commande."
+		},
+
+		"Configuration file not found or invalid. The createrolepicker command is enabled by default.": {
+			"fr": "Le fichier de configuration est introuvable ou est invalide. La commande createrolepicker est activée par défaut."
+		},
+
+		"This command is disabled.": {
+			"fr": "Cette commande est désactivée."
+		}
+	}
+}
