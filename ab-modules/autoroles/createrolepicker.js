@@ -72,7 +72,7 @@ module.exports = {
 		const row = new MessageActionRow();
 		args = args.join(" ").split(", ");
 
-		args.forEach(arg => {
+		args.slice(0, 5).forEach(arg => {
 			const settings = arg.split(":");
 
 			if (settings.length != 3 || !message.guild.roles.cache.get(settings[2]) || !allowedModes.includes(settings[1])) {
