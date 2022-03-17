@@ -14,7 +14,7 @@ Bot open-source fait par Artivain et les contributeurs.
 [![GitHub stars](https://img.shields.io/github/stars/Artivain/artibot?style=flat-square)](https://github.com/Artivain/artibot/stargazers)
 <br>
 ![Made with:](https://img.shields.io/badge/Made%20with-%3A-gray?style=flat-square)&nbsp;&nbsp;
-[![Node.js](https://img.shields.io/badge/Node.js-16.13.1-blue?style=flat-square)](https://github.com/Artivain/artibot/blob/main/.node-version)
+[![Node.js](https://img.shields.io/badge/Node.js-16.14.0-blue?style=flat-square)](https://github.com/Artivain/artibot/blob/main/.node-version)
 [![GitHub package.json dependency version (prod)](https://img.shields.io/github/package-json/dependency-version/Artivain/artibot/discord.js?style=flat-square)](https://discord.js.org/#/)
 [![GitHub package.json dependency version (prod)](https://img.shields.io/github/package-json/dependency-version/Artivain/artibot/axios?style=flat-square)](https://axios-http.com/)
 <br>
