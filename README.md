@@ -1,6 +1,6 @@
-<div style="text-align: center;">
+<div align="center">
 
-<img style="max-width: 200px;" src="https://assets.artivain.com/fav/bots/artibot.svg">
+<img src="https://assets.artivain.com/fav/bots/artibot.svg" alt="">
 
 <h1>Artibot</h1>
 Open source Discord bot made by Artivain and the community.
