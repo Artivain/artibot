@@ -6,8 +6,7 @@
 Open source Discord bot made by Artivain and the community.
 <br>
 Bot open-source fait par Artivain et les contributeurs.
-
-<br>
+<br><br>
 
 [![CodeFactor](https://www.codefactor.io/repository/github/artivain/artibot/badge?style=flat-square)](https://www.codefactor.io/repository/github/artivain/artibot)
 ![GitHub repo size](https://img.shields.io/github/repo-size/Artivain/artibot?style=flat-square)
