@@ -7,6 +7,7 @@ import uptimeCommand from "./commands/uptime.js";
 import { SlashCommandBuilder } from "@discordjs/builders";
 import embedSlashCommand from "./slash-commands/embed.js";
 import helpSlashCommand from "./slash-commands/help.js";
+import infoSlashCommand from "./slash-commands/info.js";
 
 /**
  * Create the Core module
@@ -107,6 +108,13 @@ export default function coreModule(artibot) {
 							.setDescription(localizer._("The command to get infos on."))
 					),
 				mainFunction: helpSlashCommand
+			}),
+			new SlashCommand({
+				id: "info",
+				data: new SlashCommandBuilder()
+					.setName("info")
+					.setDescription(localizer._("Learn more about this bot.")),
+				mainFunction: infoSlashCommand
 			})
 		]
 	});
@@ -131,11 +139,6 @@ export default function coreModule(artibot) {
 				},
 
 				// Slash commands
-				{
-					id: "help",
-					type: "slashcommand",
-					path: "src/slash-commands/help.js"
-				},
 				{
 					id: "info",
 					type: "slashcommand",
