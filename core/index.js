@@ -1,6 +1,7 @@
 import Artibot, { Command, Module } from "../index.js";
 import helpCommand from "./commands/help.js";
 import infoCommand from "./commands/info.js";
+import pingCommand from "./commands/ping.js";
 
 /**
  * Create the Core module
@@ -31,6 +32,14 @@ export default function coreModule(artibot) {
 				aliases: ["infos", "about"],
 				cooldown: 5,
 				mainFunction: infoCommand
+			}),
+			new Command({
+				id: "ping",
+				name: "ping",
+				description: localizer._("Check if the bot is alive."),
+				aliases: ["latence", "latency"],
+				cooldown: 3,
+				mainFunction: pingCommand
 			})
 		]
 	});
@@ -48,11 +57,6 @@ export default function coreModule(artibot) {
 			parts: [
 
 				// Commands
-				{
-					id: "info",
-					type: "command",
-					path: "src/commands/info.js"
-				},
 				{
 					id: "ping",
 					type: "command",
