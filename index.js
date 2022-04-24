@@ -163,7 +163,14 @@ export default class Artibot {
 		if (typeof module == "function") module = module(this);
 		this.modules.push(module);
 		log("Artibot", this.localizer._("Registered module: ") + module.name, "info", true);
-		module.parts.forEach(part => log("Artibot", `- [${part.type}] ${part.id}`, "log", true));
+
+		if (module.langs != "any" && !module.langs.includes(this.config.lang)) {
+			log("Artibot", this.localizer.__(" -> This module does not support the [[0]] language!", {placeholders: [this.config.lang]}), "warn", true);
+		}
+
+		for (const part of module.parts) {
+			log("Artibot", `- [${part.type}] ${part.id}`, "log", true);
+		}
 	}
 
 	/**
@@ -204,12 +211,12 @@ export class Module {
 	 * @param {string} config.name - Name of the module
 	 * @param {string} config.id - ID of this module
 	 * @param {string} config.version - Version of the module (ex.: "1.2.3")
-	 * @param {string[]} config.langs - List of supported languages (ex.: ["en", "fr"])
+	 * @param {string[]|"any"} [config.langs] - List of supported languages (ex.: ["en", "fr"]). If this does not apply, set to "any".
 	 * @param {ModulePartResolvable[]} config.parts - List of parts of the module
 	 * @param {IntentsResolvable[]} [config.intents] - List of required intents
 	 * @param {string} [config.repo] - GitHub repository of the module (ex.: "Artivain/artibot")
 	 */
-	constructor({ name, id, version, langs, parts, intents = [], repo }) {
+	constructor({ name, id, version, langs = "any", parts, intents = [], repo }) {
 		if (!name || !id || !version || !langs || !parts) throw new Error("Missing module informations!");
 		this.name = name;
 		this.id = id;
