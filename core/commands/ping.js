@@ -14,7 +14,7 @@ export default function execute(message, args, { config, createEmbed, localizer 
 			.setDescription(
 				localizer.__("Pong!\n\nThe bot's latency is [[0]]ms.\nThe API's latency is [[1]]ms.", {
 					placeholders: [
-						message.createdTimestamp - Date.now(),
+						Math.abs(Date.now() - message.createdTimestamp),
 						Math.round(message.client.ws.ping)
 					]
 				})

@@ -8,6 +8,7 @@ import { SlashCommandBuilder } from "@discordjs/builders";
 import embedSlashCommand from "./slash-commands/embed.js";
 import helpSlashCommand from "./slash-commands/help.js";
 import infoSlashCommand from "./slash-commands/info.js";
+import pingSlashCommand from "./slash-commands/ping.js";
 
 /**
  * Create the Core module
@@ -115,6 +116,13 @@ export default function coreModule(artibot) {
 					.setName("info")
 					.setDescription(localizer._("Learn more about this bot.")),
 				mainFunction: infoSlashCommand
+			}),
+			new SlashCommand({
+				id: "ping",
+				data: new SlashCommandBuilder()
+					.setName("ping")
+					.setDescription(localizer._("Check if the bot is alive.")),
+				mainFunction: pingSlashCommand
 			})
 		]
 	});
@@ -136,18 +144,6 @@ export default function coreModule(artibot) {
 					id: "resetinteractions",
 					type: "command",
 					path: "src/commands/resetinteractions.js"
-				},
-
-				// Slash commands
-				{
-					id: "info",
-					type: "slashcommand",
-					path: "src/slash-commands/info.js"
-				},
-				{
-					id: "ping",
-					type: "slashcommand",
-					path: "src/slash-commands/ping.js"
 				},
 
 				// User menu

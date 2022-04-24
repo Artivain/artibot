@@ -1,41 +1,31 @@
-const { MessageEmbed } = require("discord.js");
-const { SlashCommandBuilder } = require("@discordjs/builders");
-const { localizer } = require("../../index");
+import { CommandInteraction } from "discord.js";
+import Artibot from "../../index.js";
 
-module.exports = {
-	// The data needed to register slash commands to Discord.
-	data: new SlashCommandBuilder()
-		.setName("ping")
-		.setDescription(localizer._("Check if the bot is alive.")),
+/**
+ * Ping slash command
+ * @param {CommandInteraction} interaction 
+ * @param {Artibot} artibot 
+ */
+export default async function execute(interaction, { config, localizer, createEmbed }) {
+	if (config.advancedCorePing) {
+		var embed = createEmbed()
+			.setTitle("Ping")
+			.setDescription(
+				localizer.__("Pong!\n\nThe bot's latency is [[0]]ms.\nThe API's latency is [[1]]ms.", {
+					placeholders: [
+						Math.abs(Date.now() - interaction.createdTimestamp),
+						Math.round(interaction.client.ws.ping)
+					]
+				})
+			);
+	} else {
+		var embed = createEmbed()
+			.setTitle("Ping")
+			.setDescription(`Pong!`);
+	}
 
-	async execute(interaction, { config }) {
-
-		if (config.advancedCorePing) {
-			var embed = new MessageEmbed()
-				.setColor(config.embedColor)
-				.setTitle("Ping")
-				.setFooter({ text: config.botName, iconURL: config.botIcon })
-				.setTimestamp()
-				.setDescription(
-					localizer.__("Pong!\n\nThe bot's latency is [[0]]ms.\nThe API's latency is [[1]]ms.", {
-						placeholders: [
-							Date.now() - interaction.createdTimestamp,
-							Math.round(interaction.client.ws.ping)
-						]
-					})
-				);
-		} else {
-			var embed = new MessageEmbed()
-				.setColor(config.embedColor)
-				.setTitle("Ping")
-				.setFooter({ text: config.botName, iconURL: config.botIcon })
-				.setTimestamp()
-				.setDescription(`Pong!`);
-		};
-
-		await interaction.reply({
-			embeds: [embed],
-			ephemeral: true
-		});
-	},
-};
+	await interaction.reply({
+		embeds: [embed],
+		ephemeral: true
+	});
+}
