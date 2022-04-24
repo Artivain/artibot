@@ -1,5 +1,5 @@
-import { Collection, Message, MessageEmbed } from "discord.js";
-import Artibot from "../index.js";
+import { Collection, Message } from "discord.js";
+import Artibot, { Command } from "../index.js";
 import onMention from "../messages/onMention.js"
 
 // Prefix regex, we will use to match in mention prefix.
@@ -44,23 +44,28 @@ export async function execute(message, artibot) {
 	const commandName = args.shift().toLowerCase();
 
 	// Check if mesage does not starts with prefix, or message author is bot. If yes, return.
-	if (!message.content.startsWith(matchedPrefix) || message.author.bot)
-		return;
+	if (!message.content.startsWith(matchedPrefix) || message.author.bot) return;
 
-	const data = client.commands.get(commandName) || client.commands.find(({ command }) => command.aliases && command.aliases.includes(commandName));
+	/** @type {Command} */
+	let command;
+
+	artibot.modules.forEach(module => {
+		if (command) return;
+		module.parts.forEach(part => {
+			if (command) return;
+			if (part.type != "command") return;
+			if (part.name == commandName) command = part;
+			if (part.aliases.includes(commandName)) command = part;
+		});
+	});
 
 	// It it's not a command, don't try to execute anything
-	if (!data)
-		return;
-
-	const { command } = data;
+	if (!command) return;
 
 	// Owner Only Property, add in your command properties if true.
 	if (command.ownerOnly && message.author.id !== ownerId) {
-		let embedOwner = new MessageEmbed()
+		let embedOwner = artibot.createEmbed()
 			.setColor("RED")
-			.setFooter({ text: config.botName, iconURL: config.botIcon })
-			.setTimestamp()
 			.setTitle(localizer._("Help on this command"))
 			.setDescription(localizer.__("This command can only be executed by [[0]].", { placeholders: [`<@${ownerId}>`] }));
 		return message.reply({ embeds: [embedOwner] });
@@ -73,7 +78,7 @@ export async function execute(message, artibot) {
 		});
 	}
 
-	// Author perms property
+	// Check for permissions
 	if (command.permissions) {
 		const authorPerms = message.channel.permissionsFor(message.author);
 		if (!authorPerms || !authorPerms.has(command.permissions)) {
@@ -86,14 +91,14 @@ export async function execute(message, artibot) {
 		let reply = localizer.__("You did not give any argument, [[0]]!", { placeholders: [message.author] });
 
 		if (command.usage) {
-			reply += localizer.__("\nCorrect usage is `[[0]][[1]] [[2]]`", { placeholders: [prefix, command.name, command.usage] });
+			reply += localizer.__("\nCorrect usage is `[[0]][[1]] [[2]]`", { placeholders: [config.prefix, command.name, command.usage] });
 		}
 
 		return message.channel.send({ content: reply });
 	}
 
 	// Cooldowns
-	const { cooldowns } = client;
+	const { cooldowns } = artibot;
 
 	if (!cooldowns.has(command.name)) {
 		cooldowns.set(command.name, new Collection());
@@ -117,9 +122,9 @@ export async function execute(message, artibot) {
 	timestamps.set(message.author.id, now);
 	setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
 
-	// execute the final command. Put everything above this.
+	// Execute the final command. Put everything above this.
 	try {
-		command.execute(message, args, commons);
+		command.execute(message, args, artibot);
 	} catch (error) {
 		log("CommandManager", error, "warn", true);
 		message.reply({

@@ -1,5 +1,6 @@
-import { Command, Module } from "../index.js";
+import Artibot, { Command, Module } from "../index.js";
 import helpCommand from "./commands/help.js";
+import infoCommand from "./commands/info.js";
 
 /**
  * Create the Core module
@@ -22,6 +23,14 @@ export default function coreModule(artibot) {
 				usage: localizer._("[name of the command]"),
 				cooldown: 5,
 				mainFunction: helpCommand
+			}),
+			new Command({
+				id: "info",
+				name: "info",
+				description: localizer._("Learn more about this bot."),
+				aliases: ["infos", "about"],
+				cooldown: 5,
+				mainFunction: infoCommand
 			})
 		]
 	});
@@ -39,11 +48,6 @@ export default function coreModule(artibot) {
 			parts: [
 
 				// Commands
-				{
-					id: "help",
-					type: "command",
-					path: "src/commands/help.js"
-				},
 				{
 					id: "info",
 					type: "command",

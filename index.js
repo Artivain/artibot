@@ -3,7 +3,7 @@ import logger from "./logger.js";
 import Localizer from "artibot-localizer";
 import chalk from "chalk";
 import figlet from "figlet";
-import { Client, Intents, MessageEmbed } from "discord.js";
+import { Client, Collection, Intents, MessageEmbed, Permissions } from "discord.js";
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 const { version } = require('./package.json');
@@ -72,6 +72,12 @@ export default class Artibot {
 
 		this.version = version;
 
+		/**
+		 * Store cooldowns for commands
+		 * @type {Collection<string, Collection<Snowflake, number>>}
+		 */
+		this.cooldowns = new Collection();
+
 		// Send artwork to console
 		console.log(chalk.blue(figlet.textSync('Artibot', {
 			font: 'ANSI Shadow',
@@ -90,6 +96,18 @@ export default class Artibot {
 	}
 
 	log = log;
+
+	/**
+	 * Create an embed
+	 * @param {MessageEmbed|MessageEmbedOptions|APIEmbed} [data]
+	 * @returns {Embed} Preconfigured embed
+	 */
+	createEmbed = (data) => {
+		return new Embed(this, data);
+	}
+
+	/** Lists of people who contributed to the Artibot */
+	contributors = require("./contributors.json");
 
 	/**
 	 * @param {Object} config - Advanced config for the bot
@@ -197,16 +215,24 @@ export class Command extends BasePart {
 	 * @param {string[]} [config.aliases] - List of alternative names
 	 * @param {string} [config.usage] - Help text for the usage
 	 * @param {number} [config.cooldown] - Cooldown for this command usage, in seconds
+	 * @param {boolean} [config.ownerOnly=false] - If the command can only be executed by the owner
+	 * @param {boolean} [config.guildOnly=false] - If the command can only be executed in a guild
+	 * @param {Permissions} [config.permissions] - Required permissions
+	 * @param {boolean} [config.requireArgs=false] - Set to true if the command needs at least one argument
 	 * @param {function(Message, string[], Artibot): void} config.mainFunction - Function to execute when the command is ran
 	 * @param {function(Artibot): void} [config.initFunction] - Function executed on bot startup
 	 */
-	constructor({ id, name, description, aliases = [], usage, cooldown, mainFunction, initFunction }) {
+	constructor({ id, name, description, aliases = [], usage, cooldown, ownerOnly = false, guildOnly = false, permissions, requireArgs = false, mainFunction, initFunction }) {
 		super({ id, type: "command", mainFunction, initFunction });
 		this.name = name;
 		this.description = description;
 		this.aliases = aliases;
 		this.usage = usage;
 		this.cooldown = cooldown;
+		this.ownerOnly = ownerOnly;
+		this.guildOnly = guildOnly;
+		this.permissions = permissions;
+		this.args = requireArgs;
 	}
 }
 

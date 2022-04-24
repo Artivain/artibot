@@ -1,4 +1,4 @@
-import { Embed } from "../../index.js";
+import Artibot from "../../index.js";
 
 /**
  * @param {Message} message
@@ -6,16 +6,20 @@ import { Embed } from "../../index.js";
  * @param {Artibot} artibot 
  */
 export default async function helpCommand(message, args, artibot) {
-	const { localizer } = artibot;
+	const { localizer, log, createEmbed, config } = artibot;
 	const { commands } = artibot.modules;
 
 	// If there are no args, it means it needs whole help command.
 
 	if (!args.length) {
+		const commandList = [];
+		artibot.modules.forEach(module => module.parts.forEach(part => {
+			if (part.type == "command") commandList.push(part.name);
+		}));
 
-		let helpEmbed = new Embed()
+		let helpEmbed = createEmbed()
 			.setTitle(localizer._("List of all available commands"))
-			.setDescription("`" + commands.map(({ command }) => command.name).join("`, `") + "`")
+			.setDescription("`" + commandList.join("`, `") + "`")
 			.addField(
 				localizer._("Usage"),
 				localizer.__("You can send `[[0]]help [name of the command]` to get more info on a specific command!", { placeholders: [config.prefix] })
@@ -46,19 +50,23 @@ export default async function helpCommand(message, args, artibot) {
 
 	const name = args[0].toLowerCase();
 
-	const data =
-		commands.get(name) ||
-		commands.find((c) => c.aliases && c.aliases.includes(name));
+	let command;
 
-	// If it's an invalid command.
+	artibot.modules.forEach(module => {
+		if (command) return;
+		module.parts.forEach(part => {
+			if (command) return;
+			if (part.type != "command") return;
+			if (part.name == name || part.aliases.includes(name)) command = part;
+		});
+	});
 
-	if (!data) {
+	// Check if command does not exist
+	if (!command) {
 		return message.reply({ content: "`" + args[0] + "` " + localizer._("is not a valid command...") });
 	};
 
-	const { command } = data;
-
-	let commandEmbed = new Embed().setTitle(localizer._("Help on a command"));
+	let commandEmbed = createEmbed().setTitle(localizer._("Help on a command"));
 
 	if (command.description) commandEmbed.setDescription(`${command.description}`);
 
