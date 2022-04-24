@@ -248,11 +248,11 @@ export class Command extends BasePart {
 	 * @param {boolean} [config.ownerOnly=false] - If the command can only be executed by the owner
 	 * @param {boolean} [config.guildOnly=false] - If the command can only be executed in a guild
 	 * @param {Permissions} [config.permissions] - Required permissions
-	 * @param {boolean} [config.requireArgs=false] - Set to true if the command needs at least one argument
+	 * @param {boolean} [config.requiresArgs=false] - Set to true if the command needs at least one argument
 	 * @param {function(Message, string[], Artibot): void} config.mainFunction - Function to execute when the command is ran
 	 * @param {function(Artibot): void} [config.initFunction] - Function executed on bot startup
 	 */
-	constructor({ id, name, description, aliases = [], usage, cooldown, ownerOnly = false, guildOnly = false, permissions, requireArgs = false, mainFunction, initFunction }) {
+	constructor({ id, name, description, aliases = [], usage, cooldown, ownerOnly = false, guildOnly = false, permissions, requiresArgs = false, mainFunction, initFunction }) {
 		super({ id, type: "command", mainFunction, initFunction });
 		this.name = name;
 		this.description = description;
@@ -262,7 +262,7 @@ export class Command extends BasePart {
 		this.ownerOnly = ownerOnly;
 		this.guildOnly = guildOnly;
 		this.permissions = permissions;
-		this.args = requireArgs;
+		this.args = requiresArgs;
 	}
 }
 

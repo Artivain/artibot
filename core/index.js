@@ -69,16 +69,6 @@ export default function coreModule(artibot) {
 
 				// Commands
 				{
-					id: "update",
-					type: "command",
-					path: "src/commands/update.js"
-				},
-				{
-					id: "reload",
-					type: "command",
-					path: "src/commands/reload.js"
-				},
-				{
 					id: "resetinteractions",
 					type: "command",
 					path: "src/commands/resetinteractions.js"
