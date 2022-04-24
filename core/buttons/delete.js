@@ -1,8 +1,9 @@
-module.exports = {
-	id: "delete",
+import { ButtonInteraction } from "discord.js";
 
-	async execute(interaction) {
-		await interaction.message.delete();
-		return
-	}
-};
+/**
+ * Simple button to delete the message it is attached to
+ * @param {ButtonInteraction} interaction 
+ */
+export default function execute(interaction) {
+	interaction.message.delete();
+}

@@ -1,4 +1,4 @@
-import Artibot, { Command, Module, SlashCommand } from "../index.js";
+import Artibot, { Button, Command, Module, SlashCommand } from "../index.js";
 import helpCommand from "./commands/help.js";
 import infoCommand from "./commands/info.js";
 import pingCommand from "./commands/ping.js";
@@ -9,6 +9,7 @@ import embedSlashCommand from "./slash-commands/embed.js";
 import helpSlashCommand from "./slash-commands/help.js";
 import infoSlashCommand from "./slash-commands/info.js";
 import pingSlashCommand from "./slash-commands/ping.js";
+import deleteButton from "./buttons/delete.js";
 
 /**
  * Create the Core module
@@ -123,6 +124,12 @@ export default function coreModule(artibot) {
 					.setName("ping")
 					.setDescription(localizer._("Check if the bot is alive.")),
 				mainFunction: pingSlashCommand
+			}),
+
+			// Buttons
+			new Button({
+				id: "delete",
+				mainFunction: deleteButton
 			})
 		]
 	});

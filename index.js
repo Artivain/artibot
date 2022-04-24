@@ -3,7 +3,7 @@ import logger from "./logger.js";
 import Localizer from "artibot-localizer";
 import chalk from "chalk";
 import figlet from "figlet";
-import { Client, Collection, Intents, MessageEmbed, Permissions } from "discord.js";
+import { Client, Collection, Intents, MessageEmbed, Permissions, ButtonInteraction, CommandInteraction } from "discord.js";
 import { createRequire } from 'module';
 import coreModule from "./core/index.js";
 import { readdirSync } from "fs";
@@ -168,7 +168,7 @@ export default class Artibot {
 		log("Artibot", this.localizer._("Registered module: ") + module.name, "info", true);
 
 		if (module.langs != "any" && !module.langs.includes(this.config.lang)) {
-			log("Artibot", this.localizer.__(" -> This module does not support the [[0]] language!", {placeholders: [this.config.lang]}), "warn", true);
+			log("Artibot", this.localizer.__(" -> This module does not support the [[0]] language!", { placeholders: [this.config.lang] }), "warn", true);
 		}
 
 		for (const part of module.parts) {
@@ -206,7 +206,7 @@ export default class Artibot {
 export class Module {
 	/**
 	 * Any module part type.
-	 * @typedef {Command|SlashCommand} ModulePartResolvable
+	 * @typedef {Command|SlashCommand|Button} ModulePartResolvable
 	 */
 
 	/**
@@ -296,7 +296,7 @@ export class SlashCommand extends BasePart {
 	 * @param {string} config.id - ID of the command
 	 * @param {SlashCommandBuilder} config.data - Data to register into the Discord API
 	 * @param {number} [config.cooldown=1] - Cooldown per user for this command, in seconds
-	 * @param {function(Interaction, Artibot): void} config.mainFunction - Function to execute when the command is ran
+	 * @param {function(CommandInteraction, Artibot): void} config.mainFunction - Function to execute when the command is ran
 	 * @param {function(Artibot): void} [config.initFunction] - Function executed on bot startup
 	 */
 	constructor({ id, data, cooldown = 1, mainFunction, initFunction }) {
@@ -304,6 +304,18 @@ export class SlashCommand extends BasePart {
 		super({ id, type: "slashcommand", mainFunction, initFunction });
 		this.data = data;
 		this.cooldown = cooldown;
+	}
+}
+
+export class Button extends BasePart {
+	/**
+	 * @param {Object} config - Config for this button
+	 * @param {string} config.id - ID of the button. Supports asterix ("*") for wildcard.
+	 * @param {function(ButtonInteraction, Artibot): void} config.mainFunction - Function to execute when the button is clicked
+	 * @param {function(Artibot): void} [config.initFunction] - Function executed on bot startup
+	 */
+	constructor({ id, mainFunction, initFunction }) {
+		super({id, type: "button", mainFunction, initFunction});
 	}
 }
 
