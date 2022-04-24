@@ -19,7 +19,7 @@ export async function execute(interaction, artibot) {
 	for (const module of modules) {
 		if (command) break;
 		for (const part of module.parts) {
-			if (part.type == "slashcommand") {
+			if (part.type == "slashcommand" && part.data.name == interaction.commandName) {
 				command = part;
 				break;
 			}

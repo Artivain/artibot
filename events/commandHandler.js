@@ -2,8 +2,11 @@ import { Collection, Message } from "discord.js";
 import Artibot, { Command } from "../index.js";
 import onMention from "../messages/onMention.js"
 
-// Prefix regex, we will use to match in mention prefix.
-const escapeRegex = (string) => {
+/**
+ * @param {string} string 
+ * @returns {string}
+ */
+function escapeRegex(string) {
 	return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 };
 
@@ -126,7 +129,7 @@ export async function execute(message, artibot) {
 	try {
 		command.execute(message, args, artibot);
 	} catch (error) {
-		log("CommandManager", error, "warn", true);
+		log("CommandHandler", error, "warn", true);
 		message.reply({
 			content: localizer._("An error occured while trying to run this command.")
 		});

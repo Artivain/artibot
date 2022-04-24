@@ -7,7 +7,6 @@ import Artibot from "../../index.js";
  */
 export default async function helpCommand(message, args, artibot) {
 	const { localizer, log, createEmbed, config } = artibot;
-	const { commands } = artibot.modules;
 
 	// If there are no args, it means it needs whole help command.
 

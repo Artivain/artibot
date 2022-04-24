@@ -6,6 +6,7 @@ import checkupdatesCommand from "./commands/checkupdates.js";
 import uptimeCommand from "./commands/uptime.js";
 import { SlashCommandBuilder } from "@discordjs/builders";
 import embedSlashCommand from "./slash-commands/embed.js";
+import helpSlashCommand from "./slash-commands/help.js";
 
 /**
  * Create the Core module
@@ -94,6 +95,18 @@ export default function coreModule(artibot) {
 							.setRequired(false)
 					),
 				mainFunction: embedSlashCommand
+			}),
+			new SlashCommand({
+				id: "help",
+				data: new SlashCommandBuilder()
+					.setName("help")
+					.setDescription(localizer._("Gives a list of commands or infos about a specific command."))
+					.addStringOption(option =>
+						option
+							.setName("command")
+							.setDescription(localizer._("The command to get infos on."))
+					),
+				mainFunction: helpSlashCommand
 			})
 		]
 	});
@@ -118,11 +131,6 @@ export default function coreModule(artibot) {
 				},
 
 				// Slash commands
-				{
-					id: "embed",
-					type: "slashcommand",
-					path: "src/slash-commands/embed.js"
-				},
 				{
 					id: "help",
 					type: "slashcommand",
