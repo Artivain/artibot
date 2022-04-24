@@ -5,12 +5,13 @@ import chalk from "chalk";
 import figlet from "figlet";
 import { Client, Collection, Intents, MessageEmbed, Permissions } from "discord.js";
 import { createRequire } from 'module';
-const require = createRequire(import.meta.url);
-const { version } = require('./package.json');
-
 import coreModule from "./core/index.js";
 import { readdirSync } from "fs";
 import axios from "axios";
+import { SlashCommandBuilder } from "@discordjs/builders";
+
+const require = createRequire(import.meta.url);
+const { version } = require('./package.json');
 
 /**
  * Powerful Discord bot system.
@@ -84,7 +85,7 @@ export default class Artibot {
 			font: 'ANSI Shadow',
 			horizontalLayout: 'fitted'
 		})));
-		log("Artibot", "Initialized! v" + version, "info", true);
+		log("Artibot", this.localizer._("Initialized!") + " v" + version, "info", true);
 
 		/**
 		 * List of registered modules
@@ -111,11 +112,19 @@ export default class Artibot {
 	contributors = require("./contributors.json");
 
 	/**
+	 * The token to login into Discord
+	 * @type {string}
+	 */
+	#token;
+
+	/**
 	 * @param {Object} config - Advanced config for the bot
-	 * @param {string} config.token - The login token for the Discord bot
+	 * @param {string} [config.token] - The login token for the Discord bot
 	 * @param {IntentsResolvable[]} [config.additionalIntents] - Additional intents to register in the Discord client
 	 */
-	async login({ token, additionalIntents = [] }) {
+	async login({ token = this.#token, additionalIntents = [] }) {
+		if (!token) throw new Error("Token not set!");
+		this.#token = token;
 		this.modules.forEach(module => additionalIntents = additionalIntents.concat(module.additionalIntents));
 		this.client = new Client({
 			intents: [
@@ -131,6 +140,7 @@ export default class Artibot {
 
 		this.listeners = [];
 
+		log("Artibot", this.localizer._("Loading event listeners..."), "log", true);
 		const eventFiles = readdirSync("./events").filter(file => file.endsWith(".js"));
 
 		for (const file of eventFiles) {
@@ -152,7 +162,7 @@ export default class Artibot {
 	registerModule = (module) => {
 		if (typeof module == "function") module = module(this);
 		this.modules.push(module);
-		log("Artibot", "Registered module: " + module.name, "info", true);
+		log("Artibot", this.localizer._("Registered module: ") + module.name, "info", true);
 		module.parts.forEach(part => log("Artibot", `- [${part.type}] ${part.id}`, "log", true));
 	}
 
@@ -275,13 +285,15 @@ export class SlashCommand extends BasePart {
 	 * @param {Object} config - Config for this command
 	 * @param {string} config.id - ID of the command
 	 * @param {SlashCommandBuilder} config.data - Data to register into the Discord API
+	 * @param {number} [config.cooldown=1] - Cooldown per user for this command, in seconds
 	 * @param {function(Interaction, Artibot): void} config.mainFunction - Function to execute when the command is ran
 	 * @param {function(Artibot): void} [config.initFunction] - Function executed on bot startup
 	 */
-	constructor({ id, data, mainFunction, initFunction }) {
+	constructor({ id, data, cooldown = 1, mainFunction, initFunction }) {
 		if (!data) throw new Error("Missing data parameter");
 		super({ id, type: "slashcommand", mainFunction, initFunction });
 		this.data = data;
+		this.cooldown = cooldown;
 	}
 }
 

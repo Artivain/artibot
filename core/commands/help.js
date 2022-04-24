@@ -70,9 +70,9 @@ export default async function helpCommand(message, args, artibot) {
 
 	if (command.description) commandEmbed.setDescription(`${command.description}`);
 
-	if (command.aliases) {
+	if (command.aliases.length) {
 		commandEmbed
-			.addField(localizer._("Alias"), `\`${command.aliases.join(", ")}\``, true)
+			.addField(localizer._("Alias"), `\`${command.aliases.join("`, `")}\``, true)
 			.addField(localizer._("Cooldown"), `${command.cooldown || 3} ${localizer._("second(s)")}`, true);
 	}
 

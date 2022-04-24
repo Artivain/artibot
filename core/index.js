@@ -3,6 +3,7 @@ import helpCommand from "./commands/help.js";
 import infoCommand from "./commands/info.js";
 import pingCommand from "./commands/ping.js";
 import checkupdatesCommand from "./commands/checkupdates.js";
+import uptimeCommand from "./commands/uptime.js";
 
 /**
  * Create the Core module
@@ -51,6 +52,12 @@ export default function coreModule(artibot) {
 				description: localizer._("Intalls the updates for the bot"),
 				ownerOnly: true,
 				mainFunction: checkupdatesCommand
+			}),
+			new Command({
+				id: "uptime",
+				name: "uptime",
+				description: localizer._("Get the bot uptime"),
+				mainFunction: uptimeCommand
 			})
 		]
 	});

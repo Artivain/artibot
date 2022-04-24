@@ -581,6 +581,26 @@
 
 		"Learn more": {
 			"fr": "En savoir plus"
+		},
+
+		"Registered module: ": {
+			"fr": "Initialisation du module: "
+		},
+
+		"Loading event listeners...": {
+			"fr": "Chargement des event listeners"
+		},
+
+		"Initialized!": {
+			"fr": "Initialisé!"
+		},
+
+		"Online since <t:[[0]]:f> (<t:[[0]]:R>)": {
+			"fr": "En ligne depuis <t:[[0]]:f> (<t:[[0]]:R>)"
+		},
+
+		"Get the bot uptime": {
+			"fr": "Savoir depuis combien de temps le bot est en ligne"
 		}
 
 	}

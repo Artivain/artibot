@@ -13,11 +13,9 @@ export default class InteractionManager {
 	 * @param {Object} parameters - Parameters for this InteractionManager
 	 * @param {string} parameters.token - Token for the Discord bot
 	 * @param {Snowflake} parameters.clientId - Client ID of the bot
-	 * @param {Localizer} parameters.localizer - Lang that messages should be in
 	 * @param {Snowflake} [parameters.testGuildId] - ID of the test Discord server (required only if devMode is true)
-	 * @param {boolean} [parameters.devMode=true] - If set to true, it will register interactions only for the test guild
 	 */
-	constructor({ token, clientId, testGuildId, devMode = true, localizer }) {
+	constructor({ token, clientId, testGuildId, devMode = true }) {
 		this.rest = new REST({ version: "9" });
 		this.commandJsonData = [];
 		this.rest.setToken(token);
