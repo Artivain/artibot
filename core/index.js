@@ -2,6 +2,7 @@ import Artibot, { Command, Module } from "../index.js";
 import helpCommand from "./commands/help.js";
 import infoCommand from "./commands/info.js";
 import pingCommand from "./commands/ping.js";
+import checkupdatesCommand from "./commands/checkupdates.js";
 
 /**
  * Create the Core module
@@ -9,10 +10,13 @@ import pingCommand from "./commands/ping.js";
  * @returns {Module} Artibot Core Module
  */
 export default function coreModule(artibot) {
-	const { localizer } = artibot;
+	const { localizer, version } = artibot;
 
 	return new Module({
 		name: "Artibot Core",
+		id: "core",
+		repo: "Artivain/artibot",
+		version,
 		langs: ["en", "fr"],
 		parts: [
 			// Commands
@@ -40,6 +44,13 @@ export default function coreModule(artibot) {
 				aliases: ["latence", "latency"],
 				cooldown: 3,
 				mainFunction: pingCommand
+			}),
+			new Command({
+				id: "checkupdates",
+				name: "checkupdates",
+				description: localizer._("Intalls the updates for the bot"),
+				ownerOnly: true,
+				mainFunction: checkupdatesCommand
 			})
 		]
 	});
@@ -57,11 +68,6 @@ export default function coreModule(artibot) {
 			parts: [
 
 				// Commands
-				{
-					id: "ping",
-					type: "command",
-					path: "src/commands/ping.js"
-				},
 				{
 					id: "update",
 					type: "command",

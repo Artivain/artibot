@@ -10,6 +10,7 @@ const { version } = require('./package.json');
 
 import coreModule from "./core/index.js";
 import { readdirSync } from "fs";
+import axios from "axios";
 
 /**
  * Powerful Discord bot system.
@@ -92,7 +93,7 @@ export default class Artibot {
 		this.modules = [];
 
 		// Register the Core module
-		this.registerModule(coreModule(this));
+		this.registerModule(coreModule);
 	}
 
 	log = log;
@@ -146,12 +147,36 @@ export default class Artibot {
 
 	/**
 	 * Register a module in Artibot
-	 * @param {Module} module - The module to register
+	 * @param {Module|function(Artibot): Module} module - The module to register or a function to initialize the module 
 	 */
-	registerModule(module) {
+	registerModule = (module) => {
+		if (typeof module == "function") module = module(this);
 		this.modules.push(module);
 		log("Artibot", "Registered module: " + module.name, "info", true);
 		module.parts.forEach(part => log("Artibot", `- [${part.type}] ${part.id}`, "log", true));
+	}
+
+	/**
+	 * Get latest release version of a GitHub repository
+	 * @param {string} [repo="Artivain/artibot"] - GitHub repository to get latest version
+	 * @returns {string|false} Version number, or false if repo not found or an error happens
+	 * @async
+	 */
+	checkForUpdates = async (repo = "Artivain/artibot") => {
+		const request = await axios({
+			method: "GET",
+			url: `https://api.github.com/repos/${repo}/releases/latest`,
+			responseType: "json",
+			headers: {
+				"User-Agent": "Artibot " + this.version
+			},
+			validateStatus: () => { return true }
+		});
+
+		if (request.status != 200) return false;
+
+		const { data } = request;
+		return data.name.replace("v", "");
 	}
 }
 
@@ -167,17 +192,22 @@ export class Module {
 	/**
 	 * @param {Object} config - Configuration for the module
 	 * @param {string} config.name - Name of the module
+	 * @param {string} config.id - ID of this module
 	 * @param {string} config.version - Version of the module (ex.: "1.2.3")
-	 * @param {string[]} config.langs - List of supported languages (ex.: "en", "fr")
+	 * @param {string[]} config.langs - List of supported languages (ex.: ["en", "fr"])
 	 * @param {ModulePartResolvable[]} config.parts - List of parts of the module
 	 * @param {IntentsResolvable[]} [config.intents] - List of required intents
+	 * @param {string} [config.repo] - GitHub repository of the module (ex.: "Artivain/artibot")
 	 */
-	constructor({ name, version, langs, parts, intents = [] }) {
+	constructor({ name, id, version, langs, parts, intents = [], repo }) {
+		if (!name || !id || !version || !langs || !parts) throw new Error("Missing module informations!");
 		this.name = name;
+		this.id = id;
 		this.version = version;
 		this.langs = langs;
 		this.parts = parts;
 		this.additionalIntents = intents;
+		this.repo = repo;
 	}
 }
 

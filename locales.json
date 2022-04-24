@@ -387,8 +387,8 @@
 			"fr": "La vérification des mises à jour est désactivée dans la config!"
 		},
 
-		"Artibot is already up to date (v[[0]]).": {
-			"fr": "Artibot est déjà à jours (v[[0]])."
+		"Already up to date (v[[0]]).": {
+			"fr": "Déjà à jours (v[[0]])."
 		},
 
 		"Starting updates... Check the console for more details.": {
@@ -407,8 +407,12 @@
 			"fr": "Problème avec la mise à jour: "
 		},
 
-		"An update is available: v[[0]] --> v[[1]].\n**Read carefully the documentation before updating!**\nTo install the update, execute the `update force` command.": {
-			"fr": "Une mise à jour est disponible: v[[0]] --> v[[1]].\n**Bien lire la documentation avant de faire la mise à jour!**\nPour faire la mise à jour, faire la commande `update force`."
+		"An update is available: v[[0]] --> v[[1]].": {
+			"fr": "Une mise à jour est disponible: v[[0]] --> v[[1]]."
+		},
+
+		"Impossible to get latest version!": {
+			"fr": "Impossible d'obtenir la dernière version!"
 		},
 
 		"Make an embed and send it in the channel.": {
