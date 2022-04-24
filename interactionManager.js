@@ -1,9 +1,7 @@
 import { REST } from "@discordjs/rest";
 import { Routes } from "discord-api-types/v9";
-import log from "./logger.js";
-import Localizer from "artibot-localizer";
-import { resolve } from "path";
 import { Client } from "discord.js";
+import Artibot, { log, Module } from "./index.js";
 
 /**
  * Interaction management utility for Artibot
@@ -12,29 +10,50 @@ export default class InteractionManager {
 	/**
 	 * @param {Object} parameters - Parameters for this InteractionManager
 	 * @param {string} parameters.token - Token for the Discord bot
-	 * @param {Snowflake} parameters.clientId - Client ID of the bot
-	 * @param {Snowflake} [parameters.testGuildId] - ID of the test Discord server (required only if devMode is true)
+	 * @param {Artibot} [parameters.artibot]
 	 */
-	constructor({ token, clientId, testGuildId, devMode = true }) {
+	constructor({ token, artibot: { localizer, client, config: { testGuildId, devMode } } }) {
 		this.rest = new REST({ version: "9" });
-		this.commandJsonData = [];
 		this.rest.setToken(token);
 
-		this.clientId = clientId;
+		this.clientId = client.user.id;
 		this.testGuildId = testGuildId;
 		this.devMode = devMode;
 		this.localizer = localizer;
 	}
 
 	/**
-	 * Generate data to send to Discord API to register interactions
-	 * @param {Client} client - The Discord client for the bot
+	 * JSON data of all slash commands and other interactions
+	 * @type {string[]}
 	 */
-	generateData(client) {
-		this.commandJsonData = [
-			...Array.from(client.slashCommands.values()).map(({ command }) => command.data.toJSON()),
-			...Array.from(client.contextCommands.values()).map(({ command }) => command.data),
-		];
+	commandJSONData = [];
+
+	/**
+	 * Generate data to send to Discord API to register interactions
+	 * @param {Module[]} modules - List of the modules to generate data from
+	 */
+	generateData(modules) {
+		// this.commandJSONData = [
+		// 	...Array.from(client.slashCommands.values()).map(({ command }) => command.data.toJSON()),
+		// 	...Array.from(client.contextCommands.values()).map(({ command }) => command.data),
+		// ];
+
+		for (const module of modules) {
+			for (const part of module.parts) {
+				if (part.type == "slashcommand") {
+					this.commandJSONData.push(part.data.toJSON());
+				} else if (part.type == "usermenu" || part.type == "messagemenu") {
+					this.commandJSONData.push(part.data);
+				}
+			}
+		}
+	}
+
+	/**
+	 * Empty all stored JSON data
+	 */
+	resetData() {
+		this.commandJSONData.length = 0;
 	}
 
 	/**
@@ -44,6 +63,7 @@ export default class InteractionManager {
 	async register() {
 		try {
 			log("InteractionManager", this.localizer._("Initializing interactions and slash commands on Discord..."), "info", true);
+			if (!this.commandJSONData.length) return log("InteractionManager", this.localizer._("Nothing to register."), "warn", true);
 
 			/*
 				Send slash commands and other interactions to Discord API.
@@ -56,16 +76,17 @@ export default class InteractionManager {
 			if (this.devMode) {
 				await this.rest.put(
 					Routes.applicationGuildCommands(this.clientId, this.testGuildId),
-					{ body: this.commandJsonData }
+					{ body: this.commandJSONData }
 				);
 			} else {
 				await this.rest.put(
 					Routes.applicationCommands(this.clientId),
-					{ body: this.commandJsonData }
+					{ body: this.commandJSONData }
 				);
 			};
 
 			log("InteractionManager", this.localizer._("Interaction and slash commands initialized successfully."), "log", true);
+			log("InteractionManager", this.localizer.__(" -> Registered [[0]] interactions.", { placeholders: [this.commandJSONData.length] }), "log", true);
 			return true;
 		} catch (error) {
 			log("InteractionManager", this.localizer._("An error occured when initializing interactions and slash commands, here are the details: ") + error, "warn", true);

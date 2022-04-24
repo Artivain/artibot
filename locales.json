@@ -84,7 +84,7 @@
 		},
 
 		"An error occured when initializing interactions and slash commands, here are the details: ": {
-			"fr": "Une erreur est survenue avec l'initialisation des interactions et commandes slash, voici les détais: "
+			"fr": "Une erreur est survenue avec l'initialisation des interactions et commandes slash, voici les détails: "
 		},
 
 		"An error occured when executing this button...": {
@@ -601,6 +601,14 @@
 
 		"Get the bot uptime": {
 			"fr": "Savoir depuis combien de temps le bot est en ligne"
+		},
+
+		" -> Registered [[0]] interactions.": {
+			"fr": " -> [[0]] interactions ont été enregistrées."
+		},
+
+		"Nothing to register.": {
+			"fr": "Rien à enregistrer."
 		}
 
 	}

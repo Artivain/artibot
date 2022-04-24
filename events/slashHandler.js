@@ -9,27 +9,31 @@ export const name = "interactionCreate";
  * @param {Artibot} artibot 
  */
 export async function execute(interaction, artibot) {
-	// Deconstructed client from interaction object.
-	const { client } = interaction;
-	const { log, localizer } = artibot;
+	const { log, localizer, modules } = artibot;
 
-	// Checks if the interaction is a command (to prevent weird bugs)
-	if (!interaction.isCommand())
-		return;
+	// Checks if the interaction is a command
+	if (!interaction.isCommand()) return;
 
-	const data = client.slashCommands.get(interaction.commandName);
+	let command;
+
+	for (const module of modules) {
+		if (command) break;
+		for (const part of module.parts) {
+			if (part.type == "slashcommand") {
+				command = part;
+				break;
+			}
+		}
+	}
 
 	// If the interaction is not a command in cache.
-	if (!data)
-		return;
-
-	const { command } = data;
+	if (!command) return;
 
 	// A try to executes the interaction.
 	try {
-		await command.execute(interaction, commons);
+		await command.execute(interaction, artibot);
 	} catch (err) {
-		log("SlashManager", err, "warn", true);
+		log("SlashHandler", err, "warn", true);
 		await interaction.reply({
 			content: localizer._("An error occured while executing this command."),
 			ephemeral: true

@@ -1,9 +1,11 @@
-import Artibot, { Command, Module } from "../index.js";
+import Artibot, { Command, Module, SlashCommand } from "../index.js";
 import helpCommand from "./commands/help.js";
 import infoCommand from "./commands/info.js";
 import pingCommand from "./commands/ping.js";
 import checkupdatesCommand from "./commands/checkupdates.js";
 import uptimeCommand from "./commands/uptime.js";
+import { SlashCommandBuilder } from "@discordjs/builders";
+import embedSlashCommand from "./slash-commands/embed.js";
 
 /**
  * Create the Core module
@@ -58,6 +60,40 @@ export default function coreModule(artibot) {
 				name: "uptime",
 				description: localizer._("Get the bot uptime"),
 				mainFunction: uptimeCommand
+			}),
+
+			// Slash commands
+			new SlashCommand({
+				id: "embed",
+				data: new SlashCommandBuilder()
+					.setName("embed")
+					.setDescription(localizer._("Make an embed and send it in the channel."))
+					.addStringOption(option =>
+						option.setName("title")
+							.setDescription(localizer._("The title for the embed"))
+							.setRequired(true)
+					)
+					.addStringOption(option =>
+						option.setName("content")
+							.setDescription(localizer._("The content for the embed (message, rules, infos, etc...)"))
+							.setRequired(true)
+					)
+					.addBooleanOption(option =>
+						option.setName("date")
+							.setDescription(localizer._("To show or not the date in the footer"))
+							.setRequired(true)
+					)
+					.addStringOption(option =>
+						option.setName("footer")
+							.setDescription(localizer._("The text for the footer of the embed"))
+							.setRequired(false)
+					)
+					.addStringOption(option =>
+						option.setName("color")
+							.setDescription(localizer._("The color at the left of the embed (in hexadecimal notation, ex.: #ffffff)"))
+							.setRequired(false)
+					),
+				mainFunction: embedSlashCommand
 			})
 		]
 	});

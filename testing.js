@@ -5,7 +5,8 @@ const artibot = new Artibot({
 	ownerId: "382869186042658818",
 	botName: "Artibot [DEV]",
 	prefix: "abd ",
-	lang: "fr"
+	lang: "fr",
+	testGuildId: "775798875356397608"
 });
 
 artibot.login({ token });

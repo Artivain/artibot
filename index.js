@@ -24,7 +24,7 @@ export default class Artibot {
 	/**
 	 * @param {Object} config - Configuration for Artibot
 	 * @param {Snowflake} config.ownerId - Discord ID of the owner of the bot
-	 * @param {Snowflake} [config.testGuildId] - Discord ID of the testing guild. Not required if devMode is set to false.
+	 * @param {Snowflake} config.testGuildId - Discord ID of the testing guild
 	 * @param {string} [config.botName] - Name of the Discord bot. Used almost everywhere.
 	 * @param {string} [config.botIcon] - URL of the profile picture of the bot
 	 * @param {string} [config.prefix] - Prefix for the commands
@@ -48,6 +48,9 @@ export default class Artibot {
 	}) {
 		// Verify that the owner ID is set
 		if (!ownerId) throw new Error("You must set the owner ID.");
+
+		// Verify that the test guild ID is set
+		if (!testGuildId) throw new Error("You must set the test guild ID.");
 
 		// Verify that if dev mode is false, the test guild ID is set
 		if (!devMode && !testGuildId) throw new Error("You must set the testGuildId if devMode is false.");
