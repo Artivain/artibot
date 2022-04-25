@@ -108,3 +108,5 @@ dist
 **/config.json
 **/config.js
 updaterFiles
+
+out
