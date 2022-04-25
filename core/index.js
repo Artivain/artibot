@@ -1,4 +1,4 @@
-import Artibot, { Button, Command, Module, SlashCommand } from "../index.js";
+import Artibot, { Button, Command, MessageContextMenuOption, Module, SlashCommand } from "../index.js";
 import helpCommand from "./commands/help.js";
 import infoCommand from "./commands/info.js";
 import pingCommand from "./commands/ping.js";
@@ -10,6 +10,7 @@ import helpSlashCommand from "./slash-commands/help.js";
 import infoSlashCommand from "./slash-commands/info.js";
 import pingSlashCommand from "./slash-commands/ping.js";
 import deleteButton from "./buttons/delete.js";
+import reactMessageMenu from "./message-menu/react.js";
 
 /**
  * Create the Core module
@@ -130,6 +131,13 @@ export default function coreModule(artibot) {
 			new Button({
 				id: "delete",
 				mainFunction: deleteButton
+			}),
+
+			// Message menu
+			new MessageContextMenuOption({
+				id: "react",
+				name: localizer._("React"),
+				mainFunction: reactMessageMenu
 			})
 		]
 	});
@@ -173,11 +181,6 @@ export default function coreModule(artibot) {
 				},
 
 				// Buttons
-				{
-					id: "delete",
-					type: "button",
-					path: "src/buttons/delete.js"
-				},
 				{
 					id: "registerinteractions",
 					type: "button",

@@ -3,7 +3,7 @@ import logger from "./logger.js";
 import Localizer from "artibot-localizer";
 import chalk from "chalk";
 import figlet from "figlet";
-import { Client, Collection, Intents, MessageEmbed, Permissions, ButtonInteraction, CommandInteraction } from "discord.js";
+import * as discord from "discord.js";
 import { createRequire } from 'module';
 import coreModule from "./core/index.js";
 import { readdirSync } from "fs";
@@ -79,9 +79,9 @@ export default class Artibot {
 
 		/**
 		 * Store cooldowns for commands
-		 * @type {Collection<string, Collection<Snowflake, number>>}
+		 * @type {discord.Collection<string, discord.Collection<Snowflake, number>>}
 		 */
-		this.cooldowns = new Collection();
+		this.cooldowns = new discord.Collection();
 
 		// Send artwork to console
 		console.log(chalk.blue(figlet.textSync('Artibot', {
@@ -104,7 +104,7 @@ export default class Artibot {
 
 	/**
 	 * Create an embed
-	 * @param {MessageEmbed|MessageEmbedOptions|APIEmbed} [data]
+	 * @param {discord.MessageEmbed|discord.MessageEmbedOptions|discord.APIEmbed} [data]
 	 * @returns {Embed} Preconfigured embed
 	 */
 	createEmbed = (data) => {
@@ -129,14 +129,14 @@ export default class Artibot {
 		if (!token) throw new Error("Token not set!");
 		this.#token = token;
 		this.modules.forEach(module => additionalIntents = additionalIntents.concat(module.additionalIntents));
-		this.client = new Client({
+		this.client = new discord.Client({
 			intents: [
-				Intents.FLAGS.GUILDS,
-				Intents.FLAGS.GUILD_MESSAGES,
-				Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
-				Intents.FLAGS.GUILD_VOICE_STATES,
-				Intents.FLAGS.GUILD_MEMBERS,
-				Intents.FLAGS.GUILD_PRESENCES,
+				discord.Intents.FLAGS.GUILDS,
+				discord.Intents.FLAGS.GUILD_MESSAGES,
+				discord.Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
+				discord.Intents.FLAGS.GUILD_VOICE_STATES,
+				discord.Intents.FLAGS.GUILD_MEMBERS,
+				discord.Intents.FLAGS.GUILD_PRESENCES,
 				...additionalIntents
 			]
 		});
@@ -206,7 +206,7 @@ export default class Artibot {
 export class Module {
 	/**
 	 * Any module part type.
-	 * @typedef {Command|SlashCommand|Button} ModulePartResolvable
+	 * @typedef {Command|SlashCommand|Button|MessageContextMenuOption|UserContextMenuOption} ModulePartResolvable
 	 */
 
 	/**
@@ -267,7 +267,7 @@ export class Command extends BasePart {
 	 * @param {number} [config.cooldown] - Cooldown for this command usage, in seconds
 	 * @param {boolean} [config.ownerOnly=false] - If the command can only be executed by the owner
 	 * @param {boolean} [config.guildOnly=false] - If the command can only be executed in a guild
-	 * @param {Permissions} [config.permissions] - Required permissions
+	 * @param {discord.Permissions} [config.permissions] - Required permissions
 	 * @param {boolean} [config.requiresArgs=false] - Set to true if the command needs at least one argument
 	 * @param {function(Message, string[], Artibot): void} config.mainFunction - Function to execute when the command is ran
 	 * @param {function(Artibot): void} [config.initFunction] - Function executed on bot startup
@@ -296,7 +296,7 @@ export class SlashCommand extends BasePart {
 	 * @param {string} config.id - ID of the command
 	 * @param {SlashCommandBuilder} config.data - Data to register into the Discord API
 	 * @param {number} [config.cooldown=1] - Cooldown per user for this command, in seconds
-	 * @param {function(CommandInteraction, Artibot): void} config.mainFunction - Function to execute when the command is ran
+	 * @param {function(discord.CommandInteraction, Artibot): void} config.mainFunction - Function to execute when the command is ran
 	 * @param {function(Artibot): void} [config.initFunction] - Function executed on bot startup
 	 */
 	constructor({ id, data, cooldown = 1, mainFunction, initFunction }) {
@@ -307,22 +307,66 @@ export class SlashCommand extends BasePart {
 	}
 }
 
+/**
+ * Button interaction part for a module
+ * @extends BasePart
+ */
 export class Button extends BasePart {
 	/**
 	 * @param {Object} config - Config for this button
 	 * @param {string} config.id - ID of the button. Supports asterix ("*") for wildcard.
-	 * @param {function(ButtonInteraction, Artibot): void} config.mainFunction - Function to execute when the button is clicked
+	 * @param {function(discord.ButtonInteraction, Artibot): void} config.mainFunction - Function to execute when the button is clicked
 	 * @param {function(Artibot): void} [config.initFunction] - Function executed on bot startup
 	 */
 	constructor({ id, mainFunction, initFunction }) {
-		super({id, type: "button", mainFunction, initFunction});
+		super({ id, type: "button", mainFunction, initFunction });
 	}
 }
 
-export class Embed extends MessageEmbed {
+/**
+ * Message context menu option part for a module
+ * @extends BasePart
+ */
+export class MessageContextMenuOption extends BasePart {
+	/**
+	 * @param {Object} config - Config for this context menu option
+	 * @param {string} config.id - ID of this option
+	 * @param {string} config.name - Name of this option
+	 * @param {function(discord.MessageContextMenuInteraction, Artibot): void} config.mainFunction - Function to execute when the menu option is clicked
+	 * @param {function(Artibot): void} config.initFunction - Function executed on bot startup
+	 */
+	constructor({ id, name, mainFunction, initFunction }) {
+		if (!name) throw new Error("Missing name parameter!");
+		super({ id, type: "messagemenu", mainFunction, initFunction });
+		this.data = {
+			name,
+			type: 3 // 3 is for message context menu
+		}
+	}
+}
+
+export class UserContextMenuOption extends BasePart {
+	/**
+	 * @param {Object} config - Config for this context menu option
+	 * @param {string} config.id - ID of this option
+	 * @param {string} config.name - Name of this option
+	 * @param {function(discord.UserContextMenuInteraction, Artibot): void} config.mainFunction - Function to execute when the menu option is clicked
+	 * @param {function(Artibot): void} config.initFunction - Function executed on bot startup
+	 */
+	constructor({ id, name, mainFunction, initFunction }) {
+		if (!name) throw new Error("Missing name parameter!");
+		super({ id, type: "usermenu", mainFunction, initFunction });
+		this.data = {
+			name,
+			type: 2 // 2 is for user context menus
+		}
+	}
+}
+
+export class Embed extends discord.MessageEmbed {
 	/**
 	 * @param {Artibot} artibot
-	 * @param {MessageEmbed|MessageEmbedOptions|APIEmbed} [data]
+	 * @param {discord.MessageEmbed|discord.MessageEmbedOptions|discord.APIEmbed} [data]
 	 */
 	constructor(artibot, data) {
 		super(data);

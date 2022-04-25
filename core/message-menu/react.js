@@ -1,18 +1,19 @@
-const { localizer } = require("../../index");
+import { MessageContextMenuInteraction, Permissions } from "discord.js";
 
-module.exports = {
-	data: {
-		name: localizer._("React"),
-		type: 3, // 3 is for message context menus
-	},
+/**
+ * Add reaction to message
+ * @param {MessageContextMenuInteraction} interaction 
+ */
+export default async function execute(interaction, { localizer }) {
+	if (!interaction.memberPermissions.has(Permissions.FLAGS.MANAGE_MESSAGES)) return interaction.reply({
+		content: localizer._("You do not have the permission to execute this command!"),
+		ephemeral: true
+	});
 
-	async execute(interaction) {
-		await interaction.options._hoistedOptions[0].message.react("✅");
+	await interaction.targetMessage.react("✅");
 
-		await interaction.reply({
-			content: localizer._("Reaction added"),
-			ephemeral: true
-		});
-		return
-	}
-};
+	await interaction.reply({
+		content: localizer._("Reaction added"),
+		ephemeral: true
+	});
+}
