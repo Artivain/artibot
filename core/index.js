@@ -13,6 +13,8 @@ import deleteButton from "./buttons/delete.js";
 import reactMessageMenu from "./message-menu/react.js";
 import avatarUserMenu from "./user-menu/avatar.js";
 import informationsUserMenu from "./user-menu/informations.js";
+import resetinteractions from "./commands/resetinteractions.js";
+import registerinteractions from "./buttons/registerinteractions.js";
 
 /**
  * Create the Core module
@@ -67,6 +69,13 @@ export default function coreModule(artibot) {
 				name: "uptime",
 				description: localizer._("Get the bot uptime"),
 				mainFunction: uptimeCommand
+			}),
+			new Command({
+				id: "resetinteractions",
+				name: "resetinteractions",
+				description: localizer._("Deletes the cache of the interactions and slash commands in Discord's API."),
+				ownerOnly: true,
+				mainFunction: resetinteractions
 			}),
 
 			// Slash commands
@@ -134,6 +143,10 @@ export default function coreModule(artibot) {
 				id: "delete",
 				mainFunction: deleteButton
 			}),
+			new Button({
+				id: "registerinteractions",
+				mainFunction: registerinteractions
+			}),
 
 			// Message menu
 			new MessageContextMenuOption({
@@ -155,47 +168,4 @@ export default function coreModule(artibot) {
 			})
 		]
 	});
-
-	asd = {
-		manifest: {
-
-			manifestVersion: 1,
-			moduleVersion: require("../../package.json").version,
-			name: "Artibot Core",
-			supportedLocales: [
-				"en",
-				"fr"
-			],
-			parts: [
-
-				// Commands
-				{
-					id: "resetinteractions",
-					type: "command",
-					path: "src/commands/resetinteractions.js"
-				},
-
-				// User menu
-				{
-					id: "informations",
-					type: "usermenu",
-					path: "src/user-menu/informations.js"
-				},
-
-				// Message menu
-				{
-					id: "react",
-					type: "messagemenu",
-					path: "src/message-menu/react.js"
-				},
-
-				// Buttons
-				{
-					id: "registerinteractions",
-					type: "button",
-					path: "src/buttons/registerinteractions.js"
-				}
-			]
-		}
-	};
 }

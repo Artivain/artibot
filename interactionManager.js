@@ -32,12 +32,7 @@ export default class InteractionManager {
 	 * Generate data to send to Discord API to register interactions
 	 * @param {Module[]} modules - List of the modules to generate data from
 	 */
-	generateData(modules) {
-		// this.commandJSONData = [
-		// 	...Array.from(client.slashCommands.values()).map(({ command }) => command.data.toJSON()),
-		// 	...Array.from(client.contextCommands.values()).map(({ command }) => command.data),
-		// ];
-
+	generateData = (modules) => {
 		for (const module of modules) {
 			for (const part of module.parts) {
 				if (part.type == "slashcommand") {
@@ -52,15 +47,16 @@ export default class InteractionManager {
 	/**
 	 * Empty all stored JSON data
 	 */
-	resetData() {
+	resetData = () => {
 		this.commandJSONData.length = 0;
 	}
 
 	/**
 	 * Register interactions in Discord API
 	 * @returns {boolean} True if everything went good, false if there was a problem.
+	 * @async
 	 */
-	async register() {
+	register = async () => {
 		try {
 			log("InteractionManager", this.localizer._("Initializing interactions and slash commands on Discord..."), "info", true);
 			if (!this.commandJSONData.length) return log("InteractionManager", this.localizer._("Nothing to register."), "warn", true);

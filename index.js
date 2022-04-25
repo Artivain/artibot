@@ -143,6 +143,9 @@ export default class Artibot {
 
 		this.listeners = [];
 
+		/** @type {InteractionManager} */
+		this.interactionManager;
+
 		log("Artibot", this.localizer._("Loading event listeners..."), "log", true);
 		const eventFiles = readdirSync("./events").filter(file => file.endsWith(".js"));
 
@@ -265,7 +268,7 @@ export class Command extends BasePart {
 	 * @param {string[]} [config.aliases] - List of alternative names
 	 * @param {string} [config.usage] - Help text for the usage
 	 * @param {number} [config.cooldown] - Cooldown for this command usage, in seconds
-	 * @param {boolean} [config.ownerOnly=false] - If the command can only be executed by the owner
+	 * @param {boolean} [config.ownerOnly=false] - If the command can only be executed by the owner of the bot
 	 * @param {boolean} [config.guildOnly=false] - If the command can only be executed in a guild
 	 * @param {discord.Permissions} [config.permissions] - Required permissions
 	 * @param {boolean} [config.requiresArgs=false] - Set to true if the command needs at least one argument

@@ -328,15 +328,15 @@
 		},
 
 		"Deletes the cache of the interactions and slash commands in Discord's API.": {
-			"fr": "Supprime le cache des intéractions et des commandes slash auprès de L'API Discord."
+			"fr": "Supprime le cache des interactions et des commandes slash auprès de L'API Discord."
 		},
 
 		"Deleting saved slash commands from the bot and test server...\nThis can take some time.": {
 			"fr": "Suppression des commandes slash du bot et du serveur de test en cours...\nCeci peut prendre du temps."
 		},
 
-		"Deleting saved slash commands from the bot and test server...": {
-			"fr": "Suppression des commandes slash du bot et du serveur de test en cours..."
+		"Deleting saved slash commands and interactions from the bot and test server...": {
+			"fr": "Suppression des commandes slash et interactions du bot et du serveur de test en cours..."
 		},
 
 		"Slash commands have been deleted from test server.": {
@@ -568,15 +568,15 @@
 		},
 
 		"Initializing interactions...\nThis can take some time.": {
-			"fr": "Initialisation des intéractions...\nCeci peut prendre du temps."
+			"fr": "Initialisation des interactions...\nCeci peut prendre du temps."
 		},
 
 		"The interactions have been initialized in Discord API.": {
-			"fr": "Les intéractions ont bien été initialisées auprès de Discord."
+			"fr": "Les interactions ont bien été initialisées auprès de Discord."
 		},
 
 		"An error occured while initializing interactions in Discord API.\nCheck the console for more details.": {
-			"fr": "Une erreur est survenue avec l'initialisation des intéractions auprès de Discord.\nConsulter la console pour plus de détails."
+			"fr": "Une erreur est survenue avec l'initialisation des interactions auprès de Discord.\nConsulter la console pour plus de détails."
 		},
 
 		"Learn more": {
