@@ -1,4 +1,4 @@
-import Artibot, { Button, Command, MessageContextMenuOption, Module, SlashCommand } from "../index.js";
+import Artibot, { Button, Command, MessageContextMenuOption, Module, SlashCommand, UserContextMenuOption } from "../index.js";
 import helpCommand from "./commands/help.js";
 import infoCommand from "./commands/info.js";
 import pingCommand from "./commands/ping.js";
@@ -11,6 +11,7 @@ import infoSlashCommand from "./slash-commands/info.js";
 import pingSlashCommand from "./slash-commands/ping.js";
 import deleteButton from "./buttons/delete.js";
 import reactMessageMenu from "./message-menu/react.js";
+import avatarUserMenu from "./user-menu/avatar.js";
 
 /**
  * Create the Core module
@@ -138,6 +139,13 @@ export default function coreModule(artibot) {
 				id: "react",
 				name: localizer._("React"),
 				mainFunction: reactMessageMenu
+			}),
+
+			// User menu
+			new UserContextMenuOption({
+				id: "avatar",
+				name: localizer._("Avatar"),
+				mainFunction: avatarUserMenu
 			})
 		]
 	});
