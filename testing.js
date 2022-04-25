@@ -1,5 +1,6 @@
-import { MessageActionRow, MessageButton } from "discord.js";
-import Artibot, { Command, Module } from "./index.js";
+import { SelectMenuOptionBuilder } from "@discordjs/builders";
+import { MessageActionRow, MessageButton, MessageSelectMenu } from "discord.js";
+import Artibot, { Command, Module, SelectMenuOption } from "./index.js";
 import token from "./private.js";
 
 const artibot = new Artibot({
@@ -29,8 +30,33 @@ artibot.registerModule(
 									.setCustomId("delete")
 									.setLabel("delete")
 									.setStyle("PRIMARY")
+							),
+						new MessageActionRow()
+							.addComponents(
+								new MessageSelectMenu()
+									.setCustomId("test.selectmenu")
+									.setPlaceholder("select something")
+									.addOptions([
+										{
+											label: "Testing option",
+											description: "Testing option to do testing",
+											value: "asdasd"
+										},
+										{
+											label: "Testing option 2",
+											description: "Testing option to do testing a second time",
+											value: "qweqwe"
+										}
+									])
 							)
 					]
+				})
+			}),
+			new SelectMenuOption({
+				id: "test.selectmenu",
+				mainFunction: (interaction) => interaction.reply({
+					content: "Ok: " + interaction.values.join(", "),
+					ephemeral: true
 				})
 			})
 		]

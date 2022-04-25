@@ -209,7 +209,7 @@ export default class Artibot {
 export class Module {
 	/**
 	 * Any module part type.
-	 * @typedef {Command|SlashCommand|Button|MessageContextMenuOption|UserContextMenuOption} ModulePartResolvable
+	 * @typedef {Command|SlashCommand|Button|MessageContextMenuOption|UserContextMenuOption|Global} ModulePartResolvable
 	 */
 
 	/**
@@ -242,8 +242,8 @@ class BasePart {
 	 * @param {Object} config - Config for this part
 	 * @param {string} config.id - ID of the part
 	 * @param {string} config.type - Type of the part
-	 * @param {function(): void} config.mainFunction - The function when the part is executed
-	 * @param {function(): void} [config.initFunction] - The function executed on bot startup
+	 * @param {function(): void|Promise<void>} config.mainFunction - The function when the part is executed
+	 * @param {function(): void|Promise<void>} [config.initFunction] - The function executed on bot startup
 	 */
 	constructor({ id, type, mainFunction, initFunction }) {
 		if (!id || !type || !mainFunction) throw new Error("Missing parameter(s)");
@@ -272,8 +272,8 @@ export class Command extends BasePart {
 	 * @param {boolean} [config.guildOnly=false] - If the command can only be executed in a guild
 	 * @param {discord.Permissions} [config.permissions] - Required permissions
 	 * @param {boolean} [config.requiresArgs=false] - Set to true if the command needs at least one argument
-	 * @param {function(Message, string[], Artibot): void} config.mainFunction - Function to execute when the command is ran
-	 * @param {function(Artibot): void} [config.initFunction] - Function executed on bot startup
+	 * @param {function(Message, string[], Artibot): void|Promise<void>} config.mainFunction - Function to execute when the command is ran
+	 * @param {function(Artibot): void|Promise<void>} [config.initFunction] - Function executed on bot startup
 	 */
 	constructor({ id, name, description, aliases = [], usage, cooldown, ownerOnly = false, guildOnly = false, permissions, requiresArgs = false, mainFunction, initFunction }) {
 		super({ id, type: "command", mainFunction, initFunction });
@@ -299,8 +299,8 @@ export class SlashCommand extends BasePart {
 	 * @param {string} config.id - ID of the command
 	 * @param {SlashCommandBuilder} config.data - Data to register into the Discord API
 	 * @param {number} [config.cooldown=1] - Cooldown per user for this command, in seconds
-	 * @param {function(discord.CommandInteraction, Artibot): void} config.mainFunction - Function to execute when the command is ran
-	 * @param {function(Artibot): void} [config.initFunction] - Function executed on bot startup
+	 * @param {function(discord.CommandInteraction, Artibot): void|Promise<void>} config.mainFunction - Function to execute when the command is ran
+	 * @param {function(Artibot): void|Promise<void>} [config.initFunction] - Function executed on bot startup
 	 */
 	constructor({ id, data, cooldown = 1, mainFunction, initFunction }) {
 		if (!data) throw new Error("Missing data parameter");
@@ -318,8 +318,8 @@ export class Button extends BasePart {
 	/**
 	 * @param {Object} config - Config for this button
 	 * @param {string} config.id - ID of the button. Supports asterix ("*") for wildcard.
-	 * @param {function(discord.ButtonInteraction, Artibot): void} config.mainFunction - Function to execute when the button is clicked
-	 * @param {function(Artibot): void} [config.initFunction] - Function executed on bot startup
+	 * @param {function(discord.ButtonInteraction, Artibot): void|Promise<void>} config.mainFunction - Function to execute when the button is clicked
+	 * @param {function(Artibot): void|Promise<void>} [config.initFunction] - Function executed on bot startup
 	 */
 	constructor({ id, mainFunction, initFunction }) {
 		super({ id, type: "button", mainFunction, initFunction });
@@ -335,8 +335,8 @@ export class MessageContextMenuOption extends BasePart {
 	 * @param {Object} config - Config for this context menu option
 	 * @param {string} config.id - ID of this option
 	 * @param {string} config.name - Name of this option
-	 * @param {function(discord.MessageContextMenuInteraction, Artibot): void} config.mainFunction - Function to execute when the menu option is clicked
-	 * @param {function(Artibot): void} config.initFunction - Function executed on bot startup
+	 * @param {function(discord.MessageContextMenuInteraction, Artibot): void|Promise<void>} config.mainFunction - Function to execute when the menu option is clicked
+	 * @param {function(Artibot): void|Promise<void>} config.initFunction - Function executed on bot startup
 	 */
 	constructor({ id, name, mainFunction, initFunction }) {
 		if (!name) throw new Error("Missing name parameter!");
@@ -348,13 +348,17 @@ export class MessageContextMenuOption extends BasePart {
 	}
 }
 
+/**
+ * User context menu option part for a module
+ * @extends BasePart
+ */
 export class UserContextMenuOption extends BasePart {
 	/**
 	 * @param {Object} config - Config for this context menu option
 	 * @param {string} config.id - ID of this option
 	 * @param {string} config.name - Name of this option
-	 * @param {function(discord.UserContextMenuInteraction, Artibot): void} config.mainFunction - Function to execute when the menu option is clicked
-	 * @param {function(Artibot): void} config.initFunction - Function executed on bot startup
+	 * @param {function(discord.UserContextMenuInteraction, Artibot): void|Promise<void>} config.mainFunction - Function to execute when the menu option is clicked
+	 * @param {function(Artibot): void|Promise<void>} config.initFunction - Function executed on bot startup
 	 */
 	constructor({ id, name, mainFunction, initFunction }) {
 		if (!name) throw new Error("Missing name parameter!");
@@ -363,6 +367,22 @@ export class UserContextMenuOption extends BasePart {
 			name,
 			type: 2 // 2 is for user context menus
 		}
+	}
+}
+
+/**
+ * Select menu option part for a module
+ * @extends BasePart
+ */
+export class SelectMenuOption extends BasePart {
+	/**
+	 * @param {Object} config - Config for this menu option
+	 * @param {string} config.id - ID of this option
+	 * @param {function(discord.SelectMenuInteraction, Artibot): void|Promise<void>} config.mainFunction - Function executed when this option is selected
+	 * @param {function(Artibot): void|Promise<void>} config.initFunction - Function executed on bot startup
+	 */
+	constructor({ id, mainFunction, initFunction }) {
+		super({ id, type: "selectmenu", mainFunction, initFunction });
 	}
 }
 
