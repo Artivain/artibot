@@ -1,6 +1,6 @@
 import { SelectMenuOptionBuilder } from "@discordjs/builders";
 import { MessageActionRow, MessageButton, MessageSelectMenu } from "discord.js";
-import Artibot, { Command, Module, SelectMenuOption } from "./index.js";
+import Artibot, { Command, Module, SelectMenuOption, TriggerGroup } from "./index.js";
 import token from "./private.js";
 
 const artibot = new Artibot({
@@ -8,7 +8,8 @@ const artibot = new Artibot({
 	botName: "Artibot [DEV]",
 	prefix: "abd ",
 	lang: "fr",
-	testGuildId: "775798875356397608"
+	testGuildId: "775798875356397608",
+	debug: true
 });
 
 artibot.registerModule(
@@ -58,6 +59,17 @@ artibot.registerModule(
 					content: "Ok: " + interaction.values.join(", "),
 					ephemeral: true
 				})
+			}),
+			new TriggerGroup({
+				id: "testingtrigger",
+				triggers: ["sus", /asd/i, "plzdelete"],
+				mainFunction: async (message, trigger) => {
+					if (trigger == "plzdelete") return await message.delete();
+					return await message.reply({
+						ephemeral: true,
+						content: "Triggered: " + trigger.toString()
+					});
+				}
 			})
 		]
 	})

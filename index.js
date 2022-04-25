@@ -25,14 +25,15 @@ export default class Artibot {
 	 * @param {Object} config - Configuration for Artibot
 	 * @param {Snowflake} config.ownerId - Discord ID of the owner of the bot
 	 * @param {Snowflake} config.testGuildId - Discord ID of the testing guild
-	 * @param {string} [config.botName] - Name of the Discord bot. Used almost everywhere.
-	 * @param {string} [config.botIcon] - URL of the profile picture of the bot
-	 * @param {string} [config.prefix] - Prefix for the commands
-	 * @param {boolean} [config.devMode] - Set to false if the bot must be used in more than one server. Interactions could take more time to refresh.
-	 * @param {string} [config.lang] - Set the lang of the bot
-	 * @param {string} [config.embedColor] - Color for the embeds sent by the bot
-	 * @param {boolean} [config.advancedCorePing] - Set to false if you want to hide advanced infos from ping commands
-	 * @param {boolean} [config.checkForUpdates] - Set to false if you don't want the bot to check for new updates
+	 * @param {string} [config.botName="Artibot"] - Name of the Discord bot. Used almost everywhere.
+	 * @param {string} [config.botIcon="https://assets.artivain.com/fav/bots/artibot-512.jpg"] - URL of the profile picture of the bot
+	 * @param {string} [config.prefix="ab "] - Prefix for the commands
+	 * @param {boolean} [config.devMode=true] - Set to false if the bot must be used in more than one server. Interactions could take more time to refresh.
+	 * @param {string} [config.lang="en"] - Set the lang of the bot
+	 * @param {string} [config.embedColor="#06476d"] - Color for the embeds sent by the bot
+	 * @param {boolean} [config.advancedCorePing=true] - Set to false if you want to hide advanced infos from ping commands
+	 * @param {boolean} [config.checkForUpdates=true] - Set to false if you don't want the bot to check for new updates
+	 * @param {boolean} [config.debug=false] - Set to true to show debug messages in console
 	 */
 	constructor({
 		ownerId,
@@ -44,7 +45,8 @@ export default class Artibot {
 		lang = "en",
 		embedColor = "#06476d",
 		advancedCorePing = true,
-		checkForUpdates = true
+		checkForUpdates = true,
+		debug = false
 	}) {
 		// Verify that the owner ID is set
 		if (!ownerId) throw new Error("You must set the owner ID.");
@@ -72,7 +74,8 @@ export default class Artibot {
 			lang,
 			embedColor,
 			advancedCorePing,
-			checkForUpdates
+			checkForUpdates,
+			debug
 		}
 
 		this.version = version;
@@ -209,7 +212,7 @@ export default class Artibot {
 export class Module {
 	/**
 	 * Any module part type.
-	 * @typedef {Command|SlashCommand|Button|MessageContextMenuOption|UserContextMenuOption|Global} ModulePartResolvable
+	 * @typedef {Command|SlashCommand|Button|MessageContextMenuOption|UserContextMenuOption|TriggerGroup|Global} ModulePartResolvable
 	 */
 
 	/**
@@ -383,6 +386,27 @@ export class SelectMenuOption extends BasePart {
 	 */
 	constructor({ id, mainFunction, initFunction }) {
 		super({ id, type: "selectmenu", mainFunction, initFunction });
+	}
+}
+
+export class TriggerGroup extends BasePart {
+	/**
+	 * @param {Object} config - Config for this trigger group
+	 * @param {string} config.id - ID of this trigger group
+	 * @param {Array<string|RegExp>} config.triggers - List of triggers
+	 * @param {function(discord.Message, string|RegExp, Artibot): void|Promise<void>} config.mainFunction - Function executed on trigger found
+	 * @param {function(Artibot): void|Promise<void>} config.initFunction - Function executed on bot startup
+	 */
+	constructor({ id, triggers, mainFunction, initFunction }) {
+		if (!triggers || !triggers.length) throw new Error("Triggers cannot be empty!");
+
+		super({ id, type: "trigger", mainFunction, initFunction });
+
+		/**
+		 * List of triggers
+		 * @type {Array<string|RegExp>}
+		 */
+		this.triggers = triggers;
 	}
 }
 
