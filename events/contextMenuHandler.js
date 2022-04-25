@@ -36,7 +36,7 @@ export async function execute(interaction, artibot) {
 		try {
 			await command.execute(interaction, artibot);
 		} catch (err) {
-			log("ContextHandler", err, "warn", true);
+			log("ContextMenuHandler", err, "warn", true);
 			interaction.reply({
 				content: localizer._("An error occured when executing this interaction..."),
 				ephemeral: true,
@@ -59,7 +59,7 @@ export async function execute(interaction, artibot) {
 		try {
 			await command.execute(interaction, artibot);
 		} catch (err) {
-			log("ContextHandler", err, "warn", true);
+			log("ContextMenuHandler", err, "warn", true);
 			interaction.reply({
 				content: localizer._("An error occured when executing this interaction..."),
 				ephemeral: true,

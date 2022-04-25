@@ -12,6 +12,7 @@ import pingSlashCommand from "./slash-commands/ping.js";
 import deleteButton from "./buttons/delete.js";
 import reactMessageMenu from "./message-menu/react.js";
 import avatarUserMenu from "./user-menu/avatar.js";
+import informationsUserMenu from "./user-menu/informations.js";
 
 /**
  * Create the Core module
@@ -146,6 +147,11 @@ export default function coreModule(artibot) {
 				id: "avatar",
 				name: localizer._("Avatar"),
 				mainFunction: avatarUserMenu
+			}),
+			new UserContextMenuOption({
+				id: "informations",
+				name: localizer._("Informations"),
+				mainFunction: informationsUserMenu
 			})
 		]
 	});
@@ -170,11 +176,6 @@ export default function coreModule(artibot) {
 				},
 
 				// User menu
-				{
-					id: "avatar",
-					type: "usermenu",
-					path: "src/user-menu/avatar.js"
-				},
 				{
 					id: "informations",
 					type: "usermenu",

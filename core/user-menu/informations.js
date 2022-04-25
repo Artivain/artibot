@@ -1,62 +1,46 @@
-const { MessageEmbed } = require("discord.js");
-const moment = require("moment");
-const humanizeDuration = require("humanize-duration");
-const { localizer } = require("../../index");
+import { UserContextMenuInteraction } from "discord.js";
+import Artibot from "../../index.js";
 
-module.exports = {
-	data: {
-		name: localizer._("Informations"),
-		type: 2 // 2 is for user context menus
-	},
+/**
+ * Get some information on a user
+ * @param {UserContextMenuInteraction} interaction 
+ * @param {Artibot} artibot
+ */
+export default function execute(interaction, { config, contributors, localizer, createEmbed }) {
+	const infos = interaction.targetMember;
+	let type = localizer._("User");
+	const since = parseInt(infos.joinedTimestamp / 1000);
 
-	async execute(interaction, { config, contributors }) {
+	if (infos.user.bot) {
+		type = localizer._("Bot");
+	} else if (infos.user.system) {
+		type = localizer._("System");
+	};
 
-		const infos = interaction.options._hoistedOptions[0].member;
-		var type = localizer._("User");
-		const now = moment();
-		const since = humanizeDuration(now - moment(infos.joinedTimestamp), {
-			language: config.locale,
-			delimiter: ", ",
-			largest: 2,
-			round: true,
-			units: ["y", "mo", "w", "d", "h", "m"]
-		});
+	var more = "";
+	if (infos.guild.ownerId === infos.user.id) {
+		more += localizer._("\nIs the owner of this server.");
+	};
+	if (config.ownerId === infos.user.id) {
+		more += localizer._("\nIs the owner of this bot.");
+	};
+	if (contributors.devs.find(element => element.discordId === infos.user.id)) {
+		more += localizer._("\n**Is one of the super devs of this bot!**");
+	};
+	if (contributors.donators.find(element => element.discordId === infos.user.id)) {
+		more += localizer._("\n**Is one of the super donators of this bot!**");
+	};
 
-		if (infos.user.bot) {
-			type = localizer._("Bot");
-		} else if (infos.user.system) {
-			type = localizer._("System");
-		};
+	const embed = createEmbed()
+		.setTitle(localizer._("Information on the user"))
+		.setDescription(
+			localizer._("Name on the server: ") + (infos.nickname ? infos.nickname : infos.user.username) + "\n" +
+			localizer._("Tag:") + " `" + infos.user.username + "#" + infos.user.discriminator + "`\n" +
+			localizer._("ID:") + " `" + infos.user.id + "`" +
+			more
+		)
+		.addField(localizer._("Type"), type)
+		.addField(localizer._("On this server since"), `<t:${since}:f> (<t:${since}:R>)`);
 
-		var more = "";
-		if (infos.guild.ownerId === infos.user.id) {
-			more += localizer._("\nIs the owner of this server.");
-		};
-		if (config.ownerId === infos.user.id) {
-			more += localizer._("\nIs the owner of this bot.");
-		};
-		if (contributors.devs.find(element => element.discordId === infos.user.id)) {
-			more += localizer._("\n**Is one of the super devs of this bot!**");
-		};
-		if (contributors.donators.find(element => element.discordId === infos.user.id)) {
-			more += localizer._("\n**Is one of the super donators of this bot!**");
-		};
-
-		const embed = new MessageEmbed()
-			.setColor(config.embedColor)
-			.setTimestamp()
-			.setFooter({ text: config.botName, iconURL: config.botIcon })
-			.setTitle(localizer._("Information on the user"))
-			.setDescription(
-				localizer._("Name on the server: ") + (infos.nickname ? infos.nickname : infos.user.username) + "\n" +
-				localizer._("Tag:") + " `" + infos.user.username + "#" + infos.user.discriminator + "`\n" +
-				localizer._("ID:") + " `" + infos.user.id + "`" +
-				more
-			)
-			.addField(localizer._("Type"), type)
-			.addField(localizer._("On this server since"), since);
-
-		await interaction.reply({ embeds: [embed] });
-		return
-	}
-};
+	interaction.reply({ embeds: [embed] });
+}
