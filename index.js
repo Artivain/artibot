@@ -386,6 +386,23 @@ export class SelectMenuOption extends BasePart {
 	}
 }
 
+/**
+ * Global part for a module
+ * - Special part which is not managed by a event handler and only ran at startup
+ * @extends BasePart
+ */
+export class Global extends BasePart {
+	/**
+	 * @param {Object} config - Config for this global
+	 * @param {string} config.id - ID of this global
+	 * @param {function(Artibot): void|Promise<void>} config.mainFunction - Function executed on bot startup
+	 */
+	constructor({ id, mainFunction }) {
+		super({ id, type: "global", mainFunction });
+		this.init = mainFunction;
+	}
+}
+
 export class Embed extends discord.MessageEmbed {
 	/**
 	 * @param {Artibot} artibot
