@@ -12,7 +12,7 @@ export async function execute(message, artibot) {
 	// Ignore bots
 	if (message.author.bot) return;
 
-	const { log, localizer } = artibot;
+	const { log } = artibot;
 
 	for (const module of artibot.modules) {
 		for (const part of module.parts) {

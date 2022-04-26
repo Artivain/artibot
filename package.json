@@ -7,7 +7,7 @@
 		"start": "node index.js",
 		"test": "nodemon testing.js",
 		"upgrade": "ncu -u && npm install",
-		"build-docs": "jsdoc ."
+		"build-docs": "jsdoc -c ./jsdoc.json"
 	},
 	"type": "module",
 	"repository": "github:Artivain/artibot",
