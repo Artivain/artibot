@@ -1,7 +1,7 @@
 {
 	"name": "artibot",
 	"version": "3.0.0",
-	"description": "Bot open-source fait par Artivain et les contributeurs. ",
+	"description": "Modern, fast and modular open-source Discord bot",
 	"main": "index.js",
 	"scripts": {
 		"start": "node index.js",
@@ -15,6 +15,7 @@
 		"Discord",
 		"javascript",
 		"Artivain",
+		"artibot",
 		"framework",
 		"bot",
 		"free",
