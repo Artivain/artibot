@@ -167,8 +167,9 @@ export class Artibot {
 	/**
 	 * Register a module in Artibot
 	 * @param {Module|function(Artibot): Module} module - The module to register or a function to initialize the module 
+	 * @param {Object} [config] - Custom configuration for the module. See module documentation to learn more.
 	 */
-	registerModule = (module) => {
+	registerModule = (module, config = {}) => {
 		if (typeof module == "function") module = module(this);
 		this.modules.push(module);
 		log("Artibot", this.localizer._("Registered module: ") + module.name, "info", true);
@@ -179,6 +180,11 @@ export class Artibot {
 
 		for (const part of module.parts) {
 			log("Artibot", `- [${part.type}] ${part.id}`, "log", true);
+		}
+
+		if (Object.entries(config).length !== 0) {
+			this.config[module.id] = config;
+			log("Artibot", this.localizer.__("Custom configuration for [[0]] saved.", { placeholders: [module.name] }), "log", true);
 		}
 	}
 
