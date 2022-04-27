@@ -12,13 +12,9 @@
 		],
 		"include": [
 			"index.js",
-			"core",
 			"logger.js",
 			"interactionManager.js",
-			"messages",
-			"events",
-			"README.md",
-			"LICENSE"
+			"README.md"
 		]
 	},
 	"sourceType": "module",
@@ -34,7 +30,7 @@
 		"monospaceLinks": false
 	},
 	"opts": {
-		"template": "jsdoc-template",
+		"template": "node_modules/artibot-jsdoc-template",
 		"encoding": "utf8",
 		"destination": "documentation",
 		"recurse": false

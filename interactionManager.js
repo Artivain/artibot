@@ -5,7 +5,7 @@ import Artibot, { log, Module } from "./index.js";
 /**
  * Interaction management utility for Artibot
  */
-export default class InteractionManager {
+export class InteractionManager {
 	/**
 	 * @param {Object} parameters - Parameters for this InteractionManager
 	 * @param {string} parameters.token - Token for the Discord bot
@@ -89,3 +89,6 @@ export default class InteractionManager {
 		};
 	}
 }
+
+/** @ignore */
+export default InteractionManager;

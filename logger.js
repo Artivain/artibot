@@ -10,7 +10,7 @@ import chalk from "chalk";
  * @param {("log"|"warn"|"err"|"debug"|"info")} [type="log"] Type of message.
  * @param {boolean} [isCore=false] Is this message sent from the core? Probably not.
  */
-export default function log(name, msg, type = "log", isCore = false) {
+export function log(name, msg, type = "log", isCore = false) {
 	type = type.toLowerCase();
 	if (isCore) {
 		var prefix = chalk.green(`[${name}]`);
@@ -33,3 +33,6 @@ export default function log(name, msg, type = "log", isCore = false) {
 
 	console.log(prefix, content);
 }
+
+/** @ignore */
+export default log;

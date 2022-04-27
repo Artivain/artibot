@@ -6,7 +6,7 @@
 	"scripts": {
 		"start": "node index.js",
 		"test": "nodemon testing.js",
-		"upgrade": "ncu -u && npm install",
+		"upgrade": "ncu -u && npm install && npm update",
 		"build-docs": "jsdoc -c ./jsdoc.json"
 	},
 	"type": "module",
@@ -31,7 +31,7 @@
 		"@discordjs/builders": "^0.13.0",
 		"@discordjs/rest": "^0.4.1",
 		"artibot-localizer": "^1.0.2",
-		"axios": "^0.27.0",
+		"axios": "^0.27.1",
 		"chalk": "^5.0.1",
 		"discord-api-types": "^0.32.0",
 		"discord-giveaways": "^5.1.1",
@@ -45,6 +45,7 @@
 	"devDependencies": {
 		"jsdoc": "^3.6.10",
 		"nodemon": "^2.0.15",
-		"npm-check-updates": "^12.5.9"
+		"npm-check-updates": "^12.5.9",
+		"artibot-jsdoc-template": "GoudronViande24/artibot-jsdoc-template"
 	}
 }

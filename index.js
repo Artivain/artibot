@@ -20,7 +20,7 @@ const { version } = require('./package.json');
  * @see https://github.com/Artivain/artibot
  * @license GPL-3.0-or-later
  */
-export default class Artibot {
+export class Artibot {
 	/**
 	 * @param {Object} config - Configuration for Artibot
 	 * @param {Snowflake} config.ownerId - Discord ID of the owner of the bot
@@ -205,6 +205,9 @@ export default class Artibot {
 		return data.name.replace("v", "");
 	}
 }
+
+/** @ignore */
+export default Artibot;
 
 /**
  * Base class for Artibot modules
@@ -442,7 +445,7 @@ export class Embed extends discord.MessageEmbed {
 
 /**
  * Log message to console, with proper coloring and prefix.
- *
+ * @ignore
  * @author Artivain
  * @since v1.5.3
  * @param {string} name Name of the module sending the log.
