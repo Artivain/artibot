@@ -109,12 +109,26 @@ export class Artibot {
 	 * Create an embed
 	 * @param {discord.MessageEmbed|discord.MessageEmbedOptions|discord.APIEmbed} [data]
 	 * @returns {Embed} Preconfigured embed
+	 * @method
 	 */
 	createEmbed = (data) => {
 		return new Embed(this, data);
 	}
 
-	/** Lists of people who contributed to the Artibot */
+	/**
+	 * Contributor informations
+	 * @typedef {{name: string, github: string, discordId: Snowflake|null, discordTag: string|null}} Contributor
+	 */
+
+	/**
+	 * List of contributors
+	 * @typedef {{devs: Contributor[], contributors: Contributor[]}} ContributorList
+	 */
+
+	/**
+	 * Lists of people who contributed to the Artibot
+	 * @type {ContributorList}
+	 */
 	contributors = require("./contributors.json");
 
 	/**
@@ -168,6 +182,7 @@ export class Artibot {
 	 * Register a module in Artibot
 	 * @param {Module|function(Artibot): Module} module - The module to register or a function to initialize the module 
 	 * @param {Object} [config] - Custom configuration for the module. See module documentation to learn more.
+	 * @method
 	 */
 	registerModule = (module, config = {}) => {
 		if (typeof module == "function") module = module(this);
@@ -191,8 +206,8 @@ export class Artibot {
 	/**
 	 * Get latest release version of a GitHub repository
 	 * @param {string} [repo="Artivain/artibot"] - GitHub repository to get latest version
-	 * @returns {string|false} Version number, or false if repo not found or an error happens
-	 * @async
+	 * @returns {Promise.<string|false>} Version number, or false if repo not found or an error happens
+	 * @method
 	 */
 	checkForUpdates = async (repo = "Artivain/artibot") => {
 		const request = await axios({
