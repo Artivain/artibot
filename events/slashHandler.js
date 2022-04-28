@@ -34,9 +34,13 @@ export async function execute(interaction, artibot) {
 		await command.execute(interaction, artibot);
 	} catch (err) {
 		log("SlashHandler", err, "warn", true);
-		await interaction.reply({
-			content: localizer._("An error occured while executing this command."),
-			ephemeral: true
-		});
+		try {
+			await interaction.reply({
+				content: localizer._("An error occured while executing this command."),
+				ephemeral: true
+			});
+		} catch (err) {
+			log("SlashHandler", localizer._("Additionally, an error occured when sending the error message to the user. Maybe the interaction already has been replied to."), "warn", true);
+		}
 	};
 }

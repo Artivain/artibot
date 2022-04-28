@@ -613,6 +613,10 @@
 
 		"Custom configuration for [[0]] saved.": {
 			"fr": "Configuration personnalisée pour [[0]] sauvegardée."
+		},
+
+		"Additionally, an error occured when sending the error message to the user. Maybe the interaction already has been replied to.": {
+			"fr": "De plus, une erreur est survenue en envoyant le message d'erreur à l'utilisateur. Peut-être que l'interaction a déjà eu une réponse."
 		}
 
 	}
