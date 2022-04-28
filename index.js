@@ -64,7 +64,7 @@ export class Artibot {
 
 		// Create a localizer for the core
 		this.localizer = new Localizer({
-			filePath: "locales.json",
+			filePath: path.join(__dirname, "locales.json"),
 			lang
 		});
 
