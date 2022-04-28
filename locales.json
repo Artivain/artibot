@@ -609,6 +609,10 @@
 
 		"Nothing to register.": {
 			"fr": "Rien à enregistrer."
+		},
+
+		"Custom configuration for [[0]] saved.": {
+			"fr": "Configuration personnalisée pour [[0]] sauvegardée."
 		}
 
 	}
