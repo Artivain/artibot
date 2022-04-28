@@ -9,6 +9,10 @@ import coreModule from "./core/index.js";
 import { readdirSync } from "fs";
 import axios from "axios";
 import { SlashCommandBuilder } from "@discordjs/builders";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __dirname = fileURLToPath(import.meta.url);
 
 const require = createRequire(import.meta.url);
 const { version } = require('./package.json');
@@ -164,7 +168,7 @@ export class Artibot {
 		this.interactionManager;
 
 		log("Artibot", this.localizer._("Loading event listeners..."), "log", true);
-		const eventFiles = readdirSync("events").filter(file => file.endsWith(".js"));
+		const eventFiles = readdirSync(path.join(__dirname, "events")).filter(file => file.endsWith(".js"));
 
 		for (const file of eventFiles) {
 			const { name, execute, once } = await import(`./events/${file}`);
