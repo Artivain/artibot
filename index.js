@@ -164,7 +164,7 @@ export class Artibot {
 		this.interactionManager;
 
 		log("Artibot", this.localizer._("Loading event listeners..."), "log", true);
-		const eventFiles = readdirSync("./events").filter(file => file.endsWith(".js"));
+		const eventFiles = readdirSync("events").filter(file => file.endsWith(".js"));
 
 		for (const file of eventFiles) {
 			const { name, execute, once } = await import(`./events/${file}`);
