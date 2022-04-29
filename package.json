@@ -1,6 +1,6 @@
 {
 	"name": "artibot",
-	"version": "3.0.3",
+	"version": "3.0.4",
 	"description": "Modern, fast and modular open-source Discord bot",
 	"main": "index.js",
 	"scripts": {
@@ -10,6 +10,9 @@
 		"build-docs": "jsdoc -c ./jsdoc.json"
 	},
 	"type": "module",
+	"engines": {
+		"node": "^16.14.2"
+	},
 	"repository": "github:Artivain/artibot",
 	"keywords": [
 		"Discord",
