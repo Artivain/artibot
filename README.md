@@ -25,9 +25,12 @@ Bot open-source fait par Artivain et les contributeurs.
 [![GitHub package.json version](https://img.shields.io/github/package-json/v/Artivain/artibot?color=orange&label=alpha&style=flat-square)](https://github.com/Artivain/artibot)
 [![GitHub package.json version (branch)](https://img.shields.io/github/package-json/v/Artivain/artibot/unstable?color=red&label=unstable&style=flat-square)](https://github.com/Artivain/artibot/tree/unstable)
 <br>
-[![Discord](https://img.shields.io/discord/784679956717240391?label=Discord%20support%20server&style=flat-square)](https://discord.artivain.com)
+[![Discord](https://img.shields.io/discord/784679956717240391?label=Discord%20support%20server&style=flat-square&logo=discord)](https://discord.artivain.com)
 <br>
-![GitHub all releases](https://img.shields.io/github/downloads/Artivain/artibot/total?label=total%20downloads&style=flat-square)
+![npm](https://img.shields.io/npm/dm/artibot?label=Monthly%20downloads&logo=npm&style=flat-square)
+![npm](https://img.shields.io/npm/dt/artibot?label=Total%20downloads&logo=npm&style=flat-square)
+<br>
+[![Donate](https://img.shields.io/badge/Help%20us-donate-green?logo=paypal&style=flat-square)](https://paypal.me/Artivain)
 </div>
 
 ---
