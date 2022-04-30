@@ -27,7 +27,7 @@
 		"auto-git-update": "^2.1.2",
 		"axios": "^0.26.0",
 		"chalk": "^4.1.2",
-		"discord-api-types": "^0.25.2",
+		"discord-api-types": "^0.31.0",
 		"discord-giveaways": "^5.1.0",
 		"discord.js": "^13.6.0",
 		"discordjs-reaction-role": "^2.1.0",
