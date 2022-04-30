@@ -31,7 +31,7 @@ export class Artibot {
 	 * @param {Snowflake} config.ownerId - Discord ID of the owner of the bot
 	 * @param {Snowflake} config.testGuildId - Discord ID of the testing guild
 	 * @param {string} [config.botName="Artibot"] - Name of the Discord bot. Used almost everywhere.
-	 * @param {string} [config.botIcon="https://assets.artivain.com/fav/bots/artibot-512.jpg"] - URL of the profile picture of the bot
+	 * @param {string} [config.botIcon="https://assets.artivain.com/fav/bots/artibot-512.png"] - URL of the profile picture of the bot
 	 * @param {string} [config.prefix="ab "] - Prefix for the commands
 	 * @param {boolean} [config.devMode=true] - Set to false if the bot must be used in more than one server. Interactions could take more time to refresh.
 	 * @param {string} [config.lang="en"] - Set the lang of the bot
@@ -44,7 +44,7 @@ export class Artibot {
 		ownerId,
 		testGuildId,
 		botName = "Artibot",
-		botIcon = "https://assets.artivain.com/fav/bots/artibot-512.jpg",
+		botIcon = "https://assets.artivain.com/fav/bots/artibot-512.png",
 		prefix = "ab ",
 		devMode = true,
 		lang = "en",
