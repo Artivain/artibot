@@ -28,7 +28,7 @@
 		"axios": "^0.26.0",
 		"chalk": "^4.1.2",
 		"discord-api-types": "^0.25.2",
-		"discord-giveaways": "^5.1.0",
+		"discord-giveaways": "^5.1.1",
 		"discord.js": "^13.6.0",
 		"discordjs-reaction-role": "^2.1.0",
 		"figlet": "^1.5.2",
