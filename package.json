@@ -24,7 +24,18 @@
 		"free",
 		"api"
 	],
-	"author": "Artivain",
+	"author": {
+		"name": "Artivain",
+		"email": "info@artivain.com",
+		"url": "https://artivain.com"
+	},
+	"contributors": [
+		{
+			"name": "Thomas Fournier",
+			"email": "thomas@artivain.com",
+			"url": "https://github.com/GoudronViande24"
+		}
+	],
 	"license": "GPL-3.0-or-later",
 	"bugs": {
 		"url": "https://github.com/Artivain/artibot/issues"
