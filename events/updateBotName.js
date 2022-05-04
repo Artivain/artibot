@@ -13,6 +13,11 @@ export function execute(client, artibot) {
 	const { log, localizer, config } = artibot;
 	if (client.user.username != config.botName) {
 		client.user.setUsername(config.botName)
-			.then(log("Artibot", localizer.__("Bot name updated to [[0]].", { placeholders: [config.botName] }), "log", true));
+			.then(() =>
+				log("Artibot", localizer.__("Bot name updated to [[0]].", { placeholders: [config.botName] }), "info", true)
+			)
+			.catch(() =>
+				log("Artibot", localizer._("An error occured when trying to change the bot name. Try again later."), "warn", true)
+			);
 	};
 }

@@ -32,7 +32,7 @@ export async function execute(interaction, artibot) {
 
 	// A try to execute the button.
 	try {
-		button.execute(interaction, artibot);
+		await button.execute(interaction, artibot);
 	} catch (err) {
 		log("ButtonHandler", err, "warn", true);
 		interaction.reply({

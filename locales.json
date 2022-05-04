@@ -617,6 +617,14 @@
 
 		"Additionally, an error occured when sending the error message to the user. Maybe the interaction already has been replied to.": {
 			"fr": "De plus, une erreur est survenue en envoyant le message d'erreur à l'utilisateur. Peut-être que l'interaction a déjà eu une réponse."
+		},
+
+		"An error occured when trying to run initializing script for [[0]]: ": {
+			"fr": "Une erreur est survenue en exécutant le script d'initialisation pour [[0]]: "
+		},
+
+		"An error occured when trying to change the bot name. Try again later.": {
+			"fr": "Une erreur est survenue en essayant de changer le nom du bot. Réessayez plus tard."
 		}
 
 	}

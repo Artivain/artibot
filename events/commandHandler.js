@@ -127,7 +127,7 @@ export async function execute(message, artibot) {
 
 	// Execute the final command. Put everything above this.
 	try {
-		command.execute(message, args, artibot);
+		await command.execute(message, args, artibot);
 	} catch (error) {
 		log("CommandHandler", error, "warn", true);
 		message.reply({

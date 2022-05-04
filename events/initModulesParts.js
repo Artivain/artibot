@@ -10,9 +10,15 @@ export const once = true;
  * @param {Artibot} artibot 
  */
 export function execute(client, artibot) {
-	artibot.modules.forEach(module => {
-		module.parts.forEach(part => {
-			if (part.init && typeof part.init == "function") part.init(artibot);
+	artibot.modules.forEach(async (module) => {
+		module.parts.forEach(async (part) => {
+			if (part.init && typeof part.init == "function") {
+				try {
+					await part.init(artibot);
+				} catch (err) {
+					artibot.log("Artibot", artibot.localizer.__("An error occured when trying to run initializing script for [[0]]: ", { placeholders: [part.id] }) + err, "warn", true);
+				}
+			}
 		});
 	});
 }
