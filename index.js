@@ -150,18 +150,21 @@ export class Artibot {
 	async login({ token = this.#token, additionalIntents = [] }) {
 		if (!token) throw new Error("Token not set!");
 		this.#token = token;
-		this.modules.forEach(module => additionalIntents = additionalIntents.concat(module.additionalIntents));
-		this.client = new discord.Client({
-			intents: [
+		const moduleIntents = [];
+		this.modules.forEach(module => module.additionalIntents.forEach(intent => moduleIntents.push(intent)));
+		const intents = [...new Set([
+			[
 				discord.Intents.FLAGS.GUILDS,
 				discord.Intents.FLAGS.GUILD_MESSAGES,
 				discord.Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
 				discord.Intents.FLAGS.GUILD_VOICE_STATES,
 				discord.Intents.FLAGS.GUILD_MEMBERS,
-				discord.Intents.FLAGS.GUILD_PRESENCES,
-				...additionalIntents
-			]
-		});
+				discord.Intents.FLAGS.GUILD_PRESENCES
+			],
+			...additionalIntents,
+			...moduleIntents
+		])];
+		this.client = new discord.Client({ intents });
 
 		this.listeners = [];
 
