@@ -20,6 +20,7 @@ Bot open-source fait par Artivain et les contributeurs.
 [![GitHub issues](https://img.shields.io/github/issues/Artivain/artibot?style=for-the-badge&logo=github)](https://github.com/Artivain/artibot/issues)
 [![GitHub forks](https://img.shields.io/github/forks/Artivain/artibot?style=for-the-badge&logo=github)](https://github.com/Artivain/artibot/network)
 [![GitHub stars](https://img.shields.io/github/stars/Artivain/artibot?style=for-the-badge&logo=github)](https://github.com/Artivain/artibot/stargazers)
+[![wakatime](https://wakatime.com/badge/github/Artivain/artibot.svg?style=for-the-badge)](https://wakatime.com/badge/github/Artivain/artibot)
 <br>
 [![node-lts](https://img.shields.io/node/v-lts/artibot?color=blue&label=Node.js&logo=node.js&logoColor=white&style=for-the-badge)](https://github.com/Artivain/artibot/blob/main/.node-version)
 [![npm (prod) dependency version](https://img.shields.io/npm/dependency-version/artibot/discord.js?logo=discord&logoColor=white&style=for-the-badge)](https://discord.js.org/#/)
