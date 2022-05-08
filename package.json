@@ -21,7 +21,7 @@
 	},
 	"homepage": "https://github.com/Artivain/artibot#readme",
 	"dependencies": {
-		"@discordjs/builders": "^0.12.0",
+		"@discordjs/builders": "^0.13.0",
 		"@discordjs/rest": "^0.3.0",
 		"artibot-localizer": "^1.0.2",
 		"auto-git-update": "^2.1.2",
