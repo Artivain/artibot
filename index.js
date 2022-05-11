@@ -100,9 +100,9 @@ export class Artibot {
 
 		/**
 		 * List of registered modules
-		 * @type {Module[]}
+		 * @type {discord.Collection.<string, Module>}
 		 */
-		this.modules = [];
+		this.modules = new discord.Collection();
 
 		// Register the Core module
 		this.registerModule(coreModule);
@@ -201,8 +201,9 @@ export class Artibot {
 				process.exit(1);
 			}
 		}
-		
-		this.modules.push(module);
+
+		this.modules.set(module.id, module);
+
 		log("Artibot", this.localizer._("Registered module: ") + module.name, "info", true);
 
 		if (module.langs != "any" && !module.langs.includes(this.config.lang)) {
