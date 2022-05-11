@@ -625,6 +625,10 @@
 
 		"An error occured when trying to change the bot name. Try again later.": {
 			"fr": "Une erreur est survenue en essayant de changer le nom du bot. Réessayez plus tard."
+		},
+
+		"Error when registering module: ": {
+			"fr": "Une erreur est survenue en chargeant un module: "
 		}
 
 	}

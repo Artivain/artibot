@@ -193,7 +193,15 @@ export class Artibot {
 	 * @method
 	 */
 	registerModule = (module, config = {}) => {
-		if (typeof module == "function") module = module(this);
+		if (typeof module == "function") {
+			try {
+				module = module(this);
+			} catch (err) {
+				this.log("Artibot", this.localizer._("Error when registering module: ") + err, "err", true);
+				process.exit(1);
+			}
+		}
+		
 		this.modules.push(module);
 		log("Artibot", this.localizer._("Registered module: ") + module.name, "info", true);
 
