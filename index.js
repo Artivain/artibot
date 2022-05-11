@@ -223,7 +223,7 @@ export class Artibot {
 			url: `https://api.github.com/repos/${repo}/releases/latest`,
 			responseType: "json",
 			headers: {
-				"User-Agent": "Artibot " + this.version
+				"User-Agent": "Artibot/" + this.version
 			},
 			validateStatus: () => { return true }
 		});
