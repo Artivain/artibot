@@ -29,7 +29,7 @@ export default async function execute(message, args, { config, localizer, versio
 		}) + "\n";
 	}
 
-	for (const module of modules) {
+	for (const [, module] of modules) {
 		if (!module.repo) return;
 		const { name, version, repo } = module;
 		const latest = await checkForUpdates(repo);

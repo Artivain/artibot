@@ -17,7 +17,7 @@ export default async function execute(interaction, { config, localizer, createEm
 	 */
 	let commands = [];
 
-	for (const module of modules) {
+	for (const [, module] of modules) {
 		for (const part of module.parts) {
 			if (part.type == "slashcommand") commands.push(part);
 		}

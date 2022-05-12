@@ -24,7 +24,7 @@ export async function execute(interaction, artibot) {
 
 		let command;
 
-		for (const module of modules) {
+		for (const [, module] of modules) {
 			if (command) break;
 			for (const part of module.parts) {
 				if (command) break;
@@ -47,7 +47,7 @@ export async function execute(interaction, artibot) {
 
 		let command;
 
-		for (const module of modules) {
+		for (const [, module] of modules) {
 			if (command) break;
 			for (const part of module.parts) {
 				if (command) break;

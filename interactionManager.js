@@ -1,5 +1,6 @@
 import { REST } from "@discordjs/rest";
 import { Routes } from "discord-api-types/v9";
+import { Collection } from "discord.js";
 import Artibot, { log, Module } from "./index.js";
 
 /**
@@ -29,10 +30,10 @@ export class InteractionManager {
 
 	/**
 	 * Generate data to send to Discord API to register interactions
-	 * @param {Module[]} modules - List of the modules to generate data from
+	 * @param {Collection<string, Module>} modules - List of the modules to generate data from
 	 */
 	generateData = (modules) => {
-		for (const module of modules) {
+		for (const [, module] of modules) {
 			for (const part of module.parts) {
 				if (part.type == "slashcommand") {
 					this.commandJSONData.push(part.data.toJSON());

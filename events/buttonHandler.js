@@ -17,7 +17,7 @@ export async function execute(interaction, artibot) {
 	/** @type {Button} */
 	let button;
 
-	for (const module of modules) {
+	for (const [, module] of modules) {
 		if (button) break;
 		for (const part of module.parts) {
 			if (button) break;
