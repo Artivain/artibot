@@ -156,8 +156,6 @@ export class Artibot {
 			[
 				discord.Intents.FLAGS.GUILDS,
 				discord.Intents.FLAGS.GUILD_MESSAGES,
-				discord.Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
-				discord.Intents.FLAGS.GUILD_VOICE_STATES,
 				discord.Intents.FLAGS.GUILD_MEMBERS,
 				discord.Intents.FLAGS.GUILD_PRESENCES
 			],
