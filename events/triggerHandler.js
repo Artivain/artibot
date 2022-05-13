@@ -14,7 +14,7 @@ export async function execute(message, artibot) {
 
 	const { log } = artibot;
 
-	for (const module of artibot.modules) {
+	for (const [, module] of artibot.modules) {
 		for (const part of module.parts) {
 			if (part.type != "trigger") continue;
 			for (const trigger of part.triggers) {
