@@ -186,14 +186,14 @@ export class Artibot {
 
 	/**
 	 * Register a module in Artibot
-	 * @param {Module|function(Artibot): Module} module - The module to register or a function to initialize the module 
+	 * @param {Module|function(Artibot, Object): Module} module - The module to register or a function to initialize the module 
 	 * @param {Object} [config] - Custom configuration for the module. See module documentation to learn more.
 	 * @method
 	 */
 	registerModule = (module, config = {}) => {
 		if (typeof module == "function") {
 			try {
-				module = module(this);
+				module = module(this, config);
 			} catch (err) {
 				this.log("Artibot", this.localizer._("Error when registering module: ") + err, "err", true);
 				process.exit(1);
