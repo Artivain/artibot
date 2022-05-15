@@ -191,8 +191,6 @@ export class Artibot {
 	 * @method
 	 */
 	registerModule = (module, config = {}) => {
-		this.config[module.id] = config;
-
 		if (typeof module == "function") {
 			try {
 				module = module(this);
@@ -215,6 +213,7 @@ export class Artibot {
 		}
 
 		if (Object.entries(config).length !== 0) {
+			this.config[module.id] = config;
 			log("Artibot", this.localizer.__("Custom configuration for [[0]] saved.", { placeholders: [module.name] }), "log", true);
 		}
 	}
