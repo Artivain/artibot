@@ -1,6 +1,6 @@
 {
 	"name": "artibot",
-	"version": "3.0.7",
+	"version": "3.0.8",
 	"description": "Modern, fast and modular open-source Discord bot",
 	"main": "index.js",
 	"scripts": {
