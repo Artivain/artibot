@@ -104,5 +104,9 @@ dist
 .tern-port
 
 **/private.json
+**/private.js
 **/config.json
+**/config.js
 updaterFiles
+
+documentation

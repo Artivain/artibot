@@ -1,0 +1,38 @@
+{
+	"plugins": [
+		"plugins/markdown"
+	],
+	"recurseDepth": 10,
+	"source": {
+		"includePattern": ".+\\.js(doc|x)?$",
+		"excludePattern": "(^|\\/|\\\\)_",
+		"exclude": [
+			"ab-modules",
+			"node-modules"
+		],
+		"include": [
+			"index.js",
+			"logger.js",
+			"interactionManager.js",
+			"README.md"
+		]
+	},
+	"sourceType": "module",
+	"tags": {
+		"allowUnknownTags": true,
+		"dictionaries": [
+			"jsdoc",
+			"closure"
+		]
+	},
+	"templates": {
+		"cleverLinks": false,
+		"monospaceLinks": false
+	},
+	"opts": {
+		"template": "node_modules/artibot-jsdoc-template",
+		"encoding": "utf8",
+		"destination": "documentation",
+		"recurse": false
+	}
+}

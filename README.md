@@ -8,26 +8,32 @@ Open source Discord bot made by Artivain and the community.
 Bot open-source fait par Artivain et les contributeurs.
 <br><br>
 
-[![CodeFactor](https://www.codefactor.io/repository/github/artivain/artibot/badge?style=flat-square)](https://www.codefactor.io/repository/github/artivain/artibot)
-![GitHub repo size](https://img.shields.io/github/repo-size/Artivain/artibot?style=flat-square)
-[![GitHub license](https://img.shields.io/github/license/Artivain/artibot?style=flat-square)](https://github.com/Artivain/artibot/blob/main/LICENSE)
+[![CodeFactor Grade](https://img.shields.io/codefactor/grade/github/Artivain/artibot?label=codefactor%20grade&logo=codefactor&style=for-the-badge&logoColor=white)](https://www.codefactor.io/repository/github/artivain/artibot)
+![npms.io (final)](https://img.shields.io/npms-io/final-score/artibot?label=npms.io%20score&style=for-the-badge)
+![Snyk Vulnerabilities for npm package](https://img.shields.io/snyk/vulnerabilities/npm/artibot?label=Snyk%20vulnerabilities&logo=snyk&style=for-the-badge)
+[![Code Climate maintainability](https://img.shields.io/codeclimate/maintainability-percentage/Artivain/artibot?label=Code%20Climate%20maintainability&logo=code%20climate&style=for-the-badge)](https://codeclimate.com/github/Artivain/artibot/maintainability)
+![LGTM Grade](https://img.shields.io/lgtm/grade/javascript/github/Artivain/artibot?label=LGTM%20grade&logo=lgtm&style=for-the-badge)
 <br>
-[![GitHub issues](https://img.shields.io/github/issues/Artivain/artibot?style=flat-square)](https://github.com/Artivain/artibot/issues)
-[![GitHub forks](https://img.shields.io/github/forks/Artivain/artibot?style=flat-square)](https://github.com/Artivain/artibot/network)
-[![GitHub stars](https://img.shields.io/github/stars/Artivain/artibot?style=flat-square)](https://github.com/Artivain/artibot/stargazers)
+![GitHub repo size](https://img.shields.io/github/repo-size/Artivain/artibot?style=for-the-badge&logo=github)
+[![GitHub license](https://img.shields.io/github/license/Artivain/artibot?style=for-the-badge&logo=gnu)](https://github.com/Artivain/artibot/blob/main/LICENSE)
 <br>
-[![Node.js](https://img.shields.io/badge/Node.js-16.14.0-blue?style=flat-square)](https://github.com/Artivain/artibot/blob/main/.node-version)
-[![GitHub package.json dependency version (prod)](https://img.shields.io/github/package-json/dependency-version/Artivain/artibot/discord.js?style=flat-square)](https://discord.js.org/#/)
-[![GitHub package.json dependency version (prod)](https://img.shields.io/github/package-json/dependency-version/Artivain/artibot/axios?style=flat-square)](https://axios-http.com/)
+[![GitHub issues](https://img.shields.io/github/issues/Artivain/artibot?style=for-the-badge&logo=github)](https://github.com/Artivain/artibot/issues)
+[![GitHub forks](https://img.shields.io/github/forks/Artivain/artibot?style=for-the-badge&logo=github)](https://github.com/Artivain/artibot/network)
+[![GitHub stars](https://img.shields.io/github/stars/Artivain/artibot?style=for-the-badge&logo=github)](https://github.com/Artivain/artibot/stargazers)
+[![wakatime](https://wakatime.com/badge/github/Artivain/artibot.svg?style=for-the-badge)](https://wakatime.com/badge/github/Artivain/artibot)
 <br>
-[![GitHub release (latest by date)](https://img.shields.io/github/v/release/Artivain/artibot?label=latest&style=flat-square&color=green)](https://github.com/Artivain/artibot/releases/latest)
-[![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/Artivain/artibot?color=yellow&include_prereleases&label=beta&style=flat-square)](https://github.com/Artivain/artibot/releases)
-[![GitHub package.json version](https://img.shields.io/github/package-json/v/Artivain/artibot?color=orange&label=alpha&style=flat-square)](https://github.com/Artivain/artibot)
-[![GitHub package.json version (branch)](https://img.shields.io/github/package-json/v/Artivain/artibot/unstable?color=red&label=unstable&style=flat-square)](https://github.com/Artivain/artibot/tree/unstable)
+[![node-lts](https://img.shields.io/node/v-lts/artibot?color=blue&label=Node.js&logo=node.js&logoColor=white&style=for-the-badge)](https://github.com/Artivain/artibot/blob/main/.node-version)
+[![npm (prod) dependency version](https://img.shields.io/npm/dependency-version/artibot/discord.js?logo=discord&logoColor=white&style=for-the-badge)](https://discord.js.org/#/)
+[![npm (prod) dependency version](https://img.shields.io/npm/dependency-version/artibot/axios?logoColor=white&style=for-the-badge)](https://axios-http.com/)
 <br>
-[![Discord](https://img.shields.io/discord/784679956717240391?label=Discord%20support%20server&style=flat-square)](https://discord.artivain.com)
+[![npm](https://img.shields.io/npm/v/artibot?color=green&label=Latest%20version&logo=npm&style=for-the-badge)](https://www.npmjs.com/package/artibot)
+[![GitHub package.json version](https://img.shields.io/github/package-json/v/Artivain/artibot?color=yellow&label=Development%20version&style=for-the-badge&logo=github)](https://github.com/Artivain/artibot)
 <br>
-![GitHub all releases](https://img.shields.io/github/downloads/Artivain/artibot/total?label=total%20downloads&style=flat-square)
+[![Discord](https://img.shields.io/discord/784679956717240391?label=Discord%20support%20server&style=for-the-badge&logo=discord&logoColor=white)](https://discord.artivain.com)
+[![Donate](https://img.shields.io/badge/Help%20us-donate-green?logo=paypal&style=for-the-badge)](https://paypal.me/Artivain)
+<br>
+![npm](https://img.shields.io/npm/dm/artibot?label=Monthly%20downloads&logo=npm&style=for-the-badge)
+![npm](https://img.shields.io/npm/dt/artibot?label=Total%20downloads&logo=npm&style=for-the-badge)
 </div>
 
 ---
