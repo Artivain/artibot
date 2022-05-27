@@ -59,9 +59,6 @@ export class Artibot {
 		// Verify that the test guild ID is set
 		if (!testGuildId) throw new Error("You must set the test guild ID.");
 
-		// Verify that if dev mode is false, the test guild ID is set
-		if (!devMode && !testGuildId) throw new Error("You must set the testGuildId if devMode is false.");
-
 		// Create a localizer for the core
 		this.localizer = new Localizer({
 			filePath: path.join(__dirname, "locales.json"),
