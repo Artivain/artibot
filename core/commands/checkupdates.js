@@ -1,4 +1,3 @@
-import axios from "axios";
 import { Message } from "discord.js";
 import Artibot from "../../index.js";
 
