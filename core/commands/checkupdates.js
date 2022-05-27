@@ -17,7 +17,7 @@ export default async function execute(message, args, { config, localizer, versio
 
 	const latest = await checkForUpdates();
 
-	let reply = "**Available updates**\n\n";
+	let reply;
 
 	if (!latest) {
 		reply = "**Artibot:** " + localizer._("Impossible to get latest version!") + "\n";
