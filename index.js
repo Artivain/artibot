@@ -39,6 +39,7 @@ export class Artibot {
 	 * @param {boolean} [config.advancedCorePing=true] - Set to false if you want to hide advanced infos from ping commands
 	 * @param {boolean} [config.checkForUpdates=true] - Set to false if you don't want the bot to check for new updates
 	 * @param {boolean} [config.debug=false] - Set to true to show debug messages in console
+	 * @param {string} [config.pterodactylReadyMessage="Pterodactyl start trigger"] - Set a custom ready trigger message for Pterodactyl
 	 */
 	constructor({
 		ownerId,
@@ -51,7 +52,8 @@ export class Artibot {
 		embedColor = "#06476d",
 		advancedCorePing = true,
 		checkForUpdates = true,
-		debug = false
+		debug = false,
+		pterodactylReadyMessage = "Pterodactyl start trigger"
 	}) {
 		// Verify that the owner ID is set
 		if (!ownerId) throw new Error("You must set the owner ID.");
@@ -77,7 +79,8 @@ export class Artibot {
 			embedColor,
 			advancedCorePing,
 			checkForUpdates,
-			debug
+			debug,
+			pterodactylReadyMessage
 		}
 
 		this.version = version;
