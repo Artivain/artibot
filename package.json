@@ -43,7 +43,7 @@
 	"funding": "https://paypal.me/Artivain",
 	"homepage": "https://github.com/Artivain/artibot#readme",
 	"dependencies": {
-		"@discordjs/builders": "^0.15.0",
+		"@discordjs/builders": "^0.13.0",
 		"@discordjs/rest": "^0.5.0",
 		"artibot-localizer": "^1.0.2",
 		"axios": "^0.27.2",
