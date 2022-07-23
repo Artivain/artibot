@@ -54,9 +54,9 @@
 		"path": "^0.12.7"
 	},
 	"devDependencies": {
-		"jsdoc": "^3.6.10",
+		"artibot-jsdoc-template": "GoudronViande24/artibot-jsdoc-template",
+		"jsdoc": "^3.6.11",
 		"nodemon": "^2.0.19",
-		"npm-check-updates": "^15.2.6",
-		"artibot-jsdoc-template": "GoudronViande24/artibot-jsdoc-template"
+		"npm-check-updates": "^16.0.0"
 	}
 }
