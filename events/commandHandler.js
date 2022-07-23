@@ -68,7 +68,7 @@ export async function execute(message, artibot) {
 	// Owner Only Property, add in your command properties if true.
 	if (command.ownerOnly && message.author.id !== config.ownerId) {
 		let embedOwner = artibot.createEmbed()
-			.setColor("RED")
+			.setColor("Red")
 			.setTitle(localizer._("Help on this command"))
 			.setDescription(localizer.__("This command can only be executed by [[0]].", { placeholders: [`<@${config.ownerId}>`] }));
 		return message.reply({ embeds: [embedOwner] });

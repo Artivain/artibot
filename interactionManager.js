@@ -53,7 +53,7 @@ export class InteractionManager {
 
 	/**
 	 * Register interactions in Discord API
-	 * @returns {boolean} True if everything went good, false if there was a problem.
+	 * @returns {Promise<boolean>} True if everything went good, false if there was a problem.
 	 * @async
 	 */
 	register = async () => {

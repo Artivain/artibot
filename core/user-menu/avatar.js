@@ -1,9 +1,9 @@
-import { UserContextMenuInteraction } from "discord.js";
+import { UserContextMenuCommandInteraction } from "discord.js";
 import Artibot from "../../index.js";
 
 /**
  * Simple way to get the avatar of a user
- * @param {UserContextMenuInteraction} interaction 
+ * @param {UserContextMenuCommandInteraction} interaction 
  * @param {Artibot} artibot 
  */
 export default function execute(interaction, { localizer, createEmbed }) {

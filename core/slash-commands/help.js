@@ -44,13 +44,13 @@ export default async function execute(interaction, { config, localizer, createEm
 
 				if (!option.required) content += `\n*${localizer._("Optional")}*`;
 
-				helpEmbed.addField(option.name, content.trim(), true);
+				helpEmbed.addFields({ name: option.name, value: content.trim(), inline: true });
 			});
 
 		} else {
 			helpEmbed
 				.setDescription(localizer.__("There is no slash command with the name `[[0]]`.", { placeholders: [name] }))
-				.setColor("YELLOW");
+				.setColor("Yellow");
 		};
 	} else {
 		/**

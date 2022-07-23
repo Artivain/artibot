@@ -1,4 +1,4 @@
-import { Message, MessageActionRow, MessageButton, MessageEmbed } from 'discord.js';
+import { Message, ActionRowBuilder, ButtonBuilder, ButtonStyle } from 'discord.js';
 import Artibot from "../../index.js";
 
 /**
@@ -9,7 +9,7 @@ import Artibot from "../../index.js";
  */
 export default async function execute(message, args, { config, log, localizer, createEmbed }) {
 	const waitingEmbed = createEmbed()
-		.setColor("YELLOW")
+		.setColor("Yellow")
 		.setTitle("InteractionManager")
 		.setDescription(localizer._("Deleting saved slash commands from the bot and test server...\nThis can take some time."));
 
@@ -27,7 +27,7 @@ export default async function execute(message, args, { config, log, localizer, c
 		log("InteractionManager", localizer._("Slash commands have been deleted from test server."), "log", true);
 	} catch (e) {
 		const errorEmbed = createEmbed()
-			.setColor("RED")
+			.setColor("Red")
 			.setTitle("InteractionManager")
 			.setDescription(localizer._("An error occured while deleting slash commands from test server.\nCheck the console for more details."));
 
@@ -41,11 +41,9 @@ export default async function execute(message, args, { config, log, localizer, c
 		await message.client.application.commands.set([]);
 		log("InteractionManager", localizer._("Slash commands have been deleted from the bot."), "log", true);
 	} catch (e) {
-		const errorEmbed = new MessageEmbed()
-			.setColor("RED")
+		const errorEmbed = createEmbed()
+			.setColor("Red")
 			.setTitle("InteractionManager")
-			.setFooter({ text: config.botName, iconURL: config.botIcon })
-			.setTimestamp()
 			.setDescription(localizer._("An error occured while deleting slash commands from the bot.\nCheck the console for more details."));
 		await response.edit({ embeds: [errorEmbed] });
 		log("InteractionManager", localizer._("An error occured while deleting slash commands from the bot: ") + e, "warn", true);
@@ -56,17 +54,17 @@ export default async function execute(message, args, { config, log, localizer, c
 		.setTitle(localizer._("Purge finished"))
 		.setDescription(localizer._("The commands have been deleted from the test server and the bot successfully.\nYou can decide to register them back right now, or later by restarting the bot."));
 
-	const row = new MessageActionRow()
+	const row = new ActionRowBuilder()
 		.addComponents(
-			new MessageButton()
+			new ButtonBuilder()
 				.setCustomId("registerinteractions")
 				.setLabel(localizer._("Now"))
-				.setStyle("PRIMARY")
+				.setStyle(ButtonStyle.Primary)
 				.setEmoji("✅"),
-			new MessageButton()
+			new ButtonBuilder()
 				.setCustomId("delete")
 				.setLabel(localizer._("Later"))
-				.setStyle("SECONDARY")
+				.setStyle(ButtonStyle.Secondary)
 				.setEmoji("⌛")
 		);
 

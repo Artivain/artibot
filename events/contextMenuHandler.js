@@ -1,16 +1,16 @@
-import { MessageContextMenuInteraction, UserContextMenuInteraction } from "discord.js";
+import { ContextMenuCommandInteraction, UserContextMenuCommandInteraction } from "discord.js";
 import Artibot from "../index.js";
 
 export const name = "interactionCreate";
 
 /**
  * Context interaction listener
- * @param {MessageContextMenuInteraction|UserContextMenuInteraction} interaction 
+ * @param {ContextMenuCommandInteraction|UserContextMenuCommandInteraction} interaction 
  * @param {Artibot} artibot 
  */
 export async function execute(interaction, artibot) {
 	// Checks if the interaction is a button interaction
-	if (!interaction.isContextMenu()) return;
+	if (!interaction.isContextMenuCommand()) return;
 
 	const { log, localizer, modules } = artibot;
 
@@ -20,7 +20,7 @@ export async function execute(interaction, artibot) {
 		ephemeral: true
 	});
 
-	if (interaction.targetType === "USER") {
+	if (interaction.isUserContextMenuCommand()) {
 
 		let command;
 
@@ -43,7 +43,7 @@ export async function execute(interaction, artibot) {
 			});
 		}
 
-	} else if (interaction.targetType === "MESSAGE") {
+	} else if (interaction.isMessageContextMenuCommand()) {
 
 		let command;
 

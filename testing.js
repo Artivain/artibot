@@ -1,6 +1,5 @@
-import { SelectMenuOptionBuilder } from "@discordjs/builders";
-import { MessageActionRow, MessageButton, MessageSelectMenu } from "discord.js";
-import Artibot, { Command, Module, SelectMenuOption, TriggerGroup } from "./index.js";
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, SelectMenuBuilder } from "discord.js";
+import Artibot, { Command, Global, Module, SelectMenuOption, TriggerGroup } from "./index.js";
 import token from "./private.js";
 
 const artibot = new Artibot({
@@ -25,16 +24,16 @@ artibot.registerModule(
 				mainFunction: (message) => message.reply({
 					content: "test",
 					components: [
-						new MessageActionRow()
+						new ActionRowBuilder()
 							.addComponents(
-								new MessageButton()
+								new ButtonBuilder()
 									.setCustomId("delete")
 									.setLabel("delete")
-									.setStyle("PRIMARY")
+									.setStyle(ButtonStyle.Danger)
 							),
-						new MessageActionRow()
+						new ActionRowBuilder()
 							.addComponents(
-								new MessageSelectMenu()
+								new SelectMenuBuilder()
 									.setCustomId("test.selectmenu")
 									.setPlaceholder("select something")
 									.addOptions([

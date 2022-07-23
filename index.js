@@ -8,7 +8,6 @@ import { createRequire } from 'module';
 import coreModule from "./core/index.js";
 import { readdirSync } from "fs";
 import axios from "axios";
-import { SlashCommandBuilder } from "@discordjs/builders";
 import path from "path";
 import { fileURLToPath } from "url";
 
@@ -154,10 +153,11 @@ export class Artibot {
 		this.modules.forEach(module => module.additionalIntents.forEach(intent => moduleIntents.push(intent)));
 		const intents = [...new Set([
 			[
-				discord.Intents.FLAGS.GUILDS,
-				discord.Intents.FLAGS.GUILD_MESSAGES,
-				discord.Intents.FLAGS.GUILD_MEMBERS,
-				discord.Intents.FLAGS.GUILD_PRESENCES
+				discord.GatewayIntentBits.Guilds,
+				discord.GatewayIntentBits.GuildMessages,
+				discord.GatewayIntentBits.GuildMembers,
+				discord.GatewayIntentBits.GuildPresences,
+				discord.GatewayIntentBits.MessageContent
 			],
 			...additionalIntents,
 			...moduleIntents
@@ -339,7 +339,7 @@ export class SlashCommand extends BasePart {
 	/**
 	 * @param {Object} config - Config for this command
 	 * @param {string} config.id - ID of the command
-	 * @param {SlashCommandBuilder} config.data - Data to register into the Discord API
+	 * @param {discord.SlashCommandBuilder} config.data - Data to register into the Discord API
 	 * @param {number} [config.cooldown=1] - Cooldown per user for this command, in seconds
 	 * @param {function(discord.CommandInteraction, Artibot): void|Promise<void>} config.mainFunction - Function to execute when the command is ran
 	 * @param {function(Artibot): void|Promise<void>} [config.initFunction] - Function executed on bot startup
@@ -466,10 +466,10 @@ export class Global extends BasePart {
 	}
 }
 
-export class Embed extends discord.MessageEmbed {
+export class Embed extends discord.EmbedBuilder {
 	/**
 	 * @param {Artibot} artibot
-	 * @param {discord.MessageEmbed|discord.MessageEmbedOptions|discord.APIEmbed} [data]
+	 * @param {discord.APIEmbed | discord.EmbedData | undefined} [data]
 	 */
 	constructor(artibot, data) {
 		super(data);

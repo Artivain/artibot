@@ -1,18 +1,18 @@
-import { Interaction } from "discord.js";
+import { CommandInteraction, InteractionType } from "discord.js";
 import Artibot from "../index.js";
 
 export const name = "interactionCreate";
 
 /**
  * Slash command listener
- * @param {Interaction} interaction 
+ * @param {CommandInteraction} interaction 
  * @param {Artibot} artibot 
  */
 export async function execute(interaction, artibot) {
 	const { log, localizer, modules } = artibot;
 
 	// Checks if the interaction is a command
-	if (!interaction.isCommand()) return;
+	if (interaction.type !== InteractionType.ApplicationCommand) return;
 
 	let command;
 

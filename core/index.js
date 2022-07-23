@@ -4,7 +4,7 @@ import infoCommand from "./commands/info.js";
 import pingCommand from "./commands/ping.js";
 import checkupdatesCommand from "./commands/checkupdates.js";
 import uptimeCommand from "./commands/uptime.js";
-import { SlashCommandBuilder } from "@discordjs/builders";
+import { SlashCommandBuilder } from "discord.js";
 import embedSlashCommand from "./slash-commands/embed.js";
 import helpSlashCommand from "./slash-commands/help.js";
 import infoSlashCommand from "./slash-commands/info.js";
@@ -60,7 +60,7 @@ export default function coreModule(artibot) {
 			new Command({
 				id: "checkupdates",
 				name: "checkupdates",
-				description: localizer._("Intalls the updates for the bot"),
+				description: localizer._("Check updates for the bot"),
 				ownerOnly: true,
 				mainFunction: checkupdatesCommand
 			}),

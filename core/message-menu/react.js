@@ -1,11 +1,11 @@
-import { MessageContextMenuInteraction, Permissions } from "discord.js";
+import { MessageContextMenuCommandInteraction, PermissionsBitField } from "discord.js";
 
 /**
  * Add reaction to message
- * @param {MessageContextMenuInteraction} interaction 
+ * @param {MessageContextMenuCommandInteraction} interaction 
  */
 export default async function execute(interaction, { localizer }) {
-	if (!interaction.memberPermissions.has(Permissions.FLAGS.MANAGE_MESSAGES)) return interaction.reply({
+	if (!interaction.memberPermissions.has(PermissionsBitField.Flags.ManageMessages)) return interaction.reply({
 		content: localizer._("You do not have the permission to execute this command!"),
 		ephemeral: true
 	});

@@ -1,9 +1,9 @@
-import { UserContextMenuInteraction } from "discord.js";
+import { UserContextMenuCommandInteraction } from "discord.js";
 import Artibot from "../../index.js";
 
 /**
  * Get some information on a user
- * @param {UserContextMenuInteraction} interaction 
+ * @param {UserContextMenuCommandInteraction} interaction 
  * @param {Artibot} artibot
  */
 export default function execute(interaction, { config, contributors, localizer, createEmbed }) {
@@ -39,8 +39,10 @@ export default function execute(interaction, { config, contributors, localizer, 
 			localizer._("ID:") + " `" + infos.user.id + "`" +
 			more
 		)
-		.addField(localizer._("Type"), type)
-		.addField(localizer._("On this server since"), `<t:${since}:f> (<t:${since}:R>)`);
+		.addFields(
+			{ name: localizer._("Type"), value: type },
+			{ name: localizer._("On this server since"), value: `<t:${since}:f> (<t:${since}:R>)` }
+		);
 
 	interaction.reply({ embeds: [embed] });
 }

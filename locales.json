@@ -379,8 +379,8 @@
 			"fr": "Erreur avec la suppression des commandes dans le serveur de test: "
 		},
 
-		"Intalls the updates for the bot": {
-			"fr": "Installe les mises à jour du bot"
+		"Check updates for the bot": {
+			"fr": "Vérifie les mises à jour du bot"
 		},
 
 		"Checking for updates is disabled in config!": {

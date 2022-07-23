@@ -1,12 +1,12 @@
 import Artibot, { Button } from "../index.js";
-import { Interaction } from "discord.js";
+import { ButtonInteraction } from "discord.js";
 import buttonErrorMessage from "../messages/defaultButtonError.js";
 
 export const name = "interactionCreate";
 
 /**
  * Event listener for button interactions
- * @param {Interaction} interaction 
+ * @param {ButtonInteraction} interaction 
  * @param {Artibot} artibot 
  */
 export async function execute(interaction, artibot) {

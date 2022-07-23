@@ -19,10 +19,10 @@ export default async function helpCommand(message, args, artibot) {
 		let helpEmbed = createEmbed()
 			.setTitle(localizer._("List of all available commands"))
 			.setDescription("`" + commandList.join("`, `") + "`")
-			.addField(
-				localizer._("Usage"),
-				localizer.__("You can send `[[0]]help [name of the command]` to get more info on a specific command!", { placeholders: [config.prefix] })
-			);
+			.addFields({
+				name: localizer._("Usage"),
+				value: localizer.__("You can send `[[0]]help [name of the command]` to get more info on a specific command!", { placeholders: [config.prefix] })
+			});
 
 		// Attempts to send embed in DMs.
 
@@ -70,17 +70,18 @@ export default async function helpCommand(message, args, artibot) {
 	if (command.description) commandEmbed.setDescription(`${command.description}`);
 
 	if (command.aliases.length) {
-		commandEmbed
-			.addField(localizer._("Alias"), `\`${command.aliases.join("`, `")}\``, true)
-			.addField(localizer._("Cooldown"), `${command.cooldown || 3} ${localizer._("second(s)")}`, true);
+		commandEmbed.addFields(
+			{ name: localizer._("Alias"), value: `\`${command.aliases.join("`, `")}\``, inline: true },
+			{ name: localizer._("Cooldown"), value: `${command.cooldown || 3} ${localizer._("second(s)")}`, inline: true }
+		);
 	}
 
 	if (command.usage) {
-		commandEmbed.addField(
-			localizer._("Usage"),
-			`\`${config.prefix}${command.name} ${command.usage}\``,
-			true
-		);
+		commandEmbed.addFields({
+			name: localizer._("Usage"),
+			value: `\`${config.prefix}${command.name} ${command.usage}\``,
+			inline: true
+		});
 	}
 
 	// Finally send the embed.

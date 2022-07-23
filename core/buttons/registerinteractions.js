@@ -1,4 +1,4 @@
-import { ButtonInteraction, MessageEmbed } from 'discord.js';
+import { ButtonInteraction } from 'discord.js';
 import Artibot from "../../index.js";
 
 /**
@@ -17,7 +17,7 @@ export default async function execute(interaction, { config, modules, localizer,
 
 	await interaction.deferUpdate();
 	const waitingEmbed = createEmbed()
-		.setColor("YELLOW")
+		.setColor("Yellow")
 		.setTitle("InteractionManager")
 		.setDescription(localizer._("Initializing interactions...\nThis can take some time."));
 
@@ -38,7 +38,7 @@ export default async function execute(interaction, { config, modules, localizer,
 		await interaction.editReply({ embeds: [embed] });
 	} else {
 		const embed = createEmbed()
-			.setColor("RED")
+			.setColor("Red")
 			.setTitle("InteractionManager")
 			.setDescription(localizer._("An error occured while initializing interactions in Discord API.\nCheck the console for more details."));
 

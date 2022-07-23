@@ -1,4 +1,4 @@
-import { CommandInteraction, MessageEmbed, Permissions } from "discord.js";
+import { CommandInteraction, EmbedBuilder, PermissionsBitField } from "discord.js";
 import Artibot from "../../index.js";
 
 /**
@@ -8,7 +8,7 @@ import Artibot from "../../index.js";
  */
 export default async function execute(interaction, { config, localizer, createEmbed }) {
 
-	if (interaction.member.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) {
+	if (interaction.member.permissions.has(PermissionsBitField.Flags.Administrator)) {
 
 		const title = interaction.options.getString("title"),
 			color = interaction.options.getString("color"),
@@ -16,7 +16,7 @@ export default async function execute(interaction, { config, localizer, createEm
 			footerText = interaction.options.getString("footer"),
 			date = interaction.options.getBoolean("date");
 
-		var embed = new MessageEmbed()
+		var embed = new EmbedBuilder()
 			.setColor((color ? color : config.embedColor))
 			.setTitle(title)
 			.setDescription(content);
@@ -33,7 +33,7 @@ export default async function execute(interaction, { config, localizer, createEm
 			.setDescription(localizer.__("The embed *[[0]]* should have been created.", { placeholders: [title] }));
 	} else {
 		var embed = createEmbed()
-			.setColor("RED")
+			.setColor("Red")
 			.setTitle(localizer._("Create an embed"))
 			.setDescription(localizer._("Error: you don't have admin perms!"));
 	}
