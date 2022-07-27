@@ -41,7 +41,7 @@
 		"url": "https://github.com/Artivain/artibot/issues"
 	},
 	"funding": "https://paypal.me/Artivain",
-	"homepage": "https://github.com/Artivain/artibot#readme",
+	"homepage": "https://artibot.artivain.com",
 	"dependencies": {
 		"@discordjs/rest": "^1.0.0",
 		"artibot-localizer": "^1.0.2",
