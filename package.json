@@ -43,7 +43,7 @@
 	"funding": "https://paypal.me/Artivain",
 	"homepage": "https://artibot.artivain.com",
 	"dependencies": {
-		"@discordjs/rest": "^1.0.0",
+		"@discordjs/rest": "^1.0.1",
 		"artibot-localizer": "^1.0.2",
 		"axios": "^0.27.2",
 		"chalk": "^5.0.1",
@@ -56,6 +56,6 @@
 		"artibot-jsdoc-template": "GoudronViande24/artibot-jsdoc-template",
 		"jsdoc": "^3.6.11",
 		"nodemon": "^2.0.19",
-		"npm-check-updates": "^16.0.0"
+		"npm-check-updates": "^16.0.1"
 	}
 }
