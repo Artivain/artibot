@@ -629,6 +629,14 @@
 
 		"Error when registering module: ": {
 			"fr": "Une erreur est survenue en chargeant un module: "
+		},
+
+		"[module id]": {
+			"fr": "[id du module]"
+		},
+
+		"Module with ID `[[0]]` not found.": {
+			"fr": "Il n'y a pas de module avec le ID `[[0]]` installé."
 		}
 
 	}

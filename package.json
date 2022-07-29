@@ -1,11 +1,11 @@
 {
 	"name": "artibot",
-	"version": "4.0.0",
+	"version": "4.1.0",
 	"description": "Modern, fast and modular open-source Discord bot",
 	"main": "index.js",
 	"scripts": {
 		"start": "node index.js",
-		"test": "nodemon testing.js",
+		"test": "nodemon testing.js --ignore data/",
 		"upgrade": "ncu -u && npm install && npm update",
 		"build-docs": "jsdoc -c ./jsdoc.json"
 	},

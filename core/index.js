@@ -28,6 +28,7 @@ export default function coreModule(artibot) {
 		name: "Artibot Core",
 		id: "core",
 		repo: "Artivain/artibot",
+		packageName: "artibot",
 		version,
 		langs: ["en", "fr"],
 		parts: [
@@ -61,6 +62,7 @@ export default function coreModule(artibot) {
 				id: "checkupdates",
 				name: "checkupdates",
 				description: localizer._("Check updates for the bot"),
+				usage: localizer._("[module id]"),
 				ownerOnly: true,
 				mainFunction: checkupdatesCommand
 			}),

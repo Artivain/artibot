@@ -232,13 +232,36 @@ export class Artibot {
 			headers: {
 				"User-Agent": "Artibot/" + this.version
 			},
-			validateStatus: () => { return true }
+			validateStatus: () => true
 		});
 
 		if (request.status != 200) return false;
 
 		const { data } = request;
 		return data.name.replace("v", "");
+	}
+
+	/**
+	 * Get latest release version of a NPM package
+	 * @param {String} [packageName="artibot"] - Package name on NPM
+	 * @returns {Promise<string|false>} Version number, or false if package not found or an error happens
+	 * @method
+	 */
+	checkForPackageUpdates = async (packageName = "artibot") => {
+		const request = await axios({
+			method: "GET",
+			url: `https://api.npms.io/v2/package/${packageName}`,
+			responseType: "json",
+			headers: {
+				"User-Agent": "Artibot/" + this.version
+			},
+			validateStatus: () => true
+		});
+
+		if (request.status != 200) return false;
+
+		const { data } = request;
+		return data.collected.metadata.version;
 	}
 }
 
@@ -263,8 +286,9 @@ export class Module {
 	 * @param {ModulePartResolvable[]} config.parts - List of parts of the module
 	 * @param {IntentsResolvable[]} [config.intents] - List of required intents
 	 * @param {string} [config.repo] - GitHub repository of the module (ex.: "Artivain/artibot")
+	 * @param {String} [config.packageName] - Package name of the module on NPM (ex.: "artibot")
 	 */
-	constructor({ name, id, version, langs = "any", parts, intents = [], repo }) {
+	constructor({ name, id, version, langs = "any", parts, intents = [], repo, packageName }) {
 		if (!name || !id || !version || !langs || !parts) throw new Error("Missing module informations!");
 		this.name = name;
 		this.id = id;
@@ -273,6 +297,7 @@ export class Module {
 		this.parts = parts;
 		this.additionalIntents = intents;
 		this.repo = repo;
+		this.packageName = packageName;
 	}
 }
 

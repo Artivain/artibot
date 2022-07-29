@@ -75,3 +75,5 @@ artibot.registerModule(
 );
 
 artibot.login({ token });
+
+console.log(await artibot.checkForPackageUpdates());
