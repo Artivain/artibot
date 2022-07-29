@@ -388,11 +388,11 @@
 		},
 
 		"Already up to date (v[[0]]).": {
-			"fr": "Déjà à jours (v[[0]])."
+			"fr": "Déjà à jour (v[[0]])."
 		},
 
 		"Starting updates... Check the console for more details.": {
-			"fr": "Début des mises à jours... Consulter la console pour plus de détails."
+			"fr": "Début des mises à jour... Consulter la console pour plus de détails."
 		},
 
 		"An error occured while updating. Check the console for more details.": {
