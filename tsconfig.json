@@ -1,5 +1,10 @@
 {
-	"exclude": ["testing.js", "dist", ".github"],
+	"exclude": [
+		"testing.js",
+		"dist",
+		".github",
+		"private.js"
+	],
 	"compilerOptions": {
 		"module": "ES2022",
 		"esModuleInterop": false,
