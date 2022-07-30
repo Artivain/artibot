@@ -504,8 +504,6 @@ export class Embed extends discord.EmbedBuilder {
 	}
 }
 
-new discord.EmbedBuilder()
-
 /**
  * Log message to console, with proper coloring and prefix.
  * @ignore
