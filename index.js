@@ -111,7 +111,7 @@ export class Artibot {
 
 	/**
 	 * Create an embed
-	 * @param {discord.MessageEmbed|discord.MessageEmbedOptions|discord.APIEmbed} [data]
+	 * @param {discord.APIEmbed | discord.EmbedData} [data]
 	 * @returns {Embed} Preconfigured embed
 	 * @method
 	 */
@@ -494,7 +494,7 @@ export class Global extends BasePart {
 export class Embed extends discord.EmbedBuilder {
 	/**
 	 * @param {Artibot} artibot
-	 * @param {discord.APIEmbed | discord.EmbedData | undefined} [data]
+	 * @param {discord.APIEmbed | discord.EmbedData} [data]
 	 */
 	constructor(artibot, data) {
 		super(data);
@@ -503,6 +503,8 @@ export class Embed extends discord.EmbedBuilder {
 		this.setTimestamp();
 	}
 }
+
+new discord.EmbedBuilder()
 
 /**
  * Log message to console, with proper coloring and prefix.
