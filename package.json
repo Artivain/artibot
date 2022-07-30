@@ -1,6 +1,6 @@
 {
 	"name": "artibot",
-	"version": "4.1.4",
+	"version": "4.1.5",
 	"description": "Modern, fast and modular open-source Discord bot",
 	"main": "index.js",
 	"types": "dist/index.d.ts",
@@ -60,7 +60,7 @@
 	"homepage": "https://artibot.artivain.com",
 	"dependencies": {
 		"@discordjs/rest": "^1.0.1",
-		"artibot-localizer": "^1.0.2",
+		"artibot-localizer": "^2.0.2",
 		"axios": "^0.27.2",
 		"chalk": "^5.0.1",
 		"discord-api-types": "^0.37.0",
