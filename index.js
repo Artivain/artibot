@@ -111,7 +111,7 @@ export class Artibot {
 
 	/**
 	 * Create an embed
-	 * @param {discord.APIEmbed | discord.EmbedData} [data]
+	 * @param {discord.EmbedData} [data]
 	 * @returns {Embed} Preconfigured embed
 	 * @method
 	 */
@@ -310,7 +310,7 @@ class BasePart {
 	 * @param {string} config.id - ID of the part
 	 * @param {string} config.type - Type of the part
 	 * @param {function(): void|Promise<void>} config.mainFunction - The function when the part is executed
-	 * @param {function(): void|Promise<void>} [config.initFunction] - The function executed on bot startup
+	 * @param {function(Artibot): void|Promise<void>} [config.initFunction] - The function executed on bot startup
 	 */
 	constructor({ id, type, mainFunction, initFunction }) {
 		if (!id || !type || !mainFunction) throw new Error("Missing parameter(s)");
@@ -337,9 +337,9 @@ export class Command extends BasePart {
 	 * @param {number} [config.cooldown] - Cooldown for this command usage, in seconds
 	 * @param {boolean} [config.ownerOnly=false] - If the command can only be executed by the owner of the bot
 	 * @param {boolean} [config.guildOnly=false] - If the command can only be executed in a guild
-	 * @param {discord.Permissions} [config.permissions] - Required permissions
+	 * @param {discord.PermissionResolvable} [config.permissions] - Required permissions
 	 * @param {boolean} [config.requiresArgs=false] - Set to true if the command needs at least one argument
-	 * @param {function(Message, string[], Artibot): void|Promise<void>} config.mainFunction - Function to execute when the command is ran
+	 * @param {function(discord.Message, string[], Artibot): void|Promise<void>} config.mainFunction - Function to execute when the command is ran
 	 * @param {function(Artibot): void|Promise<void>} [config.initFunction] - Function executed on bot startup
 	 */
 	constructor({ id, name, description, aliases = [], usage, cooldown, ownerOnly = false, guildOnly = false, permissions, requiresArgs = false, mainFunction, initFunction }) {
@@ -402,8 +402,8 @@ export class MessageContextMenuOption extends BasePart {
 	 * @param {Object} config - Config for this context menu option
 	 * @param {string} config.id - ID of this option
 	 * @param {string} config.name - Name of this option
-	 * @param {function(discord.MessageContextMenuInteraction, Artibot): void|Promise<void>} config.mainFunction - Function to execute when the menu option is clicked
-	 * @param {function(Artibot): void|Promise<void>} config.initFunction - Function executed on bot startup
+	 * @param {function(discord.Interaction, Artibot): void|Promise<void>} config.mainFunction - Function to execute when the menu option is clicked
+	 * @param {function(Artibot): void|Promise<void>} [config.initFunction] - Function executed on bot startup
 	 */
 	constructor({ id, name, mainFunction, initFunction }) {
 		if (!name) throw new Error("Missing name parameter!");
@@ -424,8 +424,8 @@ export class UserContextMenuOption extends BasePart {
 	 * @param {Object} config - Config for this context menu option
 	 * @param {string} config.id - ID of this option
 	 * @param {string} config.name - Name of this option
-	 * @param {function(discord.UserContextMenuInteraction, Artibot): void|Promise<void>} config.mainFunction - Function to execute when the menu option is clicked
-	 * @param {function(Artibot): void|Promise<void>} config.initFunction - Function executed on bot startup
+	 * @param {function(discord.Interaction, Artibot): void|Promise<void>} config.mainFunction - Function to execute when the menu option is clicked
+	 * @param {function(Artibot): void|Promise<void>} [config.initFunction] - Function executed on bot startup
 	 */
 	constructor({ id, name, mainFunction, initFunction }) {
 		if (!name) throw new Error("Missing name parameter!");
@@ -446,7 +446,7 @@ export class SelectMenuOption extends BasePart {
 	 * @param {Object} config - Config for this menu option
 	 * @param {string} config.id - ID of this option
 	 * @param {function(discord.SelectMenuInteraction, Artibot): void|Promise<void>} config.mainFunction - Function executed when this option is selected
-	 * @param {function(Artibot): void|Promise<void>} config.initFunction - Function executed on bot startup
+	 * @param {function(Artibot): void|Promise<void>} [config.initFunction] - Function executed on bot startup
 	 */
 	constructor({ id, mainFunction, initFunction }) {
 		super({ id, type: "selectmenu", mainFunction, initFunction });
@@ -459,7 +459,7 @@ export class TriggerGroup extends BasePart {
 	 * @param {string} config.id - ID of this trigger group
 	 * @param {Array<string|RegExp>} config.triggers - List of triggers
 	 * @param {function(discord.Message, string|RegExp, Artibot): void|Promise<void>} config.mainFunction - Function executed on trigger found
-	 * @param {function(Artibot): void|Promise<void>} config.initFunction - Function executed on bot startup
+	 * @param {function(Artibot): void|Promise<void>} [config.initFunction] - Function executed on bot startup
 	 */
 	constructor({ id, triggers, mainFunction, initFunction }) {
 		if (!triggers || !triggers.length) throw new Error("Triggers cannot be empty!");
@@ -494,7 +494,7 @@ export class Global extends BasePart {
 export class Embed extends discord.EmbedBuilder {
 	/**
 	 * @param {Artibot} artibot
-	 * @param {discord.APIEmbed | discord.EmbedData} [data]
+	 * @param {discord.EmbedData} [data]
 	 */
 	constructor(artibot, data) {
 		super(data);
