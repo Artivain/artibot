@@ -1,13 +1,16 @@
 {
 	"name": "artibot",
-	"version": "4.1.0",
+	"version": "4.1.1",
 	"description": "Modern, fast and modular open-source Discord bot",
 	"main": "index.js",
+	"types": "dist/index.js",
 	"scripts": {
 		"start": "node index.js",
 		"test": "nodemon testing.js --ignore data/",
 		"upgrade": "ncu -u && npm install && npm update",
-		"build-docs": "jsdoc -c ./jsdoc.json"
+		"build-docs": "jsdoc -c ./jsdoc.json",
+		"prepublish": "tsc",
+		"build": "tsc"
 	},
 	"type": "module",
 	"engines": {
@@ -47,8 +50,8 @@
 		"artibot-localizer": "^1.0.2",
 		"axios": "^0.27.2",
 		"chalk": "^5.0.1",
-		"discord-api-types": "^0.36.3",
-		"discord.js": "^14.0.3",
+		"discord-api-types": "^0.37.0",
+		"discord.js": "^14.1.1",
 		"figlet": "^1.5.2",
 		"path": "^0.12.7"
 	},
@@ -56,6 +59,7 @@
 		"artibot-jsdoc-template": "GoudronViande24/artibot-jsdoc-template",
 		"jsdoc": "^3.6.11",
 		"nodemon": "^2.0.19",
-		"npm-check-updates": "^16.0.1"
+		"npm-check-updates": "^16.0.3",
+		"typescript": "^4.7.4"
 	}
 }
