@@ -520,3 +520,8 @@ export const log = (name, msg, type, isCore) => logger(name, msg, type, isCore);
  * Discord ID, a string of numbers
  * @typedef {String} Snowflake
  */
+
+/**
+ * Data that can be resolved to an intent
+ * @typedef {String|Number|discord.IntentsBitField} IntentsResolvable
+ */
