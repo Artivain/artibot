@@ -1,5 +1,5 @@
 {
-	"exclude": ["testing.js"],
+	"exclude": ["testing.js", "dist", ".github"],
 	"compilerOptions": {
 		"module": "ES2022",
 		"esModuleInterop": false,
