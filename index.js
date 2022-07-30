@@ -515,3 +515,8 @@ export class Embed extends discord.EmbedBuilder {
  * @param {boolean} [isCore=false] Is this message sent from the core? Probably not.
  */
 export const log = (name, msg, type, isCore) => logger(name, msg, type, isCore);
+
+/**
+ * Discord ID, a string of numbers
+ * @typedef {String} Snowflake
+ */
