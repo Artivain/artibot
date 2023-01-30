@@ -2,10 +2,10 @@
 	"name": "artibot",
 	"version": "5.0.0",
 	"description": "Modern, fast and modular open-source Discord bot",
-	"main": "index.js",
+	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
 	"scripts": {
-		"start": "node index.js",
+		"start": "node dist/index.js",
 		"test": "nodemon testing.js --ignore data/",
 		"test-ts": "node --loader ts-node/esm testing.ts",
 		"upgrade": "ncu -u && npm install && npm update",
@@ -14,16 +14,9 @@
 		"build": "tsc"
 	},
 	"files": [
-		"core/",
 		"dist/",
-		"events/",
-		"messages/",
 		"contributors.json",
-		"index.js",
-		"interactionManager.js",
-		"LICENSE",
-		"locales.json",
-		"logger.js"
+		"LICENSE"
 	],
 	"type": "module",
 	"engines": {
