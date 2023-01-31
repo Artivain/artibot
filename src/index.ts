@@ -15,7 +15,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const require = createRequire(import.meta.url);
-const { version } = require('./package.json');
+const { version } = require('../package.json');
 
 /**
  * Powerful Discord bot system.
@@ -25,6 +25,7 @@ const { version } = require('./package.json');
  * @license GPL-3.0-or-later
  */
 export class Artibot {
+	localizer: Localizer;
 	/**
 	 * @param {Object} config - Configuration for Artibot
 	 * @param {Snowflake} config.ownerId - Discord ID of the owner of the bot
@@ -34,7 +35,7 @@ export class Artibot {
 	 * @param {string} [config.prefix="ab "] - Prefix for the commands
 	 * @param {boolean} [config.devMode=true] - Set to false if the bot must be used in more than one server. Interactions could take more time to refresh.
 	 * @param {string} [config.lang="en"] - Set the lang of the bot
-	 * @param {string} [config.embedColor="#06476d"] - Color for the embeds sent by the bot
+	 * @param {discord.ColorResolvable} [config.embedColor="#06476d"] - Color for the embeds sent by the bot
 	 * @param {boolean} [config.advancedCorePing=true] - Set to false if you want to hide advanced infos from ping commands
 	 * @param {boolean} [config.checkForUpdates=true] - Set to false if you don't want the bot to check for new updates
 	 * @param {boolean} [config.debug=false] - Set to true to show debug messages in console
@@ -53,6 +54,19 @@ export class Artibot {
 		checkForUpdates = true,
 		debug = false,
 		pterodactylReadyMessage = "Pterodactyl start trigger"
+	}: {
+		ownerId: discord.Snowflake,
+		testGuildId: discord.Snowflake,
+		botName?: string,
+		botIcon?: string,
+		prefix?: string,
+		devMode?: boolean,
+		lang?: string,
+		embedColor?: discord.ColorResolvable,
+		advancedCorePing?: boolean,
+		checkForUpdates?: boolean,
+		debug?: boolean,
+		pterodactylReadyMessage?: string
 	}) {
 		// Verify that the owner ID is set
 		if (!ownerId) throw new Error("You must set the owner ID.");
@@ -186,7 +200,7 @@ export class Artibot {
 
 	/**
 	 * Register a module in Artibot
-	 * @param {Module|function(Artibot, Object): Module} module - The module to register or a function to initialize the module 
+	 * @param {Module|function(Artibot, Object): Module} module - The module to register or a function to initialize the module
 	 * @param {Object} [config] - Custom configuration for the module. See module documentation to learn more.
 	 * @method
 	 */
