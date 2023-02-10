@@ -192,8 +192,8 @@ export class Artibot {
 				this.client.once(name, (...args) => execute(...args, this));
 			} else {
 				this.client.on(name, async (...args) => await execute(...args, this));
-			};
-		};
+			}
+		}
 
 		this.client.login(token);
 	}
