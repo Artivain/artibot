@@ -82,7 +82,7 @@ export class InteractionManager {
 					Routes.applicationCommands(this.clientId),
 					{ body: this.commandJSONData }
 				);
-			};
+			}
 
 			log("InteractionManager", this.localizer._("Interaction and slash commands initialized successfully."), "log", true);
 			log("InteractionManager", this.localizer.__(" -> Registered [[0]] interactions.", { placeholders: [this.commandJSONData.length.toString()] }), "log", true);
@@ -90,7 +90,7 @@ export class InteractionManager {
 		} catch (error) {
 			log("InteractionManager", this.localizer._("An error occured when initializing interactions and slash commands, here are the details: ") + error, "warn", true);
 			return false;
-		};
+		}
 	}
 }
 
