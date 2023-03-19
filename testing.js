@@ -1,7 +1,5 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, Colors, StringSelectMenuBuilder } from "discord.js";
-import { ArtibotConfigBuilder } from "./dist/config.js";
-import Artibot from "./dist/index.js";
-import { Command, Module, SelectMenuOption, TriggerGroup } from "./dist/modules.js";
+import Artibot, { ArtibotConfigBuilder, Command, Module, SelectMenuOption, TriggerGroup } from "./dist/index.js";
 import token from "./private.js";
 
 const artibot = new Artibot(new ArtibotConfigBuilder()

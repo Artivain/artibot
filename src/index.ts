@@ -15,7 +15,12 @@ import { ContributorList } from "./types.js";
 import { Module } from "./modules.js";
 import Embed from "./embed.js";
 
-export { log } from "./logger.js";
+export * from "./modules.js";
+export * from "./logger.js";
+export * from "./types.js";
+export * from "./interactionManager.js";
+export * from "./config.js";
+export * from "./embed.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
