@@ -1,8 +1,8 @@
 import Artibot from "../index";
 import { ButtonInteraction, Collection } from "discord.js";
 import buttonErrorMessage from "../messages/defaultButtonError.js";
-import { Button, Module } from "../modules";
-import log from "../logger";
+import { Button, Module } from "../modules.js";
+import log from "../logger.js";
 
 export const name: string = "interactionCreate";
 
@@ -22,17 +22,22 @@ export async function execute(interaction: ButtonInteraction, artibot: Artibot):
 		await button.execute(interaction, artibot);
 	} catch (err) {
 		log("ButtonHandler", (err as Error).message, "warn", true);
-		interaction.reply({
-			content: localizer._("An error occured when executing this button..."),
-			ephemeral: true,
-		});
+		if (artibot.config.debug) console.error(err);
+		try {
+			await interaction.reply({
+				content: localizer._("An error occured when executing this button..."),
+				ephemeral: true,
+			});
+		} catch {
+			log("ButtonHandler", localizer._("Additionally, an error occured when sending the error message to the user. Maybe the interaction already has been replied to."), "warn", true);
+		}
 	}
 }
 
 function findButton(interactionId: string, modules: Collection<string, Module>): Button | void {
 	for (const [, module] of modules) {
 		for (const part of module.parts) {
-			if (part.type == "button" && (part.id == interactionId || interactionId.startsWith(part.id.split("*")[0]))) {
+			if ((part instanceof Button) && (part.id == interactionId || interactionId.startsWith(part.id.split("*")[0]))) {
 				return part;
 			}
 		}

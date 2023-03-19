@@ -1,5 +1,5 @@
 import Artibot from "../index.js";
-import { Button, Command, MessageContextMenuOption, Module, SlashCommand, UserContextMenuOption } from "../modules";
+import { Button, Command, MessageContextMenuOption, Module, SlashCommand, UserContextMenuOption } from "../modules.js";
 import helpCommand from "./commands/help.js";
 import infoCommand from "./commands/info.js";
 import pingCommand from "./commands/ping.js";

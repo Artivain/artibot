@@ -34,7 +34,7 @@ const { version }: { version: string } = require('../package.json');
 export class Artibot {
 	/** Localizer using the default strings for Artibot */
 	localizer: Localizer = new Localizer({
-		filePath: path.join(__dirname, "locales.json")
+		filePath: path.join(__dirname, "../locales.json")
 	});
 	/** Stores the Artibot config object */
 	config: ArtibotConfig;
@@ -52,7 +52,7 @@ export class Artibot {
 	/** The token to login into Discord */
 	#token: string = "";
 	/** Lists of people who contributed to the Artibot */
-	readonly contributors: ContributorList = require("./contributors.json");
+	readonly contributors: ContributorList = require("../contributors.json");
 	/**
 	 * @deprecated Please directly use the exported {@link log} directly
 	 */
@@ -61,7 +61,7 @@ export class Artibot {
 	/**
 	 * @param config - Configuration object for Artibot, use {@link ArtibotConfigBuilder} to make this easily.
 	 */
-	constructor(config: ArtibotConfig) {
+	constructor(config: Partial<ArtibotConfig>) {
 		const { ownerId, testGuildId, lang = "en" } = config;
 
 		// Verify that the owner ID is set
@@ -74,7 +74,7 @@ export class Artibot {
 		this.localizer.setLocale(lang);
 
 		// Store config
-		this.config = config;
+		this.config = config as ArtibotConfig;
 
 		// Send artwork to console
 		console.log(chalk.blue(figlet.textSync('Artibot', {
@@ -87,17 +87,22 @@ export class Artibot {
 		this.registerModule(coreModule);
 	}
 
-	/** Create an embed */
-	public createEmbed(data?: discord.EmbedData): discord.EmbedBuilder {
-		return new Embed(this, data);
+	/**
+	 * Create an embed
+	 * @method
+	 */
+	public createEmbed = (data?: discord.EmbedData): discord.EmbedBuilder => {
+		return new Embed(this.config, data);
 	}
 
 	/**
 	 * @param config - Advanced config for the bot
 	 * @param config.token - The login token for the Discord bot
 	 * @param config.additionalIntents - Additional intents to register in the Discord client
+	 * @method
+	 * @async
 	 */
-	async login({ token = this.#token, additionalIntents = [] }: { token: string, additionalIntents: discord.IntentsBitField[] }): Promise<void> {
+	public readonly login = async ({ token = this.#token, additionalIntents = [] }: { token: string, additionalIntents?: discord.IntentsBitField[] }): Promise<void> => {
 		if (!token) throw new Error("Token not set!");
 		this.#token = token;
 		const moduleIntents: discord.IntentsBitField[] = [];
@@ -136,7 +141,7 @@ export class Artibot {
 	 * @param config - Custom configuration for the module. See module documentation to learn more.
 	 * @method
 	 */
-	registerModule(module: Module | ((artibot: Artibot, config: any) => Module), config: any = {}): void {
+	public readonly registerModule = (module: Module | ((artibot: Artibot, config: any) => Module), config: any = {}): void => {
 		if (typeof module == "function") {
 			try {
 				module = module(this, config);
@@ -169,8 +174,9 @@ export class Artibot {
 	 * @param repo - GitHub repository to get latest version
 	 * @returns Version number, or false if repo not found or an error happens
 	 * @method
+	 * @async
 	 */
-	async checkForUpdates(repo: string = "Artivain/artibot"): Promise<string | false> {
+	public readonly checkForUpdates = async (repo: string = "Artivain/artibot"): Promise<string | false> => {
 		const request = await axios({
 			method: "GET",
 			url: `https://api.github.com/repos/${repo}/releases/latest`,
@@ -192,8 +198,9 @@ export class Artibot {
 	 * @param packageName - Package name on NPM
 	 * @returns Version number, or false if package not found or an error happens
 	 * @method
+	 * @async
 	 */
-	async checkForPackageUpdates(packageName: string = "artibot"): Promise<string | false> {
+	public readonly checkForPackageUpdates = async (packageName: string = "artibot"): Promise<string | false> => {
 		const request = await axios({
 			method: "GET",
 			url: `https://api.npms.io/v2/package/${packageName}`,

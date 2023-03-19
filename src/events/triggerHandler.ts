@@ -1,6 +1,6 @@
 import { Message } from "discord.js";
 import Artibot from "../index.js";
-import log from "../logger";
+import log from "../logger.js";
 import { TriggerGroup } from "../modules.js";
 
 export const name = "messageCreate";

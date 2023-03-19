@@ -1,6 +1,6 @@
 import { Message, ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, Guild } from 'discord.js';
 import Artibot from "../../index.js";
-import log from "../../logger";
+import log from "../../logger.js";
 
 export default async function execute(message: Message, args: string[], { config, localizer, createEmbed }: Artibot): Promise<void> {
 	const waitingEmbed: EmbedBuilder = createEmbed()
@@ -15,7 +15,9 @@ export default async function execute(message: Message, args: string[], { config
 	log("InteractionManager", localizer._("Deleting saved slash commands and interactions from the bot and test server..."), "log", true);
 
 	// Fetch test guild
-	const testGuild: Guild = await message.client.guilds.fetch(config.testGuildId);
+	const testGuild: Guild | null = message.client.guilds.resolve(config.testGuildId);
+
+	if (!testGuild) throw new Error("Cannot find testGuild");
 
 	// Remove all commands from test guild
 	try {

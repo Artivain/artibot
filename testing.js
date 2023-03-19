@@ -1,15 +1,18 @@
-import { ActionRowBuilder, ButtonBuilder, ButtonStyle, SelectMenuBuilder } from "discord.js";
-import Artibot, { Command, Global, Module, SelectMenuOption, TriggerGroup } from "./index.js";
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, Colors, StringSelectMenuBuilder } from "discord.js";
+import { ArtibotConfigBuilder } from "./dist/config.js";
+import Artibot from "./dist/index.js";
+import { Command, Module, SelectMenuOption, TriggerGroup } from "./dist/modules.js";
 import token from "./private.js";
 
-const artibot = new Artibot({
-	ownerId: "382869186042658818",
-	botName: "Artibot [DEV]",
-	prefix: "abd ",
-	lang: "fr",
-	testGuildId: "775798875356397608",
-	debug: true
-});
+const artibot = new Artibot(new ArtibotConfigBuilder()
+	.setOwnerId("382869186042658818")
+	.setBotName("Artibot [DEV]")
+	.setPrefix("abd ")
+	.setLang("fr")
+	.setTestGuildId("775798875356397608")
+	.enableDebug()
+	.setEmbedColor(Colors.DarkBlue)
+);
 
 artibot.registerModule(
 	new Module({
@@ -33,7 +36,7 @@ artibot.registerModule(
 							),
 						new ActionRowBuilder()
 							.addComponents(
-								new SelectMenuBuilder()
+								new StringSelectMenuBuilder()
 									.setCustomId("test.selectmenu")
 									.setPlaceholder("select something")
 									.addOptions([
@@ -76,4 +79,4 @@ artibot.registerModule(
 
 artibot.login({ token });
 
-console.log(await artibot.checkForPackageUpdates());
+//console.log(await artibot.checkForPackageUpdates());

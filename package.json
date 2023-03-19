@@ -12,8 +12,7 @@
 	"types": "dist/index.d.ts",
 	"scripts": {
 		"start": "node dist/index.js",
-		"test": "nodemon testing.js --ignore data/",
-		"test-ts": "node --loader ts-node/esm testing.ts",
+		"test": "nodemon -e ts,js,json --exec \"tsc && node testing.js\"",
 		"upgrade": "ncu -u && npm install && npm update",
 		"build-docs": "jsdoc -c ./jsdoc.json",
 		"prepublish": "tsc",
@@ -22,7 +21,8 @@
 	"files": [
 		"dist/",
 		"contributors.json",
-		"LICENSE"
+		"LICENSE",
+		"locales.json"
 	],
 	"type": "module",
 	"engines": {
@@ -58,11 +58,9 @@
 	"funding": "https://paypal.me/Artivain",
 	"homepage": "https://artibot.artivain.com",
 	"dependencies": {
-		"@discordjs/rest": "^1.6.0",
 		"artibot-localizer": "^2.0.2",
 		"axios": "^1.3.4",
 		"chalk": "^5.2.0",
-		"discord-api-types": "^0.37.36",
 		"discord.js": "^14.8.0",
 		"figlet": "^1.5.2",
 		"path": "^0.12.7"
@@ -72,7 +70,7 @@
 		"artibot-jsdoc-template": "GoudronViande24/artibot-jsdoc-template",
 		"jsdoc": "^4.0.2",
 		"nodemon": "^2.0.21",
-		"npm-check-updates": "^16.7.12",
+		"npm-check-updates": "^16.7.13",
 		"ts-node": "^10.9.1",
 		"typescript": "^5.0.2"
 	}

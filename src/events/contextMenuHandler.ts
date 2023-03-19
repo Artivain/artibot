@@ -1,22 +1,25 @@
 import { Collection, ContextMenuCommandInteraction, UserContextMenuCommandInteraction } from "discord.js";
 import Artibot from "../index.js";
-import log from "../logger";
+import log from "../logger.js";
 import { MessageContextMenuOption, Module, UserContextMenuOption } from "../modules.js";
 
 export const name = "interactionCreate";
 
 /** Context interaction listener */
-export async function execute(interaction: ContextMenuCommandInteraction | UserContextMenuCommandInteraction, artibot: Artibot) {
+export async function execute(interaction: ContextMenuCommandInteraction | UserContextMenuCommandInteraction, artibot: Artibot): Promise<void> {
 	// Checks if the interaction is a button interaction
 	if (!interaction.isContextMenuCommand()) return;
 
 	const { localizer, modules } = artibot;
 
 	// Don't execute interactions in DM channels
-	if (!interaction.channel) return interaction.reply({
-		content: localizer._("This is disabled in DM channels."),
-		ephemeral: true
-	});
+	if (!interaction.channel) {
+		await interaction.reply({
+			content: localizer._("This is disabled in DM channels."),
+			ephemeral: true
+		});
+		return;
+	}
 
 	if (interaction.isUserContextMenuCommand()) {
 
@@ -29,7 +32,7 @@ export async function execute(interaction: ContextMenuCommandInteraction | UserC
 			await command.execute(interaction, artibot);
 		} catch (err) {
 			log("ContextMenuHandler", (err as Error).message, "warn", true);
-			interaction.reply({
+			await interaction.reply({
 				content: localizer._("An error occured when executing this interaction..."),
 				ephemeral: true,
 			});
@@ -46,7 +49,7 @@ export async function execute(interaction: ContextMenuCommandInteraction | UserC
 			await command.execute(interaction, artibot);
 		} catch (err) {
 			log("ContextMenuHandler", (err as Error).message, "warn", true);
-			interaction.reply({
+			await interaction.reply({
 				content: localizer._("An error occured when executing this interaction..."),
 				ephemeral: true,
 			});

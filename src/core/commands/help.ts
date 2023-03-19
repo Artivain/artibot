@@ -1,6 +1,6 @@
 import { ChannelType, Collection, EmbedBuilder, Message } from "discord.js";
 import Artibot from "../../index.js";
-import log from "../../logger";
+import log from "../../logger.js";
 import { Command, Module } from "../../modules.js";
 
 export default async function helpCommand(message: Message, args: string[], artibot: Artibot): Promise<void> {

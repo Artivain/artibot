@@ -1,10 +1,9 @@
-import { REST } from "@discordjs/rest";
-import { RESTPostAPIChatInputApplicationCommandsJSONBody, Routes } from "discord-api-types/v10";
+import { REST, RESTPostAPIChatInputApplicationCommandsJSONBody, RESTPostAPIContextMenuApplicationCommandsJSONBody, Routes } from "discord.js";
 import Artibot from ".";
 import { Collection, Snowflake } from "discord.js";
 import Localizer from "artibot-localizer";
-import { MessageContextMenuOption, Module, SlashCommand, UserContextMenuOption } from "./modules";
-import log from "./logger";
+import { MessageContextMenuOption, Module, SlashCommand, UserContextMenuOption } from "./modules.js";
+import log from "./logger.js";
 
 /**
  * Interaction management utility for Artibot
@@ -14,49 +13,54 @@ export class InteractionManager {
 	clientId: Snowflake;
 	testGuildId: Snowflake;
 	devMode: boolean;
+	debug: boolean;
 	localizer: Localizer;
 	/** JSON data of all slash commands and other interactions */
-	commandJSONData: (RESTPostAPIChatInputApplicationCommandsJSONBody | string)[] = [];
+	commandJSONData: (RESTPostAPIChatInputApplicationCommandsJSONBody | RESTPostAPIContextMenuApplicationCommandsJSONBody)[] = [];
 
-	constructor({ token, artibot: { localizer, client, config: { testGuildId, devMode } } }: { token: string, artibot: Artibot }) {
+	constructor({ token, artibot: { localizer, client, config: { testGuildId, devMode, debug } } }: { token: string, artibot: Artibot }) {
 		if (!client || !client.user) throw new Error("Discord.js Client is not as expected");
 
-		this.rest = new REST({ version: "9" });
+		this.rest = new REST({ version: "10" });
 		this.rest.setToken(token);
 
 		this.clientId = client.user.id;
 		this.testGuildId = testGuildId;
 		this.devMode = devMode;
+		this.debug = debug;
 		this.localizer = localizer;
 	}
 
 	/**
 	 * Generate data to send to Discord API to register interactions
 	 * @param modules - List of the modules to generate data from
+	 * @method
 	 */
-	generateData(modules: Collection<string, Module>): void {
+	public readonly generateData = (modules: Collection<string, Module>): void => {
 		for (const [, module] of modules) {
 			for (const part of module.parts) {
-				if (part instanceof SlashCommand) {
+				if (part instanceof SlashCommand || part instanceof UserContextMenuOption || part instanceof MessageContextMenuOption) {
 					this.commandJSONData.push(part.data.toJSON());
-				} else if (part instanceof UserContextMenuOption || part instanceof MessageContextMenuOption) {
-					this.commandJSONData.push(JSON.stringify(part.data));
 				}
 			}
 		}
 	}
 
-	/** Empty all stored JSON data */
-	resetData(): void {
+	/**
+	 * Empty all stored JSON data
+	 * @method
+	*/
+	public readonly resetData = (): void => {
 		this.commandJSONData.length = 0;
 	}
 
 	/**
 	 * Register interactions in Discord API
 	 * @returns True if everything went good, false if there was a problem.
+	 * @method
 	 * @async
 	 */
-	async register(): Promise<boolean> {
+	public readonly register = async (): Promise<boolean> => {
 		try {
 			log("InteractionManager", this.localizer._("Initializing interactions and slash commands on Discord..."), "info", true);
 			if (!this.commandJSONData.length) {
@@ -89,6 +93,7 @@ export class InteractionManager {
 			return true;
 		} catch (error) {
 			log("InteractionManager", this.localizer._("An error occured when initializing interactions and slash commands, here are the details: ") + error, "warn", true);
+			if (this.debug) console.error(error);
 			return false;
 		}
 	}

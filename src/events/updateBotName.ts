@@ -1,6 +1,6 @@
 import { Client } from "discord.js";
 import Artibot from "../index.js";
-import log from "../logger";
+import log from "../logger.js";
 
 export const name = "ready";
 export const once = true;

@@ -2,7 +2,7 @@ import { ChannelType, Collection, Message } from "discord.js";
 import Artibot from "../index.js";
 import onMention from "../messages/onMention.js"
 import { Command, Module } from "../modules.js";
-import log from "../logger";
+import log from "../logger.js";
 
 function escapeRegex(string: string) {
 	return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -120,6 +120,7 @@ export async function execute(message: Message, artibot: Artibot): Promise<void>
 		await command.execute(message, args, artibot);
 	} catch (error) {
 		log("CommandHandler", (error as Error).message, "warn", true);
+		if (config.debug) console.error(error);
 		message.reply({
 			content: localizer._("An error occured while trying to run this command.")
 		});

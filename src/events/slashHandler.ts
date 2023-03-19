@@ -1,6 +1,6 @@
 import { Collection, CommandInteraction, InteractionType } from "discord.js";
 import Artibot from "../index.js";
-import log from "../logger";
+import log from "../logger.js";
 import { Module, SlashCommand } from "../modules.js";
 
 export const name = "interactionCreate";

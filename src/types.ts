@@ -1,5 +1,5 @@
 import { Collection, Snowflake } from "discord.js";
-import { Button, Command, MessageContextMenuOption, SlashCommand, TriggerGroup, UserContextMenuOption, Global, Module } from "./modules";
+import { Button, Command, MessageContextMenuOption, SlashCommand, TriggerGroup, UserContextMenuOption, Global, Module } from "./modules.js";
 
 /** Any module part type */
 export type ModulePartResolvable = Command | SlashCommand | Button | MessageContextMenuOption | UserContextMenuOption | TriggerGroup | Global;

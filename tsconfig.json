@@ -14,11 +14,17 @@
 		"sourceMap": true,
 		"outDir": "dist",
 		"declaration": true,
-		"emitDeclarationOnly": true,
+		"emitDeclarationOnly": false,
 		"allowJs": true,
-		"strict": true
+		"strict": true,
+		"noImplicitAny": true,
+		"noImplicitReturns": true,
+		"strictPropertyInitialization": true
 	},
 	"lib": [
 		"es2015"
-	]
+	],
+	"ts-node": {
+		"esm": true
+	}
 }

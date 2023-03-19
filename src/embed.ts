@@ -1,13 +1,13 @@
 import { Colors, EmbedBuilder, EmbedData } from "discord.js";
-import Artibot from ".";
+import { ArtibotConfig } from "./config.js";
 
 export class Embed extends EmbedBuilder {
-	constructor(artibot: Artibot, data?: EmbedData) {
+	constructor(config: ArtibotConfig, data?: EmbedData) {
 		super(data);
-		this.setColor(artibot.config.embedColor || Colors.Default);
+		this.setColor(config.embedColor || Colors.Default);
 		this.setFooter({
-			text: artibot.config.botName || "Artibot",
-			iconURL: artibot.config.botIcon
+			text: config.botName || "Artibot",
+			iconURL: config.botIcon
 		});
 		this.setTimestamp();
 	}

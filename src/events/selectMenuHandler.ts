@@ -1,7 +1,8 @@
 import { StringSelectMenuInteraction } from "discord.js";
 import Artibot from "../index.js";
 import selectMenuError from "../messages/selectMenuError.js";
-import log from "../logger";
+import log from "../logger.js";
+import { SelectMenuOption } from "../modules.js";
 
 export const name = "interactionCreate";
 
@@ -17,7 +18,7 @@ export async function execute(interaction: StringSelectMenuInteraction, artibot:
 		if (command) break;
 		for (const part of module.parts) {
 			if (command) break;
-			if (part.type == "selectmenu" && part.id == interaction.customId) command = part;
+			if ((part instanceof SelectMenuOption) && part.id == interaction.customId) command = part;
 		}
 	}
 

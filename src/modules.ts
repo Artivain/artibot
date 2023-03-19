@@ -1,4 +1,4 @@
-import { ButtonInteraction, ChatInputCommandInteraction, IntentsBitField, Message, MessageContextMenuCommandInteraction, PermissionResolvable, SlashCommandBuilder, StringSelectMenuInteraction, UserContextMenuCommandInteraction } from "discord.js";
+import { ApplicationCommandType, ButtonInteraction, ChatInputCommandInteraction, ContextMenuCommandBuilder, IntentsBitField, Message, MessageContextMenuCommandInteraction, PermissionResolvable, SlashCommandBuilder, StringSelectMenuInteraction, UserContextMenuCommandInteraction } from "discord.js";
 import Artibot from ".";
 import { ModulePartResolvable, Trigger } from "./types";
 
@@ -134,7 +134,7 @@ export class Command extends BasePart {
 
 export interface SlashCommandConfig extends BasePartConfig {
 	/** Data to register into the Discord API */
-	data: Partial<SlashCommandBuilder>;
+	data: Omit<SlashCommandBuilder, "addSubcommand" | "addSubcommandGroup">;
 	/** Minimum time (in seconds) between usages */
 	cooldown?: number;
 	/** Function to execute when the command is ran */
@@ -146,7 +146,7 @@ export interface SlashCommandConfig extends BasePartConfig {
  * @extends BasePart
  */
 export class SlashCommand extends BasePart {
-	data: Partial<SlashCommandBuilder>;
+	data: Omit<SlashCommandBuilder, "addSubcommand" | "addSubcommandGroup">;
 	cooldown: number = 0;
 
 	constructor({ id, data, cooldown = 0, mainFunction, initFunction }: SlashCommandConfig) {
@@ -184,18 +184,13 @@ export interface MessageContextMenuOptionConfig extends BasePartConfig {
  * @extends BasePart
  */
 export class MessageContextMenuOption extends BasePart {
-	data: {
-		name: string;
-		type: 3;
-	};
+	data: ContextMenuCommandBuilder = new ContextMenuCommandBuilder()
+		.setType(ApplicationCommandType.Message);
 
 	constructor({ id, name, mainFunction, initFunction }: MessageContextMenuOptionConfig) {
 		if (!name) throw new Error("Missing name parameter!");
 		super({ id, mainFunction, initFunction });
-		this.data = {
-			name,
-			type: 3 // 3 is for message context menu
-		}
+		this.data.setName(name);
 	}
 }
 
@@ -211,18 +206,13 @@ export interface UserContextMenuOptionConfig extends BasePartConfig {
  * @extends BasePart
  */
 export class UserContextMenuOption extends BasePart {
-	data: {
-		name: string;
-		type: 2;
-	};
+	data: ContextMenuCommandBuilder = new ContextMenuCommandBuilder()
+		.setType(ApplicationCommandType.User);
 
 	constructor({ id, name, mainFunction, initFunction }: UserContextMenuOptionConfig) {
 		if (!name) throw new Error("Missing name parameter!");
 		super({ id, mainFunction, initFunction });
-		this.data = {
-			name,
-			type: 2 // 2 is for user context menus
-		}
+		this.data.setName(name);
 	}
 }
 

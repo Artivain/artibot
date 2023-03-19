@@ -1,6 +1,6 @@
 import { Guild } from "discord.js";
 import Artibot from "../index.js";
-import log from "../logger";
+import log from "../logger.js";
 
 export const name = "guildCreate";
 
