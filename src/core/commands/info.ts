@@ -37,14 +37,14 @@ export default async function execute(message: Message, args: string[], { locali
 			"[GitHub](https://github.com/Artivain/artibot)";
 	} else {
 		description = localizer.__("[[0]] is based on Artibot, a modern and open-source Discord bot maintained by Artivain and it's community.\n", { placeholders: [config.botName] }) + "[GitHub](https://github.com/Artivain/artibot)";
-	};
+	}
 
 	let memberCount: number = 0;
 	for (const [, guild] of message.client.guilds.cache) {
 		memberCount += guild.memberCount;
 	}
 
-	let embed: EmbedBuilder = createEmbed()
+	const embed: EmbedBuilder = createEmbed()
 		.setTitle(localizer.__("About [[0]]", { placeholders: [config.botName] }))
 		.setDescription(description)
 		.addFields(

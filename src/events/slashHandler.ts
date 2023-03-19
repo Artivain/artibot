@@ -30,7 +30,7 @@ export async function execute(interaction: CommandInteraction, artibot: Artibot)
 		} catch (err) {
 			log("SlashHandler", localizer._("Additionally, an error occured when sending the error message to the user. Maybe the interaction already has been replied to."), "warn", true);
 		}
-	};
+	}
 }
 
 function findCommand(name: string, modules: Collection<string, Module>): SlashCommand | void {

@@ -20,7 +20,7 @@ export async function execute(interaction: ContextMenuCommandInteraction | UserC
 
 	if (interaction.isUserContextMenuCommand()) {
 
-		let command: UserContextMenuOption | void = findUserCommand(interaction.commandName, modules);
+		const command: UserContextMenuOption | void = findUserCommand(interaction.commandName, modules);
 
 		if (!command) return;
 
@@ -37,7 +37,7 @@ export async function execute(interaction: ContextMenuCommandInteraction | UserC
 
 	} else if (interaction.isMessageContextMenuCommand()) {
 
-		let command: MessageContextMenuOption | void = findMessageCommand(interaction.commandName, modules);
+		const command: MessageContextMenuOption | void = findMessageCommand(interaction.commandName, modules);
 
 		if (!command) return;
 

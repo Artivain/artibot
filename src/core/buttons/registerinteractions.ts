@@ -25,7 +25,7 @@ export default async function execute(interaction: ButtonInteraction, { config, 
 
 	resetData();
 	generateData(modules);
-	let success = await register();
+	const success = await register();
 
 	if (success) {
 		const embed: EmbedBuilder = createEmbed()
