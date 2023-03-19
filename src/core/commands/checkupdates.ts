@@ -8,7 +8,7 @@ export default async function execute(message: Message, args: string[], { config
 	if (!config.checkForUpdates) {
 		message.reply(localizer._("Checking for updates is disabled in config!"));
 		return;
-	};
+	}
 
 	// Check if an argument is passed
 	if (args.length) {

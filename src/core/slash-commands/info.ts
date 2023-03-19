@@ -44,7 +44,7 @@ export default async function execute(interaction: ChatInputCommandInteraction, 
 		memberCount += guild.memberCount;
 	}
 
-	let embed: EmbedBuilder = createEmbed()
+	const embed: EmbedBuilder = createEmbed()
 		.setTitle(localizer.__("About [[0]]", { placeholders: [config.botName] }))
 		.setDescription(description)
 		.addFields(

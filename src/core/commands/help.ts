@@ -14,7 +14,7 @@ export default async function helpCommand(message: Message, args: string[], arti
 			if (part instanceof Command) commandList.push(part.name);
 		}));
 
-		let helpEmbed: EmbedBuilder = createEmbed()
+		const helpEmbed: EmbedBuilder = createEmbed()
 			.setTitle(localizer._("List of all available commands"))
 			.setDescription("`" + commandList.join("`, `") + "`")
 			.addFields({
@@ -54,7 +54,7 @@ export default async function helpCommand(message: Message, args: string[], arti
 		return;
 	}
 
-	let commandEmbed: EmbedBuilder = createEmbed().setTitle(localizer._("Help on a command"));
+	const commandEmbed: EmbedBuilder = createEmbed().setTitle(localizer._("Help on a command"));
 
 	if (command.description) commandEmbed.setDescription(`${command.description}`);
 

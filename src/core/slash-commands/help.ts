@@ -9,7 +9,7 @@ export default async function execute(interaction: ChatInputCommandInteraction, 
 	const helpEmbed: EmbedBuilder = createEmbed();
 
 	/** List of all slash commands */
-	let commands: SlashCommand[] = [];
+	const commands: SlashCommand[] = [];
 
 	for (const [, module] of modules) {
 		for (const part of module.parts) {

@@ -6,7 +6,7 @@ import log from "../logger";
 
 function escapeRegex(string: string) {
 	return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-};
+}
 
 export const name = "messageCreate";
 
@@ -49,14 +49,14 @@ export async function execute(message: Message, artibot: Artibot): Promise<void>
 	// Check if mesage does not starts with prefix, or message author is bot. If yes, return.
 	if (!message.content.startsWith(matchedPrefix) || message.author.bot) return;
 
-	let command: Command | void = findCommand(commandName, artibot.modules);
+	const command: Command | void = findCommand(commandName, artibot.modules);
 
 	// It it's not a command, don't try to execute anything
 	if (!command) return;
 
 	// Owner Only Property, add in your command properties if true.
 	if (command.ownerOnly && message.author.id !== config.ownerId) {
-		let embedOwner = artibot.createEmbed()
+		const embedOwner = artibot.createEmbed()
 			.setColor("Red")
 			.setTitle(localizer._("Help on this command"))
 			.setDescription(localizer.__("This command can only be executed by [[0]].", { placeholders: [`<@${config.ownerId}>`] }));

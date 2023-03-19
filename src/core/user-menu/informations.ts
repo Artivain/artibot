@@ -12,20 +12,20 @@ export default async function execute(interaction: UserContextMenuCommandInterac
 		type = localizer._("Bot");
 	} else if (infos.user.system) {
 		type = localizer._("System");
-	};
+	}
 
 	if (infos.guild.ownerId === infos.user.id) {
 		more += localizer._("\nIs the owner of this server.");
-	};
+	}
 	if (config.ownerId === infos.user.id) {
 		more += localizer._("\nIs the owner of this bot.");
-	};
+	}
 	if (contributors.devs.find(element => element.discordId === infos.user.id)) {
 		more += localizer._("\n**Is one of the super devs of this bot!**");
-	};
+	}
 	if (contributors.donators.find(element => element.discordId === infos.user.id)) {
 		more += localizer._("\n**Is one of the super donators of this bot!**");
-	};
+	}
 
 	const embed: EmbedBuilder = createEmbed()
 		.setTitle(localizer._("Information on the user"))
