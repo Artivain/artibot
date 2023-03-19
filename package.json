@@ -2,6 +2,9 @@
 	"name": "artibot",
 	"version": "5.0.0",
 	"description": "Modern, fast and modular open-source Discord bot",
+	"exports": {
+		".": "./dist/index.js"
+	},
 	"types": "dist/index.d.ts",
 	"scripts": {
 		"start": "node dist/index.js",
