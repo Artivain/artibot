@@ -1,4 +1,4 @@
-import { ButtonInteraction, CommandInteraction, IntentsBitField, Interaction, Message, PermissionResolvable, SlashCommandBuilder, StringSelectMenuInteraction } from "discord.js";
+import { ButtonInteraction, ChatInputCommandInteraction, IntentsBitField, Message, MessageContextMenuCommandInteraction, PermissionResolvable, SlashCommandBuilder, StringSelectMenuInteraction, UserContextMenuCommandInteraction } from "discord.js";
 import Artibot from ".";
 import { ModulePartResolvable, Trigger } from "./types";
 
@@ -8,29 +8,29 @@ export interface ModuleConfig {
 	/** ID of this module */
 	id: string;
 	/** Version of the module (ex.: "1.2.3") */
-	version: string;
+	version?: string;
 	/** List of supported languages (ex.: ["en", "fr"]). If this does not apply, set to "any". */
-	langs: string[] | "any";
+	langs?: string[] | "any";
 	/** List of parts of the module */
 	parts: ModulePartResolvable[];
 	/** List of required intents */
-	intents: IntentsBitField[];
+	intents?: IntentsBitField[];
 	/** GitHub repository of the module (ex.: "Artivain/artibot") */
-	repo: string;
+	repo?: string;
 	/** Package name of the module on NPM (ex.: "artibot") */
-	packageName: string;
+	packageName?: string;
 }
 
 /** Base class for Artibot modules */
 export class Module {
 	name: string;
 	id: string;
-	version: string;
-	langs: string[] | "any";
+	version: string = "0.0.0";
+	langs: string[] | "any" = "any";
 	parts: ModulePartResolvable[];
-	additionalIntents: IntentsBitField[];
-	repo: string;
-	packageName: string;
+	additionalIntents: IntentsBitField[] = [];
+	repo?: string;
+	packageName?: string;
 
 	constructor({ name, id, version, langs = "any", parts, intents = [], repo, packageName }: ModuleConfig) {
 		if (!name || !id || !version || !langs || !parts) throw new Error("Missing module informations!");
@@ -48,8 +48,6 @@ export class Module {
 export interface BasePartConfig {
 	/** ID of the part */
 	id: string;
-	/** Type of the part */
-	type: string;
 	/** The function when the part is executed */
 	mainFunction: (...args: any[]) => void | Promise<void>;
 	/** The function executed on bot startup */
@@ -61,15 +59,13 @@ export interface BasePartConfig {
  */
 export class BasePart {
 	id: string;
-	type: string;
 	execute: BasePartConfig["mainFunction"];
 	init: BasePartConfig["initFunction"];
 
-	constructor({ id, type, mainFunction, initFunction }: BasePartConfig) {
-		if (!id || !type || !mainFunction) throw new Error("Missing parameter(s)");
+	constructor({ id, mainFunction, initFunction }: BasePartConfig) {
+		if (!id || !mainFunction) throw new Error("Missing parameter(s)");
 
 		this.id = id;
-		this.type = type;
 		this.execute = mainFunction;
 		this.init = initFunction;
 	}
@@ -88,10 +84,7 @@ export interface CommandConfig extends BasePartConfig {
 	cooldown?: number;
 	/** If the command can only be executed by the owner of the bot */
 	ownerOnly?: boolean;
-	/**
-	 * If the command can only be executed in a guild
-	 * @deprecated This is not ensured anymore
-	*/
+	/** If the command can only be executed in a guild */
 	guildOnly?: boolean;
 	/** Required permissions */
 	permissions?: PermissionResolvable;
@@ -122,9 +115,10 @@ export class Command extends BasePart {
 	ownerOnly: boolean = false;
 	permissions?: PermissionResolvable;
 	args: number = 0;
+	guildOnly: boolean = true;
 
 	constructor(config: CommandConfig) {
-		super({ ...config, type: "command" });
+		super(config);
 		this.name = config.name;
 		this.description = config.description;
 		if (config.aliases) this.aliases = config.aliases;
@@ -134,16 +128,17 @@ export class Command extends BasePart {
 		this.permissions = config.permissions;
 		if (config.requiresArgs) this.args = 1;
 		if (config.requiredArgs) this.args = config.requiredArgs;
+		if (config.guildOnly) this.guildOnly = config.guildOnly;
 	}
 }
 
 export interface SlashCommandConfig extends BasePartConfig {
 	/** Data to register into the Discord API */
-	data: SlashCommandBuilder;
+	data: Partial<SlashCommandBuilder>;
 	/** Minimum time (in seconds) between usages */
 	cooldown?: number;
 	/** Function to execute when the command is ran */
-	mainFunction: (interaction: CommandInteraction, artibot: Artibot) => void | Promise<void>;
+	mainFunction: (interaction: ChatInputCommandInteraction<"cached">, artibot: Artibot) => void | Promise<void>;
 }
 
 /**
@@ -151,12 +146,12 @@ export interface SlashCommandConfig extends BasePartConfig {
  * @extends BasePart
  */
 export class SlashCommand extends BasePart {
-	data: SlashCommandBuilder;
+	data: Partial<SlashCommandBuilder>;
 	cooldown: number = 0;
 
 	constructor({ id, data, cooldown = 0, mainFunction, initFunction }: SlashCommandConfig) {
 		if (!data) throw new Error("Missing data parameter");
-		super({ id, type: "slashcommand", mainFunction, initFunction });
+		super({ id, mainFunction, initFunction });
 		this.data = data;
 		this.cooldown = cooldown;
 	}
@@ -164,7 +159,7 @@ export class SlashCommand extends BasePart {
 
 export interface ButtonConfig extends BasePartConfig {
 	/** Function to execute when the button is clicked */
-	mainFunction: (interaction: ButtonInteraction, artibot: Artibot) => void | Promise<void>;
+	mainFunction: (interaction: ButtonInteraction<"cached">, artibot: Artibot) => void | Promise<void>;
 }
 
 /**
@@ -173,15 +168,15 @@ export interface ButtonConfig extends BasePartConfig {
  */
 export class Button extends BasePart {
 	constructor({ id, mainFunction, initFunction }: ButtonConfig) {
-		super({ id, type: "button", mainFunction, initFunction });
+		super({ id, mainFunction, initFunction });
 	}
 }
 
-export interface ContextMenuOptionConfig extends BasePartConfig {
+export interface MessageContextMenuOptionConfig extends BasePartConfig {
 	/** Name of this option */
 	name: string;
 	/** Function to execute when the menu option is clicked */
-	mainFunction: (interaction: Interaction, artibot: Artibot) => void | Promise<void>;
+	mainFunction: (interaction: MessageContextMenuCommandInteraction<"cached">, artibot: Artibot) => void | Promise<void>;
 }
 
 /**
@@ -194,14 +189,21 @@ export class MessageContextMenuOption extends BasePart {
 		type: 3;
 	};
 
-	constructor({ id, name, mainFunction, initFunction }: ContextMenuOptionConfig) {
+	constructor({ id, name, mainFunction, initFunction }: MessageContextMenuOptionConfig) {
 		if (!name) throw new Error("Missing name parameter!");
-		super({ id, type: "messagemenu", mainFunction, initFunction });
+		super({ id, mainFunction, initFunction });
 		this.data = {
 			name,
 			type: 3 // 3 is for message context menu
 		}
 	}
+}
+
+export interface UserContextMenuOptionConfig extends BasePartConfig {
+	/** Name of this option */
+	name: string;
+	/** Function to execute when the menu option is clicked */
+	mainFunction: (interaction: UserContextMenuCommandInteraction<"cached">, artibot: Artibot) => void | Promise<void>;
 }
 
 /**
@@ -214,9 +216,9 @@ export class UserContextMenuOption extends BasePart {
 		type: 2;
 	};
 
-	constructor({ id, name, mainFunction, initFunction }: ContextMenuOptionConfig) {
+	constructor({ id, name, mainFunction, initFunction }: UserContextMenuOptionConfig) {
 		if (!name) throw new Error("Missing name parameter!");
-		super({ id, type: "usermenu", mainFunction, initFunction });
+		super({ id, mainFunction, initFunction });
 		this.data = {
 			name,
 			type: 2 // 2 is for user context menus
@@ -226,7 +228,7 @@ export class UserContextMenuOption extends BasePart {
 
 export interface SelectMenuOptionConfig extends BasePartConfig {
 	/** Function executed when this option is selected */
-	mainFunction: (interaction: StringSelectMenuInteraction, artibot: Artibot) => void | Promise<void>;
+	mainFunction: (interaction: StringSelectMenuInteraction<"cached">, artibot: Artibot) => void | Promise<void>;
 }
 
 /**
@@ -235,7 +237,7 @@ export interface SelectMenuOptionConfig extends BasePartConfig {
  */
 export class SelectMenuOption extends BasePart {
 	constructor({ id, mainFunction, initFunction }: SelectMenuOptionConfig) {
-		super({ id, type: "selectmenu", mainFunction, initFunction });
+		super({ id, mainFunction, initFunction });
 	}
 }
 
@@ -251,7 +253,7 @@ export class TriggerGroup extends BasePart {
 
 	constructor({ id, triggers, mainFunction, initFunction }: TriggerGroupConfig) {
 		if (!triggers || !triggers.length) throw new Error("Triggers cannot be empty!");
-		super({ id, type: "trigger", mainFunction, initFunction });
+		super({ id, mainFunction, initFunction });
 		this.triggers = triggers;
 	}
 }
@@ -268,7 +270,7 @@ export class Global extends BasePart {
 	 * @param {function(Artibot): void|Promise<void>} config.mainFunction - Function executed on bot startup
 	 */
 	constructor({ id, mainFunction }: BasePartConfig) {
-		super({ id, type: "global", mainFunction });
+		super({ id, mainFunction });
 		this.init = mainFunction;
 	}
 }

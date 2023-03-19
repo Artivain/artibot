@@ -637,6 +637,14 @@
 
 		"Module with ID `[[0]]` not found.": {
 			"fr": "Il n'y a pas de module avec le ID `[[0]]` installé."
+		},
+
+		"You are missing at least one argument, [[0]]!": {
+			"fr": "Il manque au moins un argument, [[0]]!"
+		},
+
+		"This command can only be used in a server.": {
+			"fr": "Cette commande ne peut être utilisée que dans un serveur."
 		}
 
 	}

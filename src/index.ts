@@ -88,7 +88,7 @@ export class Artibot {
 	}
 
 	/** Create an embed */
-	public createEmbed(data: discord.EmbedData): Embed {
+	public createEmbed(data?: discord.EmbedData): discord.EmbedBuilder {
 		return new Embed(this, data);
 	}
 
@@ -155,7 +155,7 @@ export class Artibot {
 		}
 
 		for (const part of module.parts) {
-			log("Artibot", `- [${part.type}] ${part.id}`, "log", true);
+			log("Artibot", `- [${part.constructor.name}] ${part.id}`, "log", true);
 		}
 
 		if (Object.entries(config).length !== 0) {

@@ -1,10 +1,12 @@
-import { IntentsBitField, Snowflake } from "discord.js";
-import { Button, Command, MessageContextMenuOption, SlashCommand, TriggerGroup, UserContextMenuOption, Global } from "./modules";
+import { Collection, Snowflake } from "discord.js";
+import { Button, Command, MessageContextMenuOption, SlashCommand, TriggerGroup, UserContextMenuOption, Global, Module } from "./modules";
 
 /** Any module part type */
 export type ModulePartResolvable = Command | SlashCommand | Button | MessageContextMenuOption | UserContextMenuOption | TriggerGroup | Global;
 
 export type Trigger = string | RegExp;
+
+export type Modules = Collection<string, Module>;
 
 export interface Contributor {
 	name: string,
@@ -15,5 +17,5 @@ export interface Contributor {
 
 export interface ContributorList {
 	devs: Contributor[],
-	contributors: Contributor[]
+	donators: Contributor[]
 }
