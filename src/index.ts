@@ -178,8 +178,6 @@ export class Artibot {
 	 * Get latest release version of a GitHub repository
 	 * @param repo - GitHub repository to get latest version
 	 * @returns Version number, or false if repo not found or an error happens
-	 * @method
-	 * @async
 	 */
 	public readonly checkForUpdates = async (repo: string = "Artivain/artibot"): Promise<string | false> => {
 		const request = await axios({

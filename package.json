@@ -10,9 +10,10 @@
 		"start": "node dist/index.js",
 		"test": "nodemon -e ts,js,json --exec \"tsc && node testing.js\"",
 		"upgrade": "ncu -u && npm install && npm update",
-		"build-docs": "jsdoc -c ./jsdoc.json",
+		"build-docs": "typedoc",
 		"prepublish": "tsc",
-		"build": "tsc"
+		"build": "tsc",
+		"docs": "npm run build-docs"
 	},
 	"files": [
 		"dist/",
@@ -63,11 +64,11 @@
 	},
 	"devDependencies": {
 		"@types/figlet": "^1.5.5",
-		"artibot-jsdoc-template": "GoudronViande24/artibot-jsdoc-template",
-		"jsdoc": "^4.0.2",
 		"nodemon": "^2.0.21",
 		"npm-check-updates": "^16.7.13",
 		"ts-node": "^10.9.1",
+		"typedoc": "^0.23.28",
+		"typedoc-plugin-mdn-links": "^3.0.3",
 		"typescript": "^5.0.2"
 	}
 }

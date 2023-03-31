@@ -109,5 +109,5 @@ dist
 **/config.js
 updaterFiles
 
-documentation
+docs
 package-lock.json

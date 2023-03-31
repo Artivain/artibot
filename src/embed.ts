@@ -1,6 +1,7 @@
 import { Colors, EmbedBuilder, EmbedData } from "discord.js";
 import { ArtibotConfig } from "./config.js";
 
+/** Prepared {@link EmbedBuilder} with {@link ArtibotConfig Artibot config} */
 export class Embed extends EmbedBuilder {
 	constructor(config: ArtibotConfig, data?: EmbedData) {
 		super(data);

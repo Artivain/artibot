@@ -1,0 +1,31 @@
+{
+	"$schema": "https://typedoc.org/schema.json",
+	"name": "Artibot",
+	"out": "docs",
+	"excludeExternals": true,
+	"entryPoints": [
+		"src/index.ts"
+	],
+	"navigationLinks": {
+		"Guide": "https://artibot.artivain.com/guide",
+		"Discord": "https://discord.artivain.com",
+		"Plugins": "https://artibot.artivain.com/plugins"
+	},
+	"githubPages": false,
+	"hideGenerator": true,
+	"validation": true,
+	"requiredToBeDocumented": [
+		"Enum",
+		"EnumMember",
+		"Function",
+		"Class",
+		"Interface",
+		"Property",
+		"Method",
+		"Accessor",
+		"TypeAlias"
+	],
+	"plugin": [
+		"typedoc-plugin-mdn-links"
+	]
+}
