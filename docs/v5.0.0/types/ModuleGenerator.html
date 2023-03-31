@@ -1,4 +1,4 @@
-<!DOCTYPE html><html class="default" lang="en"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>log | Artibot</title><meta name="description" content="Official documentation for Artibot, a modular Discord bot framework written in TypeScript."/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script async src="../assets/search.js" id="search-script"></script><link rel="icon" href="https://assets.artivain.com/fav/bots/artibot.svg" />
+<!DOCTYPE html><html class="default" lang="en"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>ModuleGenerator | Artibot</title><meta name="description" content="Official documentation for Artibot, a modular Discord bot framework written in TypeScript."/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script async src="../assets/search.js" id="search-script"></script><link rel="icon" href="https://assets.artivain.com/fav/bots/artibot.svg" />
 </head><body><select id="plugin-versions-select" class="title" name="versions"></select><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os"</script><header class="tsd-page-toolbar">
 <div class="tsd-toolbar-contents container">
 <div class="table-cell" id="tsd-search" data-base="..">
@@ -14,40 +14,13 @@
 <div class="tsd-page-title">
 <ul class="tsd-breadcrumb">
 <li><a href="../modules.html">Artibot</a></li>
-<li><a href="log.html">log</a></li></ul>
-<h1>Function log</h1></div>
-<section class="tsd-panel">
-<ul class="tsd-signatures tsd-kind-function">
-<li class="tsd-signature tsd-anchor-link" id="log">log<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, msg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, type<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">&quot;log&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;debug&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;warn&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;err&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;info&quot;</span>, isCore<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><a href="#log" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" id="icon-anchor-a"></path><path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" id="icon-anchor-b"></path><path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" id="icon-anchor-c"></path></svg></a></li>
-<li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Log message to console, with proper coloring and prefix.</p>
-
-<h3>Author</h3><p>Artivain</p>
-
-<h3>Since</h3><p>v1.5.3</p>
-</div>
-<div class="tsd-parameters">
-<h4 class="tsd-parameters-title">Parameters</h4>
-<ul class="tsd-parameter-list">
-<li>
-<h5>name: <span class="tsd-signature-type">string</span></h5>
-<div class="tsd-comment tsd-typography"><p>Name of the module sending the log.</p>
-</div></li>
-<li>
-<h5>msg: <span class="tsd-signature-type">string</span></h5>
-<div class="tsd-comment tsd-typography"><p>Message to send.</p>
-</div></li>
-<li>
-<h5>type: <span class="tsd-signature-type">&quot;log&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;debug&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;warn&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;err&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;info&quot;</span><span class="tsd-signature-symbol"> = &quot;log&quot;</span></h5>
-<div class="tsd-comment tsd-typography"><p>Type of message.</p>
-</div></li>
-<li>
-<h5>isCore: <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = false</span></h5>
-<div class="tsd-comment tsd-typography"><p>Is this message sent from the core? Probably not.</p>
-</div></li></ul></div>
-<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
+<li><a href="ModuleGenerator.html">ModuleGenerator</a></li></ul>
+<h1>Type alias ModuleGenerator</h1></div>
+<div class="tsd-signature">Module<wbr/>Generator<span class="tsd-signature-symbol">:</span> <a href="../classes/Module.html" class="tsd-signature-type" data-tsd-kind="Class">Module</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span>artibot<span class="tsd-signature-symbol">: </span><a href="../classes/Artibot.html" class="tsd-signature-type" data-tsd-kind="Class">Artibot</a>, config<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="../classes/Module.html" class="tsd-signature-type" data-tsd-kind="Class">Module</a><span class="tsd-signature-symbol">)</span></div>
+<div class="tsd-comment tsd-typography"><p>Module, or a function that returns a module</p>
+</div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/Artivain/artibot/blob/3b23074/src/logger.ts#L13">logger.ts:13</a></li></ul></aside></li></ul></section></div>
+<li>Defined in <a href="https://github.com/Artivain/artibot/blob/3b23074/src/types.ts#L15">types.ts:15</a></li></ul></aside></div>
 <div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 <div class="tsd-navigation settings">
 <details class="tsd-index-accordion"><summary class="tsd-accordion-summary">
@@ -97,16 +70,16 @@
 <li class="tsd-kind-interface"><a href="../interfaces/SlashCommandConfig.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-256-path"></use><use href="#icon-256-text"></use></svg>Slash<wbr/>Command<wbr/>Config</a></li>
 <li class="tsd-kind-interface"><a href="../interfaces/TriggerGroupConfig.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-256-path"></use><use href="#icon-256-text"></use></svg>Trigger<wbr/>Group<wbr/>Config</a></li>
 <li class="tsd-kind-interface"><a href="../interfaces/UserContextMenuOptionConfig.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-256-path"></use><use href="#icon-256-text"></use></svg>User<wbr/>Context<wbr/>Menu<wbr/>Option<wbr/>Config</a></li>
-<li class="tsd-kind-type-alias"><a href="../types/ModuleGenerator.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><rect fill="var(--color-icon-background)" stroke="var(--color-ts)" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="6" id="icon-4194304-path"></rect><path d="M11.31 16V8.224H8.91V7.24H14.79V8.224H12.39V16H11.31Z" fill="var(--color-text)" id="icon-4194304-text"></path></svg>Module<wbr/>Generator</a></li>
-<li class="tsd-kind-type-alias"><a href="../types/ModulePartResolvable.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-4194304-path"></use><use href="#icon-4194304-text"></use></svg>Module<wbr/>Part<wbr/>Resolvable</a></li>
-<li class="tsd-kind-type-alias"><a href="../types/Modules.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-4194304-path"></use><use href="#icon-4194304-text"></use></svg>Modules</a></li>
-<li class="tsd-kind-type-alias"><a href="../types/Trigger.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-4194304-path"></use><use href="#icon-4194304-text"></use></svg>Trigger</a></li>
-<li class="current tsd-kind-function"><a href="log.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><rect fill="var(--color-icon-background)" stroke="var(--color-ts-function)" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="6" id="icon-64-path"></rect><path d="M9.39 16V7.24H14.55V8.224H10.446V11.128H14.238V12.112H10.47V16H9.39Z" fill="var(--color-text)" id="icon-64-text"></path></svg>log</a></li></ul></nav></div></div>
+<li class="current tsd-kind-type-alias"><a href="ModuleGenerator.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><rect fill="var(--color-icon-background)" stroke="var(--color-ts)" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="6" id="icon-4194304-path"></rect><path d="M11.31 16V8.224H8.91V7.24H14.79V8.224H12.39V16H11.31Z" fill="var(--color-text)" id="icon-4194304-text"></path></svg>Module<wbr/>Generator</a></li>
+<li class="tsd-kind-type-alias"><a href="ModulePartResolvable.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-4194304-path"></use><use href="#icon-4194304-text"></use></svg>Module<wbr/>Part<wbr/>Resolvable</a></li>
+<li class="tsd-kind-type-alias"><a href="Modules.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-4194304-path"></use><use href="#icon-4194304-text"></use></svg>Modules</a></li>
+<li class="tsd-kind-type-alias"><a href="Trigger.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-4194304-path"></use><use href="#icon-4194304-text"></use></svg>Trigger</a></li>
+<li class="tsd-kind-function"><a href="../functions/log.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><rect fill="var(--color-icon-background)" stroke="var(--color-ts-function)" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="6" id="icon-64-path"></rect><path d="M9.39 16V7.24H14.55V8.224H10.446V11.128H14.238V12.112H10.47V16H9.39Z" fill="var(--color-text)" id="icon-64-text"></path></svg>log</a></li></ul></nav></div></div>
 <div class="container tsd-generator">
 <p style="line-height: 28px;">Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a> v0.23.28<br>
             <span id="generation-date"></span>
             <script>
-                window.GENERATION_DATE = 1680245850605;
+                window.GENERATION_DATE = 1680245850598;
 
                 (() => {
                     
