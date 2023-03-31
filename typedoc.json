@@ -11,7 +11,7 @@
 		"Discord": "https://discord.artivain.com",
 		"Plugins": "https://artibot.artivain.com/plugins"
 	},
-	"githubPages": false,
+	"githubPages": true,
 	"hideGenerator": true,
 	"validation": true,
 	"requiredToBeDocumented": [
@@ -26,6 +26,8 @@
 		"TypeAlias"
 	],
 	"plugin": [
-		"typedoc-plugin-mdn-links"
-	]
+		"typedoc-plugin-mdn-links",
+		"typedoc-plugin-versions"
+	],
+	"cname": "docs.artibot.artivain.com"
 }
