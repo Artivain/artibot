@@ -41,7 +41,7 @@ jobs:
             - name: Build
               uses: actions/setup-node@v3
               with:
-                  node-version: 16.x
+                  node-version: 18.x
                   cache: 'npm'
             - run: npm install
             - run: npm run build # set up 'build' script in your package.json
