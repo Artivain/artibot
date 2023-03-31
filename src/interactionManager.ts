@@ -9,15 +9,26 @@ import log from "./logger.js";
  * Interaction management utility for Artibot
  */
 export class InteractionManager {
+	/** Discord.js REST API utilitie */
 	private rest: REST;
+	/** Discord bot client ID */
 	clientId: Snowflake;
+	/** Test guild ID */
 	testGuildId: Snowflake;
+	/** Dev mode */
 	devMode: boolean;
+	/** Debug mode */
 	debug: boolean;
+	/** Localizer instance */
 	localizer: Localizer;
 	/** JSON data of all slash commands and other interactions */
 	commandJSONData: (RESTPostAPIChatInputApplicationCommandsJSONBody | RESTPostAPIContextMenuApplicationCommandsJSONBody)[] = [];
 
+	/**
+	 * @param config
+	 * @param config.token - Discord bot token
+	 * @param config.artibot - Artibot instance
+	 */
 	constructor({ token, artibot: { localizer, client, config: { testGuildId, devMode, debug } } }: { token: string, artibot: Artibot }) {
 		if (!client || !client.user) throw new Error("Discord.js Client is not as expected");
 
@@ -99,5 +110,4 @@ export class InteractionManager {
 	}
 }
 
-/** @ignore */
 export default InteractionManager;

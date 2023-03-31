@@ -43,17 +43,29 @@ export interface ArtibotConfig {
  * @since 5.0.0
  */
 export class ArtibotConfigBuilder implements Partial<ArtibotConfig> {
+	/** Discord ID of the owner of the bot */
 	ownerId?: Snowflake;
+	/** ID of the test server */
 	testGuildId?: Snowflake;
+	/** Name of the bot */
 	botName: string = "Artibot";
+	/** Icon of the bot */
 	botIcon: string = "https://assets.artivain.com/fav/bots/artibot-512.png";
+	/** Prefix for the classic commands */
 	prefix: string = "ab ";
+	/** Set to false if the bot must be used in more than one server. Interactions could take more time to refresh. */
 	devMode: boolean = true;
+	/** Set the lang of the bot */
 	lang: string = "en";
+	/** Color for the embeds sent by the bot */
 	embedColor: ColorResolvable = Colors.Default;
+	/** Set to false if you want to hide advanced infos from ping commands */
 	advancedCorePing: boolean = true;
+	/** Set to false to disable checking for updates */
 	checkForUpdates: boolean = true;
+	/** Set to true to show debug messages in console */
 	debug: boolean = false;
+	/** Set a custom ready trigger message for Pterodactyl */
 	pterodactylReadyMessage: string = "Pterodactyl Ready";
 
 	/** Set the Discord ID of the owner of this bot (probably you) */
@@ -68,13 +80,13 @@ export class ArtibotConfigBuilder implements Partial<ArtibotConfig> {
 		return this;
 	}
 
-	/** Set the name to use in Discord, in {@link Embed} and {@link Artibot.createEmbed()} */
+	/** Set the name to use in Discord, in {@link Embed} and {@link Artibot.createEmbed} */
 	public setBotName(name: string): this {
 		this.botName = name;
 		return this;
 	}
 
-	/** Set the icon to use in {@link Embed} and {@link Artibot.createEmbed()} */
+	/** Set the icon to use in {@link Embed} and {@link Artibot.createEmbed} */
 	public setBotIcon(url: string): this {
 		this.botIcon = url;
 		return this;
@@ -113,7 +125,7 @@ export class ArtibotConfigBuilder implements Partial<ArtibotConfig> {
 		return this;
 	}
 
-	/** Set the color of {@link Embed} and {@link Artibot.createEmbed()} */
+	/** Set the color of {@link Embed} and {@link Artibot.createEmbed} */
 	public setEmbedColor(color: ColorResolvable): this {
 		this.embedColor = color;
 		return this;

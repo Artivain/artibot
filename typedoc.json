@@ -13,16 +13,16 @@
 	},
 	"githubPages": true,
 	"hideGenerator": false,
-	"validation": true,
+	"validation": {
+		"invalidLink": true,
+		"notDocumented": true,
+		"notExported": false
+	},
 	"requiredToBeDocumented": [
 		"Enum",
 		"EnumMember",
-		"Function",
 		"Class",
 		"Interface",
-		"Property",
-		"Method",
-		"Accessor",
 		"TypeAlias"
 	],
 	"plugin": [

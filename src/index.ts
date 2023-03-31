@@ -11,7 +11,7 @@ import axios from "axios";
 import path from "path";
 import { fileURLToPath } from "url";
 import { ArtibotConfig, ArtibotConfigBuilder } from "./config.js";
-import { ContributorList } from "./types.js";
+import { ContributorList, ModuleGenerator } from "./types.js";
 import { Module } from "./modules.js";
 import Embed from "./embed.js";
 
@@ -34,6 +34,7 @@ const { version }: { version: string } = require('../package.json');
  * @author Thomas Fournier <thomas@artivain.com>
  * @see https://github.com/Artivain/artibot
  * @see https://artibot.artivain.com
+ * @see https://docs.artibot.artivain.com
  * @license GPL-3.0-or-later
  */
 export class Artibot {
@@ -51,8 +52,7 @@ export class Artibot {
 	modules: discord.Collection<string, Module> = new discord.Collection();
 	/** Discord.js client */
 	client?: discord.Client;
-	/** @todo */
-	listeners: any[] = [];
+	/** Instance of {@link InteractionManager} */
 	interactionManager?: InteractionManager;
 	/** The token to login into Discord */
 	#token: string = "";
@@ -94,7 +94,8 @@ export class Artibot {
 
 	/**
 	 * Create an embed
-	 * @method
+	 * @param data - Data to set in the embed
+	 * @returns A new embed builder, already configured with the defaults from the config
 	 */
 	public createEmbed = (data?: discord.EmbedData): discord.EmbedBuilder => {
 		return new Embed(this.config, data);
@@ -144,9 +145,8 @@ export class Artibot {
 	 * Register a module in Artibot
 	 * @param module - The module to register or a function to initialize the module
 	 * @param config - Custom configuration for the module. See module documentation to learn more.
-	 * @method
 	 */
-	public readonly registerModule = (module: Module | ((artibot: Artibot, config: any) => Module), config: any = {}): void => {
+	public readonly registerModule = (module: ModuleGenerator, config: any = {}): void => {
 		if (typeof module == "function") {
 			try {
 				module = module(this, config);
