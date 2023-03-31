@@ -1,8 +1,7 @@
 name: PUBLISH DOCS
 on:
-    workflow_dispatch:
-    workflow_call:
-    # or set up your own custom triggers
+  push:
+    branches: [ main ]
 permissions:
     contents: write # allows the 'Commit' step without tokens
 
