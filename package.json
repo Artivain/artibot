@@ -68,6 +68,7 @@
 		"npm-check-updates": "^16.7.13",
 		"ts-node": "^10.9.1",
 		"typedoc": "^0.23.28",
+		"typedoc-plugin-extras": "^2.3.2",
 		"typedoc-plugin-mdn-links": "^3.0.3",
 		"typedoc-plugin-versions": "^0.2.3",
 		"typescript": "^5.0.2"

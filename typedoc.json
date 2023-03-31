@@ -12,7 +12,7 @@
 		"Plugins": "https://artibot.artivain.com/plugins"
 	},
 	"githubPages": true,
-	"hideGenerator": true,
+	"hideGenerator": false,
 	"validation": true,
 	"requiredToBeDocumented": [
 		"Enum",
@@ -27,7 +27,13 @@
 	],
 	"plugin": [
 		"typedoc-plugin-mdn-links",
-		"typedoc-plugin-versions"
+		"typedoc-plugin-versions",
+		"typedoc-plugin-extras"
 	],
-	"cname": "docs.artibot.artivain.com"
+	"cname": "docs.artibot.artivain.com",
+	"customDescription": "Official documentation for Artibot, a modular Discord bot framework written in TypeScript.",
+	"favicon": "https://assets.artivain.com/fav/bots/artibot.svg",
+	"footerTypedocVersion": true,
+	"footerLastModified": true,
+
 }
