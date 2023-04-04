@@ -11,7 +11,7 @@ import axios from "axios";
 import path from "path";
 import { fileURLToPath } from "url";
 import { ArtibotConfig, ArtibotConfigBuilder } from "./config.js";
-import { ContributorList, ModuleGenerator } from "./types.js";
+import { ContributorList, ModuleGenerator, RegisterModuleOverload } from "./types.js";
 import { Module } from "./modules.js";
 import Embed from "./embed.js";
 
@@ -146,7 +146,7 @@ export class Artibot {
 	 * @param module - The module to register or a function to initialize the module
 	 * @param config - Custom configuration for the module. See module documentation to learn more.
 	 */
-	public readonly registerModule = (module: ModuleGenerator, config: any = {}): void => {
+	public readonly registerModule: RegisterModuleOverload = (module: ModuleGenerator, config: any = {}): void => {
 		if (typeof module == "function") {
 			try {
 				module = module(this, config);
