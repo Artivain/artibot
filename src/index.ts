@@ -111,7 +111,7 @@ export class Artibot {
 	public readonly login = async ({ token = this.#token, additionalIntents = [] }: { token: string, additionalIntents?: discord.IntentsBitField[] }): Promise<void> => {
 		if (!token) throw new Error("Token not set!");
 		this.#token = token;
-		const moduleIntents: discord.IntentsBitField[] = [];
+		const moduleIntents: discord.GatewayIntentBits[] = [];
 		this.modules.forEach(module => module.additionalIntents.forEach(intent => moduleIntents.push(intent)));
 		const intents = [...new Set([
 			[

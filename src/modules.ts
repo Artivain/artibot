@@ -1,4 +1,4 @@
-import { ApplicationCommandType, ButtonInteraction, ChatInputCommandInteraction, ContextMenuCommandBuilder, IntentsBitField, Message, MessageContextMenuCommandInteraction, PermissionResolvable, SlashCommandBuilder, StringSelectMenuInteraction, UserContextMenuCommandInteraction } from "discord.js";
+import { ApplicationCommandType, ButtonInteraction, ChatInputCommandInteraction, ContextMenuCommandBuilder, GatewayIntentBits, Message, MessageContextMenuCommandInteraction, PermissionResolvable, SlashCommandBuilder, StringSelectMenuInteraction, UserContextMenuCommandInteraction } from "discord.js";
 import Artibot from ".";
 import { ModulePartResolvable, Trigger } from "./types";
 
@@ -15,7 +15,7 @@ export interface ModuleConfig {
 	/** List of parts of the module */
 	parts: ModulePartResolvable[];
 	/** List of required intents */
-	intents?: IntentsBitField[];
+	intents?: GatewayIntentBits[];
 	/** GitHub repository of the module (ex.: "Artivain/artibot") */
 	repo?: string;
 	/** Package name of the module on NPM (ex.: "artibot") */
@@ -35,7 +35,7 @@ export class Module {
 	/** List of parts of the module */
 	parts: ModulePartResolvable[];
 	/** List of required intents */
-	additionalIntents: IntentsBitField[] = [];
+	additionalIntents: GatewayIntentBits[] = [];
 	/** GitHub repository of the module (ex.: "Artivain/artibot") */
 	repo?: string;
 	/** Package name of the module on NPM (ex.: "artibot") */
