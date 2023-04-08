@@ -4,7 +4,8 @@
 		"testing.ts",
 		"dist/",
 		".github/",
-		"private.js"
+		"private.js",
+		"docs"
 	],
 	"compilerOptions": {
 		"module": "ES2022",
