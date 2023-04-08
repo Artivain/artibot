@@ -1,6 +1,6 @@
 {
 	"name": "artibot",
-	"version": "5.1.1",
+	"version": "5.1.2",
 	"description": "Modern, fast and modular open-source Discord bot",
 	"exports": {
 		".": "./dist/index.js"

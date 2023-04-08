@@ -51,6 +51,7 @@ export class InteractionManager {
 		for (const [, module] of modules) {
 			for (const part of module.parts) {
 				if (part instanceof SlashCommand || part instanceof UserContextMenuOption || part instanceof MessageContextMenuOption) {
+					if (!part.data.toJSON) throw new Error("Slash command data is not as expected");
 					this.commandJSONData.push(part.data.toJSON());
 				}
 			}

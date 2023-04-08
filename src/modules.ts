@@ -166,7 +166,7 @@ export class Command extends BasePart {
 /** Configuration for a slash command */
 export interface SlashCommandConfig extends BasePartConfig {
 	/** Data to register into the Discord API */
-	data: Omit<SlashCommandBuilder, "addSubcommand" | "addSubcommandGroup">;
+	data: Partial<SlashCommandBuilder>;
 	/** Minimum time (in seconds) between usages */
 	cooldown?: number;
 	/** Function to execute when the command is ran */
@@ -179,7 +179,7 @@ export interface SlashCommandConfig extends BasePartConfig {
  */
 export class SlashCommand extends BasePart {
 	/** Data to register into the Discord API */
-	data: Omit<SlashCommandBuilder, "addSubcommand" | "addSubcommandGroup">;
+	data: Partial<SlashCommandBuilder>;
 	/** Minimum time (in seconds) between usages */
 	cooldown: number = 0;
 
