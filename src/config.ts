@@ -66,7 +66,7 @@ export class ArtibotConfigBuilder implements Partial<ArtibotConfig> {
 	/** Set to true to show debug messages in console */
 	debug: boolean = false;
 	/** Set a custom ready trigger message for Pterodactyl */
-	pterodactylReadyMessage: string = "Pterodactyl Ready";
+	pterodactylReadyMessage: string = "Ready";
 
 	/** Set the Discord ID of the owner of this bot (probably you) */
 	public setOwnerId(id: Snowflake): this {

@@ -6,7 +6,7 @@ export const once = true;
 
 /** Send pterodactyl started trigger */
 export function execute(client: Client, { config: { pterodactylReadyMessage } }: Artibot): void {
-	if ("RUNS_IN_PTERODACTYL" in process.env && process.env.RUNS_IN_PTERODACTYL) {
+	if ("P_SERVER_UUID" in process.env && process.env.P_SERVER_UUID) {
 		console.log(pterodactylReadyMessage);
 	}
 }
