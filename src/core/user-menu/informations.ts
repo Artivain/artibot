@@ -3,7 +3,7 @@ import Artibot from "../../index.js";
 
 /** Get some information on a user */
 export default async function execute(interaction: UserContextMenuCommandInteraction<"cached">, { config, contributors, localizer, createEmbed }: Artibot): Promise<void> {
-	const infos: GuildMember = await interaction.targetMember.fetch(true);
+	const infos: GuildMember = await interaction.targetMember!.fetch(true);
 	let type: string = localizer._("User");
 	const since: number = infos.joinedTimestamp! / 1000;
 	let more: string = "";

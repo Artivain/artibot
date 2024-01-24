@@ -3,7 +3,7 @@ import Artibot from "../../index.js";
 
 /** Simple way to get the avatar of a user */
 export default async function execute(interaction: UserContextMenuCommandInteraction<"cached">, { localizer, createEmbed }: Artibot): Promise<void> {
-	const member: GuildMember = interaction.targetMember;
+	const member: GuildMember = interaction.targetMember!;
 	const avatar: string = member.displayAvatarURL({
 		size: 512,
 		forceStatic: false,
